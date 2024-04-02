@@ -1,0 +1,24 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using TelemetryStash.Database.Repositories;
+
+namespace TelemetryStash.Database;
+
+public static class DatabaseExtensions
+{
+    public static void AddTelemetryDatabase(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<TelemetryDbContext>(options =>
+        {
+            var connectionString = configuration.GetConnectionString("TelemetryStashDatabase");
+            options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly(typeof(TelemetryDbContext).Assembly.FullName));
+        });
+
+        services.AddTransient<IDeviceRepository, DeviceRepository>();
+        services.AddTransient<IRegisterRepository, RegisterRepository>();
+        services.AddTransient<IRegisterKeyRepository, RegisterKeyRepository>();
+        services.AddTransient<IRegisterSetRepository, RegisterSetRepository>();
+        services.AddTransient<ITelemetryRepository, TelemetryRepository>();
+    }
+}
