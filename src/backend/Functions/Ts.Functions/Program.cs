@@ -20,13 +20,19 @@ var host = new HostBuilder()
         // Infrastructure services
         services.AddApplicationInsights(context.Configuration);
         services.AddHttpClientLogger();
-        services.AddHybridCache();
+        services.AddHybridCache(options =>
+        {
+            options.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromDays(30)
+            };
+        });
 
-        services.AddTransient<TelemetryService>();
-        services.AddTransient<DeviceService>();
-        services.AddTransient<RegisterSetService>();
-        services.AddTransient<RegisterService>();
-        services.AddTransient<RegisterKeyService>();
+        services.AddTransient<ITelemetryService, TelemetryService>();
+        services.AddTransient<IDeviceService, DeviceService>();
+        services.AddTransient<IRegisterSetService, RegisterSetService>();
+        services.AddTransient<IRegisterService, RegisterService>();
+        services.AddTransient<IRegisterKeyService, RegisterKeyService>();
 
         // Domain services
         services.AddTelemetryDatabase(context.Configuration);

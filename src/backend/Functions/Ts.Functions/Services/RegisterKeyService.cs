@@ -9,7 +9,7 @@ public interface IRegisterKeyService
     Task<RegisterKey> GetOrAdd(int registerId, string registerSubset, CancellationToken token = default);
 }
 
-public class RegisterKeyService(IRegisterKeyRepository registerKeyRepository, HybridCache cache)
+public class RegisterKeyService(IRegisterKeyRepository registerKeyRepository, HybridCache cache) : IRegisterKeyService
 {
     public async Task<RegisterKey> GetOrAdd(int registerId, string registerSubset, CancellationToken token = default)
     {

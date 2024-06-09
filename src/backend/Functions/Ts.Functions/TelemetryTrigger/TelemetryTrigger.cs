@@ -9,7 +9,7 @@ using TelemetryStash.Functions.Services;
 
 namespace TelemetryStash.Functions.TelemetryTrigger;
 
-public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, TelemetryService telemetryService)
+public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryService telemetryService)
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = false };
 
@@ -27,7 +27,7 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, TelemetryService
             var body = Convert.FromBase64String(eventData.Body);
 
             var telemetry = JsonSerializer.Deserialize<TelemetryRequest>(Encoding.UTF8.GetString(body), JsonOptions)
-                ?? throw new Exception($"Failed deserialize telemetry Body: {body}" );
+                ?? throw new Exception($"Failed deserialize telemetry Body: {body}");
 
             await telemetryService.Process(eventData.SystemProperties.DeviceId, telemetry);
         }

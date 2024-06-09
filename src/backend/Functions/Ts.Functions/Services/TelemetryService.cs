@@ -13,7 +13,7 @@ public class TelemetryService(
     IDeviceService deviceService,
     IRegisterSetService registerSetService,
     IRegisterService registerService,
-    IRegisterKeyService registerKeyService)
+    IRegisterKeyService registerKeyService) : ITelemetryService
 {
     public async Task Process(string deviceId, TelemetryRequest telemetry)
     {
@@ -26,10 +26,10 @@ public class TelemetryService(
             var registerSubset = registerRequests.Key;
 
             var registerSet = await registerSetService.GetOrAdd(device.Id, registerSetRequest);
-            var register = await registerService.GetOrAdd(registerSet.Id, registerSubset);
 
             foreach (var registerRequest in registerRequests.Value)
             {
+                var register = await registerService.GetOrAdd(registerSet.Id, registerRequest.Key);
                 var registerKey = await registerKeyService.GetOrAdd(register.Id, registerSubset);
                 telemetryMap.Add((registerKey.Id, registerRequest.Value));
             }

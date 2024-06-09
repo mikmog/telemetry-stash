@@ -9,7 +9,7 @@ public interface IRegisterSetService
     Task<RegisterSet> GetOrAdd(int deviceId, string registerSet, CancellationToken token = default);
 }
 
-public class RegisterSetService(IRegisterSetRepository registerSetRepository, HybridCache cache)
+public class RegisterSetService(IRegisterSetRepository registerSetRepository, HybridCache cache) : IRegisterSetService
 {
     public async Task<RegisterSet> GetOrAdd(int deviceId, string registerSet, CancellationToken token = default)
     {

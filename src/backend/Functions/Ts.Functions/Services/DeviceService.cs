@@ -9,7 +9,7 @@ public interface IDeviceService
     Task<Device> GetOrAdd(string deviceId, CancellationToken token = default);
 }
 
-public class DeviceService(IDeviceRepository deviceRepository, HybridCache cache)
+public class DeviceService(IDeviceRepository deviceRepository, HybridCache cache) : IDeviceService
 {
     public async Task<Device> GetOrAdd(string deviceId, CancellationToken token = default)
     {
