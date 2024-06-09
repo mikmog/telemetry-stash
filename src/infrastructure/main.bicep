@@ -33,22 +33,22 @@ resource identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' 
 // ********************************************************************
 // KEY VAULT
 // ********************************************************************
-// resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
-//   name: 'kv-${appName}-${env}'
-//   location: location
-//   tags: union(commonTags, envTag)
-//   properties: {
-//     tenantId: subscription().tenantId    
-//     enableRbacAuthorization: true
-//     publicNetworkAccess: 'enabled'
-//     sku: {
-//       family: 'A'
-//       name: 'standard'
-//     }
-//     enableSoftDelete: true
-//     softDeleteRetentionInDays: 30
-//   }
-// }
+resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {
+  name: 'kv1-${appName}-${env}'
+  location: location
+  tags: union(commonTags, envTag)
+  properties: {
+    tenantId: subscription().tenantId    
+    enableRbacAuthorization: true
+    publicNetworkAccess: 'enabled'
+    sku: {
+      family: 'A'
+      name: 'standard'
+    }
+    enableSoftDelete: true
+    softDeleteRetentionInDays: 30
+  }
+}
 
 // ********************************************************************
 // LOG ANALYTICS WORKSPACE
@@ -100,7 +100,7 @@ resource sqlServer 'Microsoft.Sql/servers@2021-11-01' = {
       tenantId: subscription().tenantId 
     }
     administratorLogin: 'dbadmin'
-    administratorLoginPassword: 'aaaa11111AAA!!!!34c'
+    #administratorLoginPassword: ''
     publicNetworkAccess: 'Enabled'
     restrictOutboundNetworkAccess: 'Disabled'  
   }

@@ -12,8 +12,8 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
-    <RootNamespace>TelemetryStash.Network.Service</RootNamespace>
-    <AssemblyName>Ts.Network.Service</AssemblyName>
+    <RootNamespace>TelemetryStash.NetworkService</RootNamespace>
+    <AssemblyName>Ts.NetworkService</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
