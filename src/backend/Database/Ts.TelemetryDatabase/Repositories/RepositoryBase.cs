@@ -7,13 +7,13 @@ public interface IDbRepository<TEntity>
 {
     TEntity Add(TEntity entity);
     IEnumerable<TEntity> Add(IEnumerable<TEntity> entities);
-    Task<List<TEntity>> All(Opts<TEntity>? opts = null);
+    Task<List<TEntity>> All(Opts<TEntity>? opts = null, CancellationToken token = default);
     TEntity Upsert(TEntity entity);
     TEntity Update(TEntity entity);
     IEnumerable<TEntity> Update(IEnumerable<TEntity> entities);
     void Delete(TEntity entity);
     void StopTracking(TEntity entity);
-    Task<int> SaveChangesAsync();
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }
 
 public abstract class RepositoryBase<TEntity>(TelemetryDbContext context) : IDbRepository<TEntity> where TEntity : class
@@ -32,12 +32,12 @@ public abstract class RepositoryBase<TEntity>(TelemetryDbContext context) : IDbR
         return entities;
     }
 
-    public async Task<List<TEntity>> All(Opts<TEntity>? opts = null)
+    public async Task<List<TEntity>> All(Opts<TEntity>? opts = null, CancellationToken token = default)
     {
         return await Context
             .Set<TEntity>()
             .WithOptions(opts)
-            .ToListAsync();
+            .ToListAsync(token);
     }
 
     public TEntity Upsert(TEntity entity)
@@ -79,9 +79,9 @@ public abstract class RepositoryBase<TEntity>(TelemetryDbContext context) : IDbR
         context.Entry(entity).State = EntityState.Detached;
     }
 
-    public async Task<int> SaveChangesAsync()
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        return await context.SaveChangesAsync();
+        return await context.SaveChangesAsync(token);
     }
 }
 

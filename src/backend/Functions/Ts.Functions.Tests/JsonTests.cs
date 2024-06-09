@@ -33,38 +33,38 @@ public class JsonTests
         Assert.NotNull(telemetry);
     }
 
-    //[Fact]
-    //public void DeserializeDynamicKeyJson()
-    //{
-    //    // Arrange
-    //    var json = """
-    //    {
-    //      "ts": "230901101336494",
-    //      "set":  "BT",
-    //      "reg": {
-    //        "fe:fe": {
-    //          "name": "Huw",
-    //          "strength": 8,
-    //          "mac": "fe:fe"
-    //        },
-    //        "ff:f0": {
-    //          "name": "Son",
-    //          "strength": 8,
-    //          "mac": "ff:f0"
-    //        },
-    //        "ff:f1": {
-    //          "name": "Mot",
-    //          "strength": 8,
-    //          "mac": "ff:f1"
-    //        }
-    //      }
-    //    }
-    //    """;
-        
-    //    // Act
-    //    var telemetry = JsonSerializer.Deserialize<Telemetry>(json);
+    [Fact(Skip = "TODO add support for strings")]
+    public void DeserializeDynamicKeyJson()
+    {
+        // Arrange
+        var json = """
+        {
+          "ts": "230901101336494",
+          "set":  "BT",
+          "reg": {
+            "fe:fe": {
+              "name": "Huw",
+              "strength": 8,
+              "mac": "fe:fe"
+            },
+            "ff:f0": {
+              "name": "Son",
+              "strength": 8,
+              "mac": "ff:f0"
+            },
+            "ff:f1": {
+              "name": "Mot",
+              "strength": 8,
+              "mac": "ff:f1"
+            }
+          }
+        }
+        """;
 
-    //    // Assert
-    //    Assert.NotNull(telemetry);
-    //}
+        // Act
+        var telemetry = JsonSerializer.Deserialize<TelemetryRequest>(json);
+
+        // Assert
+        Assert.NotNull(telemetry);
+    }
 }

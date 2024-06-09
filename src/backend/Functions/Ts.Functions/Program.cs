@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Caching.Hybrid;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TelemetryStash.Database;
 using TelemetryStash.Functions.Extensions;
-using TelemetryStash.Functions.TelemetryTrigger.Services;
+using TelemetryStash.Functions.Services;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -19,11 +20,13 @@ var host = new HostBuilder()
         // Infrastructure services
         services.AddApplicationInsights(context.Configuration);
         services.AddHttpClientLogger();
+        services.AddHybridCache();
 
-        services.AddTransient<CachedDeviceService>();
-        services.AddTransient<CachedRegisterService>();
-        services.AddTransient<CachedRegisterSetService>();
         services.AddTransient<TelemetryService>();
+        services.AddTransient<DeviceService>();
+        services.AddTransient<RegisterSetService>();
+        services.AddTransient<RegisterService>();
+        services.AddTransient<RegisterKeyService>();
 
         // Domain services
         services.AddTelemetryDatabase(context.Configuration);

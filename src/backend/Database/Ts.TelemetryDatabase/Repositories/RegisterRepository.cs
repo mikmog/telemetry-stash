@@ -5,18 +5,18 @@ namespace TelemetryStash.Database.Repositories;
 
 public interface IRegisterRepository : IDbRepository<TEntity>
 {
-    Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null);
+    Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default);
 }
 
 public class RegisterRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IRegisterRepository
 {
-    public async Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null)
+    public async Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default)
     {
         return await Context
             .Set<TEntity>()
             .WithOptions(opts)
             .Where(reg => reg.RegisterSetId == registerSetId)
             .Where(reg => reg.RegisterIdentifier == registerIdentifier)
-            .SingleOrDefaultAsync();
+            .SingleOrDefaultAsync(token);
     }
 }

@@ -17,6 +17,7 @@
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0-preview.4.24267.1" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.4.24267.1" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.0.0-preview.4.24267.6" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.4.24266.19" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.4.24266.19" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.0-preview.4.24266.19" />
