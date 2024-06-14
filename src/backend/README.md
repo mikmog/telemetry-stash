@@ -6,7 +6,6 @@ The setup of azure resources is done with bicep and az cli.
 
 ### Deploy azure resources to a new resource group
 
-
 1. Create the resource group
 
 ```shell
