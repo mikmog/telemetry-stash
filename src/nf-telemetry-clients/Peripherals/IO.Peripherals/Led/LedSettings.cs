@@ -5,7 +5,7 @@ namespace TelemetryStash.IO.Peripherals.Led
 {
     public class LedSettings
     {
-        private const string Pin1Key = "Led.Pin1";
+        private const string Pin1Key = "Led1.Pin";
 
         public void Configure(IDictionary dictionary)
         {

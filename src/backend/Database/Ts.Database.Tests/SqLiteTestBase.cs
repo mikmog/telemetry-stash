@@ -18,8 +18,8 @@ public class SqLiteTestBase : IDisposable
         var modelBuilder = SqliteConventionSetBuilder.CreateModelBuilder();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TelemetryDbContext).Assembly);
 
-        // SqLite does not support DateTimeOffset.
         // Add conversion for DateTimeOffset properties.
+        // SqLite does not support DateTimeOffset.
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
             var properties = entityType.ClrType
@@ -45,7 +45,10 @@ public class SqLiteTestBase : IDisposable
         context.Database.EnsureCreated();
     }
 
-    protected TelemetryDbContext GetDbContext() => new(_contextOptions);
+    protected TelemetryDbContext GetDbContext()
+    {
+        return new(_contextOptions);
+    }
 
     public void Dispose()
     {

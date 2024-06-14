@@ -19,29 +19,20 @@ namespace SmartPowerMeter.Client
         private static Am23XXSensor _am23XXSensor;
         private static Led _led;
 
-        //private const string AidonIdentifier = "P1";
-        //private const string Am23XXIdentifier = "Am23XX";
-
         public static void Main()
         {
             try
             {
                 Thread.Sleep(1000);
 
-                // TODO
-                //_am23XXSensor = new(Am23XXIdentifier, 6, 7);
-                //_aidonSensor = new(AidonIdentifier, 20, 21);
-                //_led = new(10);
                 Wifi.EnsureConnected();
                 PrintStartupMessage();
                 var settings = new AppSettings(new ConfigurationService());
                 
                 _led = new(settings.Led.Pin1);
-                //_telemetryService = new(new MqttService(settings.Mqtt));
-                _telemetryService = new(null);
+                _telemetryService = new(new MqttService(settings.Mqtt));
                 _aidonSensor = new(settings.AidonSensor);
-                //_am23XXSensor = new(settings.Am23XXSensor);
-                _am23XXSensor = new(null);
+                _am23XXSensor = new(settings.Am23XXSensor);
 
                 Run();
             }
@@ -69,6 +60,7 @@ namespace SmartPowerMeter.Client
         {
             try
             {
+                _led.Signal(LedSignal.On);
                 var registerSet = _am23XXSensor.ReadTempAndHumidity();
                 if (registerSet != null)
                 {
@@ -103,7 +95,6 @@ namespace SmartPowerMeter.Client
             _telemetryService = null;
 
             Debug.WriteLine("Rebooting in 60 sec...");
-            Thread.Sleep(60000);
             _led?.Signal(LedSignal.BlinkSosFor60Sec);
             Power.RebootDevice(100);
         }

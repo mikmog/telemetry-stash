@@ -1,9 +1,0 @@
-{
-   "serialport":"COM3",
-   "files": [
-      {         
-         "DestinationFilePath": "I:\\TestFile.txt",
-         "SourceFilePath": "C:\\Temp\\TestFile.txt"
-      }
-   ]
-}

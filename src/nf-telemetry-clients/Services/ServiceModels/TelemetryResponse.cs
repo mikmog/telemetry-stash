@@ -83,13 +83,5 @@ namespace TelemetryStash.ServiceModels
 
             return new Register(identifier, (int)value, short.Parse(fractionsReversed));
         }
-
-        //private static string Reverse(string s)
-        //{
-        //    var charArray = s.ToCharArray();
-
-
-        //    return new string(charArray);
-        //}
     }
 }

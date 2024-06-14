@@ -12,28 +12,10 @@ namespace TelemetryStash.Aidon.Sensor
         public readonly string _registerSetIdentifier;
         public readonly string _comPort;
 
-        // TODO
-        //public AidonSensor(string registerSetIdentifier, int rxPin, int txPin)
-        //{
-        //    _registerSetIdentifier = registerSetIdentifier;
-
-        //    // ESP32 DevKit:
-        //    //Configuration.SetPinFunction(16, DeviceFunction.COM3_RX);
-        //    //Configuration.SetPinFunction(17, DeviceFunction.COM3_TX);
-
-        //    // XIAO_ESP32C3
-        //    //Configuration.SetPinFunction(20, DeviceFunction.COM2_
-        //    RX);
-        //    //Configuration.SetPinFunction(21, DeviceFunction.COM2_TX);
-
-        //    Configuration.SetPinFunction(rxPin, DeviceFunction.COM2_RX);
-        //    Configuration.SetPinFunction(txPin, DeviceFunction.COM2_TX);
-        //}
         public AidonSensor(AidonSensorSettings settings)
         {
             _registerSetIdentifier = settings.RegisterSetIdentifier;
             Configuration.SetPinFunction(settings.RxPin, settings.RxComPort);
-            //Configuration.SetPinFunction(settings.TxPin, settings.TxComPort);
             _comPort = settings.ComPort;
         }
 
@@ -64,10 +46,6 @@ namespace TelemetryStash.Aidon.Sensor
             }
 
             var message = _serialPort.ReadExisting();
-
-            // TODO
-            Debug.WriteLine(message);
-            return;
 
             if (!AidonMessageValidator.IsValid(message, out var error))
             {

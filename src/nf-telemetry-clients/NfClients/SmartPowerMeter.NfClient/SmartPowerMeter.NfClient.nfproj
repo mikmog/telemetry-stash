@@ -59,6 +59,7 @@
     <ProjectReference Include="..\..\Services\ServiceModels\ServiceModels.nfproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\AppSettings.XIAOC3.Prod.json" />
     <Content Include="Configuration\AppSettings.S3WROOM1.Dev.json" />
     <Content Include="Configuration\AppSettings.XIAOC3.Dev.json" />
     <Content Include="Configuration\deploy.json" />

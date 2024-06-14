@@ -12,10 +12,6 @@ namespace TelemetryStash.IO.Peripherals.Led
 
         public Led(int pin)
         {
-            //// ESP32 DevKit: Pin 2 or 4
-            //_led = new GpioController().OpenPin(2, PinMode.Output);
-
-            // Xiao ESP32
             _led = new GpioController().OpenPin(pin, PinMode.Output);
         }
 

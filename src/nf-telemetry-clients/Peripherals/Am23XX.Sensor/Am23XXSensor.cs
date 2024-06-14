@@ -15,8 +15,6 @@ namespace TelemetryStash.Am23XX.Sensor
 
         public Am23XXSensor(string registerSetIdentifier, int dataPin, int clockPin)
         {
-            //Configuration.SetPinFunction(6, DeviceFunction.I2C1_DATA);
-            //Configuration.SetPinFunction(7, DeviceFunction.I2C1_CLOCK);
             Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
             _registerSetIdentifier = registerSetIdentifier;
