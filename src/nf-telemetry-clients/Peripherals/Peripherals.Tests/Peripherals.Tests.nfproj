@@ -42,10 +42,10 @@
       <HintPath>..\..\packages\nanoFramework.System.Runtime.1.0.27\lib\nanoFramework.System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework">
-      <HintPath>..\..\packages\nanoFramework.TestFramework.2.1.104\lib\nanoFramework.TestFramework.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.TestFramework.2.1.107\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher">
-      <HintPath>..\..\packages\nanoFramework.TestFramework.2.1.104\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\..\packages\nanoFramework.TestFramework.2.1.107\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
