@@ -1,12 +1,19 @@
-﻿# Telemetry Stash, Backend
+﻿# TelemetryStash, Backend
 
-The backend consists of an API and Functions.  
-It's using DotNet/C#
+## Infrastructure as code
 
+The setup of azure resources is done with bicep and az cli.
 
-## Development
+### Deploy azure resources to a new resource group
 
+1. Create the resource group
+```
+shell
+az group create --name {RESOURCE_GROUP_NAME} --location swedencentral
+```
 
-### Required tools
-
-* Visual Studio
+2. Run the az cli command to deploy resources
+```
+shell
+az deployment group create --resource-group {RESOURCE_GROUP_NAME} --parameters infrastructure/ts.dev.bicepparam
+```
