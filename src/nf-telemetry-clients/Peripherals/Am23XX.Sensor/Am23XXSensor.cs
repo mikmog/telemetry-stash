@@ -13,12 +13,6 @@ namespace TelemetryStash.Am23XX.Sensor
         private DateTime _lastRead = DateTime.MinValue;
         private readonly string _registerSetIdentifier;
 
-        public Am23XXSensor(string registerSetIdentifier, int dataPin, int clockPin)
-        {
-            Configuration.SetPinFunction(dataPin, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(clockPin, DeviceFunction.I2C1_CLOCK);
-            _registerSetIdentifier = registerSetIdentifier;
-        }
         public Am23XXSensor(Am23XXSensorSettings settings)
         {
             if(settings == null)
@@ -37,6 +31,7 @@ namespace TelemetryStash.Am23XX.Sensor
             if (_am2320 == null)
             {
                 Debug.WriteLine(nameof(Am23XXSensor) + " not initialized");
+                return null;
             }
 
             if (_lastRead.Add(Am2320.MinimumReadPeriod) > DateTime.UtcNow)

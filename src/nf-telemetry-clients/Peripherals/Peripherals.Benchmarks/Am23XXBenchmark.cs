@@ -16,7 +16,7 @@ namespace TelemetryStash.Peripherals.Benchmarks
         [Setup]
         public void Setup()
         {
-            _am23XX = new("Am23XX", 6, 7);
+            _am23XX = new(new Am23XXSensorSettings { DataPin = 6, ClockPin = 7, RegisterSetIdentifier = "Am23XX" } );
         }
 
         [Benchmark, Baseline]

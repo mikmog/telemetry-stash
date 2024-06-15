@@ -17,9 +17,9 @@ namespace TelemetryStash.DeviceServices.Mqtt
 
         public MqttSettings Configure(IDictionary dictionary)
         {
-            var reader = new CertificateReader();
+            var reader = new FileReader();
             string Setting(string key) => dictionary[key] as string ?? throw new ArgumentException("Setting not found", key);
-            byte[] ReadFile(string key) => reader.ReadCertificate(Setting(key), $"File not found '{key}'");
+            byte[] ReadFile(string key) => reader.ReadFile(Setting(key), $"File not found '{key}'");
 
             ClientICertificateName = Setting(ClientCertificateNameKey);
             BrokerHostName = Setting(BrokerHostNameKey);

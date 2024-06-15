@@ -49,10 +49,10 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.418\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.50.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.51.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.50.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.51.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

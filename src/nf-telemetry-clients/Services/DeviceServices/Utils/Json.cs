@@ -58,8 +58,7 @@ namespace TelemetryStash.DeviceServices
         }
 
         /// <summary>
-        /// Deserialize basic JSON to Dictionary.
-        /// Only primitive types supported.
+        /// Deserialize basic JSON to Dictionary. Only primitive types supported.
         /// Quotes not supported in strings.
         /// </summary>
         public static IDictionary DeserializeToDictionary(string json)

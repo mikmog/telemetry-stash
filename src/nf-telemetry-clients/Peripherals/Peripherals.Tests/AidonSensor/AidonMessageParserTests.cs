@@ -9,11 +9,6 @@ namespace TelemetryStash.Peripherals.Tests.AidonSensor
     [TestClass]
     public class AidonMessageParserTests
     {
-        public AidonMessageParserTests()
-        {
-            
-        }
-
         [TestMethod]
         public void Parses_message()
         {

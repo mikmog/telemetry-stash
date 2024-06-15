@@ -2,7 +2,6 @@ using nanoFramework.Json;
 using nanoFramework.TestFramework;
 using System;
 using System.Collections;
-using System.Diagnostics;
 using TelemetryStash.DeviceServices;
 using TelemetryStash.ServiceModels;
 

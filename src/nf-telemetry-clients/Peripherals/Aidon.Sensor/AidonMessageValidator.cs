@@ -8,6 +8,8 @@
         const char Slash = '/';
         const char ExclamationPoint = '!';
 
+        // TODO: CRC16 validation
+        // https://www.convertcase.com/hashing/crc-16-checksum-calculator
         public static bool IsValid(string message, out string error)
         {
             error = null;

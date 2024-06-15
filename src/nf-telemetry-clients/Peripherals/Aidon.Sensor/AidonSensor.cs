@@ -5,6 +5,10 @@ using TelemetryStash.ServiceModels;
 
 namespace TelemetryStash.Aidon.Sensor
 {
+    
+    // https://aidon.com/wp-content/uploads/2023/06/AIDONFD_RJ12_HAN_Interface_SV.pdf
+    // Aidon 6442 S
+
     public class AidonSensor
     {
         private SerialPort _serialPort;

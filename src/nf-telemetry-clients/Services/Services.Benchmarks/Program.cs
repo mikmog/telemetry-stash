@@ -19,9 +19,8 @@ namespace TelemetryStash.Services.Benchmarks
             //BenchmarkRunner.RunClass(typeof(FrameworkBenchmark));
             //BenchmarkRunner.RunClass(typeof(JsonBenchmark));
             //BenchmarkRunner.RunClass(typeof(LocalStorageBenchmark));
-
             //BenchmarkRunner.RunClass(typeof(BufferedTelemetryServiceBenchmark));
-            BenchmarkRunner.RunClass(typeof(MqttClientBenchmark));
+            //BenchmarkRunner.RunClass(typeof(MqttClientBenchmark));
             //BenchmarkRunner.RunClass(typeof(WifiHelperBenchmark));
 
             Debug.WriteLine("Benchmarks completed");

@@ -27,8 +27,8 @@ namespace SmartPowerMeter.Client
 
                 Wifi.EnsureConnected();
                 PrintStartupMessage();
+
                 var settings = new AppSettings(new ConfigurationService());
-                
                 _led = new(settings.Led.Pin1);
                 _telemetryService = new(new MqttService(settings.Mqtt));
                 _aidonSensor = new(settings.AidonSensor);
@@ -47,9 +47,11 @@ namespace SmartPowerMeter.Client
         {
             _led.Signal(LedSignal.Blink5ForStart);
             PrintStartupMessage();
+
             _led.Signal(LedSignal.On);
             Thread.Sleep(5000);
             _led.Signal(LedSignal.Off);
+
             _aidonSensor.DataReceived += AidonDataReceived;
             _aidonSensor.Open();
 
@@ -70,6 +72,7 @@ namespace SmartPowerMeter.Client
                 _telemetryService.AddTelemetry(telemetry);
                 _led.Signal(LedSignal.Off);
 
+                // TODO: Can probably be removed
                 var remainingRam = nanoFramework.Runtime.Native.GC.Run(false);
                 if (remainingRam <= 10000)
                 {

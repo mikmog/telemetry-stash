@@ -3,9 +3,9 @@ using System.IO;
 
 namespace TelemetryStash.DeviceServices.Utils
 {
-    public class CertificateReader
+    public class FileReader
     {
-        public byte[] ReadCertificate(string filePath, string errorMessage)
+        public byte[] ReadFile(string filePath, string errorMessage)
         {
             if (!File.Exists(filePath))
             {
@@ -14,11 +14,11 @@ namespace TelemetryStash.DeviceServices.Utils
             
             var bytes = File.ReadAllBytes(filePath);
             
-            var certificate = new byte[bytes.Length + 1];
-            Array.Copy(bytes, certificate, bytes.Length);
-            certificate[certificate.Length - 1] = 0;
+            var fileBuffer = new byte[bytes.Length + 1];
+            Array.Copy(bytes, fileBuffer, bytes.Length);
+            fileBuffer[fileBuffer.Length - 1] = 0;
 
-            return certificate;
+            return fileBuffer;
         }
     }
 }
