@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TelemetryStash.Database.Repositories;
 
-namespace TelemetryStash.Database;
+namespace TelemetryStash.Database.Extensions;
 
-public static class DatabaseExtensions
+public static class StartupExtensions
 {
-    public static void AddTelemetryDatabase(this IServiceCollection services, IConfiguration configuration)
+    public static void AddDatabaseServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<TelemetryDbContext>(options =>
         {

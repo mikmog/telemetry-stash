@@ -42,10 +42,10 @@ dotnet ef database update --project ../Ts.Database -- --environment "Development
 ### Allow functions to access database
 
 ```
-USE {DATABASE_NAME}
-CREATE USER [func-telemetrystash-dev] FROM EXTERNAL PROVIDER;
-EXEC sp_addrolemember 'db_datareader', [func-telemetrystash-dev];
-EXEC sp_addrolemember 'db_datawriter', [func-telemetrystash-dev];
+USE [{DATABASE_NAME}]
+CREATE USER [{IDENTITY}] FROM EXTERNAL PROVIDER;
+EXEC sp_addrolemember 'db_datareader', [{IDENTITY}];
+EXEC sp_addrolemember 'db_datawriter', [{IDENTITY}];
  
-GRANT EXECUTE ON dbo.uspUpsertTelemetry to [func-telemetrystash-dev]
+GRANT EXECUTE ON dbo.uspUpsertTelemetry to [{IDENTITY}]
 ```

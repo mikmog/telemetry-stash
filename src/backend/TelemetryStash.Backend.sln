@@ -35,6 +35,61 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ts.Database.Tests", "Databa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ts.Functions.Tests", "Functions\Ts.Functions.Tests\Ts.Functions.Tests.csproj", "{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FBF8F9D0-CADA-4B53-B63F-D0E5B972A3BB}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\definitions.bicep = Infrastructure\definitions.bicep
+		Infrastructure\main.bicep = Infrastructure\main.bicep
+		Infrastructure\parameters.bicep = Infrastructure\parameters.bicep
+		Infrastructure\ts.dev.bicepparam = Infrastructure\ts.dev.bicepparam
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{E3862FA9-4574-41D2-8E4A-989029AA8525}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\app\app-service-plan.bicep = Infrastructure\modules\app\app-service-plan.bicep
+		Infrastructure\modules\app\app-service.bicep = Infrastructure\modules\app\app-service.bicep
+		Infrastructure\modules\app\function-app.bicep = Infrastructure\modules\app\function-app.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "identity", "identity", "{E4AD3A1B-C77C-454C-8B97-3346BFFAAAB8}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\identity\user-assigned-identity.bicep = Infrastructure\modules\identity\user-assigned-identity.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iot-hub", "iot-hub", "{69C00706-D495-4B27-B85A-08DE6627E169}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\iot-hub\iot-hub.bicep = Infrastructure\modules\iot-hub\iot-hub.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "key-vault", "key-vault", "{6BAAF901-F620-49B6-92D6-1C3F90645FE6}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\key-vault\key-vault.bicep = Infrastructure\modules\key-vault\key-vault.bicep
+		Infrastructure\modules\key-vault\role-assignment.bicep = Infrastructure\modules\key-vault\role-assignment.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lock", "lock", "{467C62B3-B11A-4B0D-9499-BC4DC9CD697F}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\lock\delete-lock.bicep = Infrastructure\modules\lock\delete-lock.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "monitor", "monitor", "{5E87727F-78D5-438D-8B9D-B26802EABD6B}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\monitor\application-insights.bicep = Infrastructure\modules\monitor\application-insights.bicep
+		Infrastructure\modules\monitor\log-workspace.bicep = Infrastructure\modules\monitor\log-workspace.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{D19E8767-5981-4F8F-A871-35961CAD142E}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\sql\sql-database.bicep = Infrastructure\modules\sql\sql-database.bicep
+		Infrastructure\modules\sql\sql-server.bicep = Infrastructure\modules\sql\sql-server.bicep
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storage", "storage", "{BE693564-7B16-4AF5-8F80-EAFAB1DBF4FE}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\modules\storage\storage-account.bicep = Infrastructure\modules\storage\storage-account.bicep
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +121,15 @@ Global
 		{0A6224ED-0BA4-4D6B-BC0C-1E8CC1C2279C} = {19F05283-86C3-4D40-A5D7-C70017DF9EFC}
 		{71E5CF55-45E8-4EA7-A217-F8B2600E8C92} = {7807ABF0-CB83-4EE8-A735-094CABD47A56}
 		{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD} = {19F05283-86C3-4D40-A5D7-C70017DF9EFC}
+		{3CB841EB-2FD7-42DB-BF7E-01022D43B7FD} = {FBF8F9D0-CADA-4B53-B63F-D0E5B972A3BB}
+		{E3862FA9-4574-41D2-8E4A-989029AA8525} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{E4AD3A1B-C77C-454C-8B97-3346BFFAAAB8} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{69C00706-D495-4B27-B85A-08DE6627E169} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{6BAAF901-F620-49B6-92D6-1C3F90645FE6} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{467C62B3-B11A-4B0D-9499-BC4DC9CD697F} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{5E87727F-78D5-438D-8B9D-B26802EABD6B} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{D19E8767-5981-4F8F-A871-35961CAD142E} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{BE693564-7B16-4AF5-8F80-EAFAB1DBF4FE} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73B6DB14-9569-4D5F-BEF4-D33784E84725}

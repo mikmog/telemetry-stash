@@ -38,29 +38,6 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryServic
     }
 }
 
-/** CloudEvent
-  {
-      "id": "12f7acd7-a8c0-7336-61a6-91bdf1556cc3",
-      "source": "/SUBSCRIPTIONS/1DF7D724-263C-45A3-8008-1ED420D2A7FF/RESOURCEGROUPS/TEAMCOPY/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/TEAMCOPY-IOT-HUB-FREE",
-      "type": "Microsoft.Devices.DeviceTelemetry",
-      "data": {
-        "properties": {},
-        "systemProperties": {
-          "iothub-connection-device-id": "P1MeterCaSigned",
-          "iothub-connection-auth-method": "{\"scope\":\"device\",\"type\":\"CA-Signed\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
-          "iothub-connection-auth-generation-id": "638458640089312750",
-          "iothub-enqueuedtime": "2024-04-03T18:47:40.358Z",
-          "iothub-message-source": "Telemetry"
-        },
-        "body": "eyJUcyI6IjIwMjQtMDQtMDNUMTg6NDc6NDBaIiwiUmVnIjoxMCwiTnVtIjp7IlRBRSI6OTMzNy41MywiVEVJIjowLCJUUkQiOjMuNTksIlRSSSI6MjI5OC4zNzgsIkVEIjoxLjIzLCJFSSI6MCwiUkVEIjowLCJSRUkiOjAuNTMxLCIxRUQiOjAuMzQ0LCIxRUkiOjAsIjJFRCI6MC42ODUsIjJFSSI6MCwiM0VEIjowLjE4MywiM0VJIjowLCIxUkQiOjAsIjFSSSI6MC4yNzUsIjJSRCI6MCwiMlJJIjowLjE4OCwiM1JEIjowLCIzUkkiOjAuMDcxLCIxViI6MjMyLjksIjJWIjoyMzEuNywiM1YiOjIzMS45LCIxQyI6MiwiMkMiOjMsIjNDIjowLjh9fQ=="
-      },
-      "time": "2024-04-03T18:47:40.358+00:00",
-      "specversion": "1.0",
-      "subject": "devices/P1MeterCaSigned"
-    }
- */
-
-
 public record CloudEventData
 {
     [JsonPropertyName("systemProperties")]

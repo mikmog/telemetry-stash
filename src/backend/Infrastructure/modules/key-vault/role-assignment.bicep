@@ -17,7 +17,7 @@ resource assignRoles 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for
   properties: {
     principalId: assignment.principalId
     principalType: assignment.principalType
-    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions',  keyVaultRoleDefinitions[assignment.roleDefinition])
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', keyVaultRoleDefinitions[assignment.roleDefinition])
   }
 }]
 

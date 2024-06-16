@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using TelemetryStash.Functions.Services;
-using TelemetryStash.Functions.Tests.Shared;
 
 namespace TelemetryStash.Functions.Tests.TelemetryTrigger;
 

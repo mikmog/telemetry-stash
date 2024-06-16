@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TelemetryStash.Functions.Tests.Shared;
+namespace TelemetryStash.Functions.Tests;
 public class CacheProvider : IDisposable
 {
     private readonly ServiceProvider _provider;

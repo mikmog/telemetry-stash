@@ -35,7 +35,7 @@ public class TelemetryDbContext : DbContext
             .HaveMaxLength(450);
 
         configurationBuilder.Properties<decimal>()
-            .HavePrecision(19,4);
+            .HavePrecision(19, 4);
 
         configurationBuilder.Properties<DateTimeOffset>()
             .HavePrecision(4);

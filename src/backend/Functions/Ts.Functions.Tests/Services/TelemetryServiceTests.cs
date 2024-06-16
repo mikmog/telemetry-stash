@@ -2,7 +2,6 @@
 using System.Text.Json;
 using TelemetryStash.Functions.Services;
 using TelemetryStash.Functions.TelemetryTrigger;
-using TelemetryStash.Functions.Tests.Shared;
 
 namespace TelemetryStash.Functions.Tests.Services;
 
