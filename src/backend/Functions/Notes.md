@@ -1,4 +1,4 @@
-﻿# Telemetry Stash Functions
+﻿# Internal notes
 
 ## Sample telemetry
 

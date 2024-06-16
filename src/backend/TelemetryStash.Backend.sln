@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.34818.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{19F05283-86C3-4D40-A5D7-C70017DF9EFC}"
 	ProjectSection(SolutionItems) = preProject
-		Functions\README.md = Functions\README.md
+		Functions\Notes.md = Functions\Notes.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{19E8FEF9-8A0E-4ADA-9F06-20B7887573A3}"
@@ -14,14 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{C9161958-70AD-46D7-BEDA-6BEAD7880C54}"
-	ProjectSection(SolutionItems) = preProject
-		Api\README.md = Api\README.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{7807ABF0-CB83-4EE8-A735-094CABD47A56}"
-	ProjectSection(SolutionItems) = preProject
-		Database\README.md = Database\README.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5B7A9E00-9861-47D5-9CA6-EC22FEECBB1D}"
 	ProjectSection(SolutionItems) = preProject
