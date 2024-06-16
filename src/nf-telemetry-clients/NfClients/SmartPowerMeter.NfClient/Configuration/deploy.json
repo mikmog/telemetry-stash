@@ -1,0 +1,21 @@
+{
+  "serialport": "%SerialPort%",
+  "files": [
+    {
+      "DestinationFilePath": "I:\\AppSettings.json",
+      "SourceFilePath": "%AppSettings.json%"
+    },
+    {
+      "DestinationFilePath": "I:\\DigiCertGlobalRootG2.pem",
+      "SourceFilePath": "DigiCertGlobalRootG2.pem"
+    },
+    {
+      "DestinationFilePath": "I:\\Client.pem",
+      "SourceFilePath": "%Client.PemCert%"
+    },
+    {
+      "DestinationFilePath": "I:\\Client.key",
+      "SourceFilePath": "%Client.PrivateKey%"
+    }
+  ]
+}
