@@ -60,6 +60,8 @@ namespace SmartPowerMeter.Client
 
         private static void AidonDataReceived(Telemetry telemetry)
         {
+            // TODO
+            return;
             try
             {
                 _led.Signal(LedSignal.On);
