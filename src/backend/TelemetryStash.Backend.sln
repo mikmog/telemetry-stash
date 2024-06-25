@@ -90,6 +90,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "storage", "storage", "{BE69
 		Infrastructure\modules\storage\storage-account.bicep = Infrastructure\modules\storage\storage-account.bicep
 	EndProjectSection
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Ts.TelemetryDatabase.Sql", "Database\Ts.TelemetryDatabase.Sql\Ts.TelemetryDatabase.Sql.sqlproj", "{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,12 @@ Global
 		{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +138,7 @@ Global
 		{5E87727F-78D5-438D-8B9D-B26802EABD6B} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
 		{D19E8767-5981-4F8F-A871-35961CAD142E} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
 		{BE693564-7B16-4AF5-8F80-EAFAB1DBF4FE} = {3CB841EB-2FD7-42DB-BF7E-01022D43B7FD}
+		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B} = {7807ABF0-CB83-4EE8-A735-094CABD47A56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73B6DB14-9569-4D5F-BEF4-D33784E84725}

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="0.1.19-preview" />
+  <PropertyGroup>
+    <Name>Ts.TelemetryDatabase.Sql</Name>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="User Defined Types" />
+    <Folder Include="Stored Procedures" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="User Defined Types\TelemetriesType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Stored Procedures\UpsertTelemetry.sql" />
+  </ItemGroup>
+</Project>
