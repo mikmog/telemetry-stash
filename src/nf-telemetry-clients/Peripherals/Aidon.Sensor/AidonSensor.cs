@@ -51,10 +51,6 @@ namespace TelemetryStash.Aidon.Sensor
 
             var message = _serialPort.ReadExisting();
 
-            // TODO
-            Debug.WriteLine(message);
-            return;
-
             if (!AidonMessageValidator.IsValid(message, out var error))
             {
                 Debug.WriteLine(error);

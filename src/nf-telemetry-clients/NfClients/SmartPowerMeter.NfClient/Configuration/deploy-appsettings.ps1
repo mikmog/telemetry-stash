@@ -19,8 +19,8 @@
 ############################################################################################################
 param(
 	[string]$keyVaultName = "kv1-telemetrystash-dev",
-	[string]$settingsFile = "AppSettings.XIAOC3.Dev.json",
-	[string]$serialPort = "COM9",
+	[string]$settingsFile = "AppSettings.S3WROOM1.Dev.json",
+	[string]$serialPort = "COM3",
 	[string]$deployJsonFile = "deploy.json"
 )
 
