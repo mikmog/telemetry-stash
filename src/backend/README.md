@@ -30,13 +30,15 @@ In Visual Studio. Right click ```Ts.Functions``` Select _Open in Terminal_
 ```shell
 dotnet tool install --global dotnet-ef
 dotnet tool update --global dotnet-ef
+
+dotnet tool install --global dotnet-ef --version 9.0.0-preview.5.24306.3
 ```
 
 ### Dotnet tool usage
 
 ```shell
-dotnet ef migrations add Initial --project ../Ts.Database
-dotnet ef database update --project ../Ts.Database -- --environment "Development"
+dotnet ef migrations add Initial --project ../../Database/Ts.TelemetryDatabase
+dotnet ef database update --project ../../Database/Ts.TelemetryDatabase -- --environment "Production"
 ```
 
 ### Allow functions to access database

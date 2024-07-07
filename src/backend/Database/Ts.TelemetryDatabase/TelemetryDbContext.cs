@@ -27,6 +27,11 @@ public class TelemetryDbContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(TelemetryDbContext).Assembly);
     }
 
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    optionsBuilder.UseSqlServer("");
+    //}
+
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         base.ConfigureConventions(configurationBuilder);

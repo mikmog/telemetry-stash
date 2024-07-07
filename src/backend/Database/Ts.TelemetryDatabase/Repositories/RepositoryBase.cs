@@ -42,10 +42,11 @@ public abstract class RepositoryBase<TEntity>(TelemetryDbContext context) : IDbR
 
     public TEntity Upsert(TEntity entity)
     {
-        if(context.Entry(entity).State == EntityState.Detached)
+        if (context.Entry(entity).State == EntityState.Detached)
         {
             Add(entity);
-        } else
+        }
+        else
         {
             Update(entity);
         }

@@ -12,11 +12,15 @@ public static class StartupExtensions
         services.AddDbContext<TelemetryDbContext>(options =>
         {
             var connectionString = configuration.GetConnectionString("TelemetryStashDatabase");
-            options.UseSqlServer(connectionString, builder => builder.MigrationsAssembly(typeof(TelemetryDbContext).Assembly.FullName));
+            options.UseSqlServer(connectionString, builder =>
+                builder.MigrationsAssembly(typeof(TelemetryDbContext).Assembly.FullName)
+            );
         });
 
+        // modelBuilder.ApplyConfigurationsFromAssembly(typeof(TelemetryDbContext).Assembly);
+
         services.AddTransient<IDeviceRepository, DeviceRepository>();
-        services.AddTransient<IRegisterRepository, RegisterRepository>();
+        services.AddTransient<IRegisterRepository, RegisterTemplateRepository>();
         services.AddTransient<IRegisterKeyRepository, RegisterKeyRepository>();
         services.AddTransient<IRegisterSetRepository, RegisterSetRepository>();
         services.AddTransient<ITelemetryRepository, TelemetryRepository>();

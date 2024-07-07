@@ -58,13 +58,13 @@ public record TelemetryRequest
 {
     [JsonConverter(typeof(TimestampConverter))]
     [JsonPropertyName("ts")]
-    public DateTimeOffset Timestamp { get; set; }
+    public required DateTimeOffset Timestamp { get; set; }
 
     [JsonPropertyName("set")]
     public string? RegisterSet { get; set; }
 
     [JsonPropertyName("reg")]
-    public Dictionary<string, Dictionary<string, decimal>> Registers { get; set; } = [];
+    public required Dictionary<string, Dictionary<string, decimal>> Registers { get; set; }
 }
 
 public class TimestampConverter : JsonConverter<DateTimeOffset>

@@ -1,0 +1,16 @@
+﻿CREATE TABLE [dbo].[Timestamps] (
+    [Id]                    INT IDENTITY (1, 1)         NOT NULL,
+    [DeviceId]              SMALLINT                    NOT NULL,
+    [Timestamp]             DATETIMEOFFSET (4)          NOT NULL,
+    [Created]               DATETIMEOFFSET (4)          NOT NULL,
+
+    CONSTRAINT [PK_Timestamps] PRIMARY KEY CLUSTERED ( [Id] ASC ),
+    CONSTRAINT [FK_Timestamps_Devices] FOREIGN KEY ( [DeviceId] ) REFERENCES [dbo].[Devices] ( [Id] )
+);
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_DeviceId_Timestamp] ON [dbo].[Timestamps]
+(
+	[DeviceId] ASC,
+	[Timestamp] ASC
+)

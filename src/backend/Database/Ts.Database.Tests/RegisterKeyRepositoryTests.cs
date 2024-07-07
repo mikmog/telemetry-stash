@@ -10,7 +10,7 @@ public class RegisterKeyRepositoryTests : SqLiteTestBase
 
         var deviceRepo = new DeviceRepository(context);
         var registerSetRepo = new RegisterSetRepository(context);
-        var registerRepo = new RegisterRepository(context);
+        var registerRepo = new RegisterTemplateRepository(context);
         var sut = new RegisterKeyRepository(context);
 
         var device = deviceRepo.Add(new Device(DeviceId: "ESP32"));

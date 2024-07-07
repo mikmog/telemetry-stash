@@ -14,28 +14,28 @@ BEGIN
 
     DECLARE @TsId INT;
 
-    SELECT @TsId = [Id]
-    FROM TimeStamps
-    WHERE DeviceId = @DeviceId AND Ts = @Timestamp;
+    SELECT @TsId = Id
+    FROM Timestamps
+    WHERE DeviceId = @DeviceId AND [Timestamp] = @Timestamp;
 
     IF @TsId IS NULL
     BEGIN
 		-- Insert timestamp
 		DECLARE @Id TABLE(Id INT);
-        INSERT INTO Timestamps(DeviceId, Ts, Created)
+        INSERT INTO Timestamps(DeviceId, [Timestamp], Created)
         OUTPUT inserted.Id INTO @Id
         VALUES(@DeviceId, @Timestamp, GETUTCDATE());
-		SELECT @TsId = [Id] from @Id
+		SELECT @TsId = Id from @Id
     END
 
     -- Insert telemetry
-	INSERT INTO dbo.Telemetries(TimestampId, RegisterKeyId, [Value])
-	SELECT @TsId, RegisterKeyId, Value 
+	INSERT INTO dbo.Telemetries(TimestampId, RegisterId, [Value])
+	SELECT @TsId, RegisterId, Value 
 	FROM @Telemetry AS T
 	WHERE NOT EXISTS (
 		SELECT 1 
 		FROM dbo.Telemetries 
-		WHERE TimestampId = @TsId AND RegisterKeyId = T.RegisterKeyId
+		WHERE TimestampId = @TsId AND RegisterId = T.RegisterId
 	);
 
 END

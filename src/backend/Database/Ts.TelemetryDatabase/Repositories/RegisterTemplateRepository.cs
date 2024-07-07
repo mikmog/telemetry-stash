@@ -8,7 +8,7 @@ public interface IRegisterRepository : IDbRepository<TEntity>
     Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default);
 }
 
-public class RegisterRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IRegisterRepository
+public class RegisterTemplateRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IRegisterRepository
 {
     public async Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default)
     {

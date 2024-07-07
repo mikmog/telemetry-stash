@@ -9,9 +9,12 @@ public static class StartupExtensions
     {
         services.AddHybridCache(options =>
         {
+            options.MaximumPayloadBytes = 1024 * 1024;
+            options.MaximumKeyLength = 1024;
             options.DefaultEntryOptions = new HybridCacheEntryOptions
             {
-                Expiration = TimeSpan.FromDays(30)
+                Expiration = TimeSpan.FromMinutes(55),
+                LocalCacheExpiration = TimeSpan.FromMinutes(55)
             };
         });
 
