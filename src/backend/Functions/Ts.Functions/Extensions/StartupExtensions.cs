@@ -21,7 +21,7 @@ public static class StartupExtensions
         services.AddTransient<ITelemetryService, TelemetryService>();
         services.AddTransient<IDeviceService, DeviceService>();
         services.AddTransient<IRegisterSetService, RegisterSetService>();
+        services.AddTransient<IRegisterTemplateService, RegisterTemplateService>();
         services.AddTransient<IRegisterService, RegisterService>();
-        services.AddTransient<IRegisterKeyService, RegisterKeyService>();
     }
 }

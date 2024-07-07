@@ -15,8 +15,8 @@ public class RegisterSetServiceTests
         var sut = new RegisterSetService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "TempSensor");
-        await sut.GetOrAdd(1, "TempSensor");
+        await sut.GetOrCreate(1, "TempSensor");
+        await sut.GetOrCreate(1, "TempSensor");
 
         // Assert
         await repository.Received(1).GetRegisterSet(1, "TempSensor", Arg.Any<Opts<RegisterSet>>(), Arg.Any<CancellationToken>());
@@ -32,7 +32,7 @@ public class RegisterSetServiceTests
         var sut = new RegisterSetService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "TempSensor");
+        await sut.GetOrCreate(1, "TempSensor");
 
         // Assert
         repository.Received(1).Add(Arg.Any<RegisterSet>());

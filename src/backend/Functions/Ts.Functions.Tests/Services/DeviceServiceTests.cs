@@ -14,8 +14,8 @@ public class DeviceServiceTests
         var sut = new DeviceService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd("ESP32");
-        await sut.GetOrAdd("ESP32");
+        await sut.GetOrCreate("ESP32");
+        await sut.GetOrCreate("ESP32");
 
         // Assert
         await repository.Received(1).GetByDeviceId("ESP32", Arg.Any<Opts<Device>>(), Arg.Any<CancellationToken>());
@@ -30,7 +30,7 @@ public class DeviceServiceTests
         var sut = new DeviceService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd("ESP32");
+        await sut.GetOrCreate("ESP32");
 
         // Assert
         repository.Received(1).Add(Arg.Any<Device>());
@@ -55,7 +55,7 @@ public class DeviceServiceTests
         // Act
         for (var i = 0; i < 10; i++)
         {
-            tasks.Add(sut.GetOrAdd($"ESP32"));
+            tasks.Add(sut.GetOrCreate($"ESP32"));
         }
         await Task.WhenAll(tasks);
 

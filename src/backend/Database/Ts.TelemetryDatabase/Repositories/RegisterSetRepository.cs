@@ -1,22 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TEntity = TelemetryStash.Database.Models.RegisterSet;
+﻿using TelemetryStash.Database.Models;
 
 namespace TelemetryStash.Database.Repositories;
 
-public interface IRegisterSetRepository : IDbRepository<TEntity>
+public interface IRegisterSetRepository
 {
-    Task<TEntity?> GetRegisterSet(int deviceId, string identifier, Opts<TEntity>? opts = null, CancellationToken token = default);
+    Task<RegisterSet?> GetByDeviceAndIdentifier(int deviceId, string identifier, CancellationToken token = default);
+
+    Task<RegisterSet> Upsert(int deviceId, string identifier, CancellationToken token = default);
 }
 
-public class RegisterSetRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IRegisterSetRepository
+public class RegisterSetRepository(IDbProvider dbProvider) : IRegisterSetRepository
 {
-    public async Task<TEntity?> GetRegisterSet(int deviceId, string identifier, Opts<TEntity>? opts = null, CancellationToken token = default)
+    public async Task<RegisterSet?> GetByDeviceAndIdentifier(int deviceId, string identifier, CancellationToken token = default)
     {
-        return await Context
-            .Set<TEntity>()
-            .WithOptions(opts)
-            .Where(reg => reg.DeviceId == deviceId)
-            .Where(reg => reg.Identifier == identifier)
-            .SingleOrDefaultAsync(token);
+        return await dbProvider
+            .ExecuteScalar<RegisterSet>("dbo.GetRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token);
+    }
+
+    public async Task<RegisterSet> Upsert(int deviceId, string identifier, CancellationToken token = default)
+    {
+        return await dbProvider
+            .ExecuteScalar<RegisterSet>("dbo.UpsertRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token)
+            ?? throw new Exception("UpsertRegisterSet not null expected");
     }
 }

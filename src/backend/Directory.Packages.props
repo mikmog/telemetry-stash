@@ -14,11 +14,13 @@
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.17.3-preview2" />
     <PackageVersion Include="Microsoft.ApplicationInsights.WorkerService" Version="2.22.0" />
     <PackageVersion Include="Microsoft.Azure.Functions.Worker.ApplicationInsights" Version="1.2.0" />
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.2.1" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.0-preview.5.24306.3" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0-preview.5.24306.3" PrivateAssets="All" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0-preview.5.24306.3" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0-preview.5.24306.3" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.0.0-preview.5.24306.11" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0-preview.5.24306.7" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0-preview.5.24306.7" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.5.24306.7" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="9.0.0-preview.5.24306.7" />

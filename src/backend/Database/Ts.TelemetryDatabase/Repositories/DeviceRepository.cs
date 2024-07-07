@@ -1,20 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TEntity = TelemetryStash.Database.Models.Device;
+﻿using TelemetryStash.Database.Models;
 
 namespace TelemetryStash.Database.Repositories;
 
-public interface IDeviceRepository : IDbRepository<TEntity>
+public interface IDeviceRepository
 {
-    Task<TEntity?> GetByDeviceId(string deviceId, Opts<TEntity>? opts = null, CancellationToken token = default);
+    Task<Device?> GetByDeviceId(string deviceId, CancellationToken token = default);
+
+    Task<Device> Upsert(string deviceId, CancellationToken token = default);
 }
 
-public class DeviceRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IDeviceRepository
+public class DeviceRepository(IDbProvider dbProvider) : IDeviceRepository
 {
-    public async Task<TEntity?> GetByDeviceId(string deviceId, Opts<TEntity>? opts = null, CancellationToken token = default)
+    public async Task<Device?> GetByDeviceId(string deviceId, CancellationToken token = default)
     {
-        return await Context
-            .Set<TEntity>()
-            .WithOptions(opts)
-            .SingleOrDefaultAsync(d => d.DeviceId == deviceId, token);
+        return await dbProvider
+            .ExecuteScalar<Device>("dbo.GetDevice", new { DeviceId = deviceId }, token);
+    }
+
+    public async Task<Device> Upsert(string deviceId, CancellationToken token = default)
+    {
+        return await dbProvider
+            .ExecuteScalar<Device>("dbo.UpsertDevice", new { DeviceId = deviceId }, token)
+            ?? throw new Exception("UpsertDevice not null expected");
     }
 }

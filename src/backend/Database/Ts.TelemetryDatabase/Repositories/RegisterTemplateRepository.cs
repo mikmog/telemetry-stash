@@ -1,22 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TEntity = TelemetryStash.Database.Models.Register;
+﻿using TelemetryStash.Database.Models;
 
 namespace TelemetryStash.Database.Repositories;
 
-public interface IRegisterRepository : IDbRepository<TEntity>
+public interface IRegisterTemplateRepository
 {
-    Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default);
+    Task<RegisterTemplate?> GetRegister(int registerSetId, string registerIdentifier, CancellationToken token = default);
+
+    Task<RegisterTemplate> Upsert(int registerSetId, string registerIdentifier, CancellationToken token = default);
 }
 
-public class RegisterTemplateRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), IRegisterRepository
+public class RegisterTemplateRepository(IDbProvider dbProvider) : IRegisterTemplateRepository
 {
-    public async Task<TEntity?> GetRegister(int registerSetId, string registerIdentifier, Opts<TEntity>? opts = null, CancellationToken token = default)
+    public async Task<RegisterTemplate?> GetRegister(int registerSetId, string registerIdentifier, CancellationToken token = default)
     {
-        return await Context
-            .Set<TEntity>()
-            .WithOptions(opts)
-            .Where(reg => reg.RegisterSetId == registerSetId)
-            .Where(reg => reg.RegisterIdentifier == registerIdentifier)
-            .SingleOrDefaultAsync(token);
+        return await dbProvider.ExecuteScalar<RegisterTemplate?>("dbo.GetRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token);
+    }
+
+    // TODO: Handle missing fields
+    public async Task<RegisterTemplate> Upsert(int registerSetId, string registerIdentifier, CancellationToken token = default)
+    {
+        return await dbProvider
+            .ExecuteScalar<RegisterTemplate>("dbo.UpsertRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token)
+            ?? throw new InvalidOperationException("UpsertRegisterTemplate not null expected");
     }
 }

@@ -10,13 +10,13 @@ public class RegisterServiceTests
     {
         // Arrange
         using var cacheProvider = new CacheProvider();
-        var repository = Substitute.For<IRegisterRepository>();
+        var repository = Substitute.For<IRegisterTemplateRepository>();
 
-        var sut = new RegisterService(repository, cacheProvider.HybridCache);
+        var sut = new RegisterTemplateService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "OutdoorTemp");
-        await sut.GetOrAdd(1, "OutdoorTemp");
+        await sut.GetOrCreate(1, "OutdoorTemp");
+        await sut.GetOrCreate(1, "OutdoorTemp");
 
         // Assert
         await repository.Received(1).GetRegister(1, "OutdoorTemp", Arg.Any<Opts<Register>>(), Arg.Any<CancellationToken>());
@@ -27,12 +27,12 @@ public class RegisterServiceTests
     {
         // Arrange
         using var cacheProvider = new CacheProvider();
-        var repository = Substitute.For<IRegisterRepository>();
+        var repository = Substitute.For<IRegisterTemplateRepository>();
 
-        var sut = new RegisterService(repository, cacheProvider.HybridCache);
+        var sut = new RegisterTemplateService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "OutdoorTemp");
+        await sut.GetOrCreate(1, "OutdoorTemp");
 
         // Assert
         repository.Received(1).Add(Arg.Any<Register>());

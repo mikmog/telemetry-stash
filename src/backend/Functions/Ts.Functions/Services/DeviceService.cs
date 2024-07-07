@@ -6,29 +6,16 @@ namespace TelemetryStash.Functions.Services;
 
 public interface IDeviceService
 {
-    Task<Device> GetOrAdd(string deviceId, CancellationToken token = default);
+    Task<Device> GetOrCreate(string deviceId, CancellationToken token = default);
 }
 
 public class DeviceService(IDeviceRepository deviceRepository, HybridCache cache) : IDeviceService
 {
-    public async Task<Device> GetOrAdd(string deviceId, CancellationToken token = default)
+    public async Task<Device> GetOrCreate(string deviceId, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
             $"{nameof(Device)}{deviceId}",
-            async token => await GetOrAdd(deviceId, deviceRepository, token),
+            async token => await deviceRepository.Upsert(deviceId, token),
             token: token);
-    }
-
-    private static async Task<Device> GetOrAdd(string deviceId, IDeviceRepository repository, CancellationToken token)
-    {
-        var device = await repository.GetByDeviceId(deviceId, opt => opt.AsNoTracking(), token);
-        if (device == null)
-        {
-            device = repository.Add(new Device(deviceId));
-            await repository.SaveChangesAsync(token);
-            repository.StopTracking(device);
-        }
-
-        return device;
     }
 }

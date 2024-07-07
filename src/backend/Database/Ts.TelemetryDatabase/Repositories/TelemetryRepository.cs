@@ -1,38 +1,34 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
 using System.Data;
-using TEntity = TelemetryStash.Database.Models.Telemetry;
 
 namespace TelemetryStash.Database.Repositories;
 
-public interface ITelemetryRepository : IDbRepository<TEntity>
+public interface ITelemetryRepository
 {
-    Task UpsertTelemetry(int deviceId, DateTimeOffset timestamp, List<(int RegisterKey, decimal Value)> telemetry);
+    Task Upsert(int deviceId, DateTimeOffset timestamp, List<(int RegisterId, decimal Value)> telemetry, CancellationToken token = default);
 }
 
-public class TelemetryRepository(TelemetryDbContext context) : RepositoryBase<TEntity>(context), ITelemetryRepository
+public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
 {
-    public async Task UpsertTelemetry(int deviceId, DateTimeOffset timestamp, List<(int RegisterKey, decimal Value)> telemetry)
+    public async Task Upsert(int deviceId, DateTimeOffset timestamp, List<(int RegisterId, decimal Value)> telemetry, CancellationToken token = default)
     {
-        var telemetryTable = new DataTable();
-        telemetryTable.Columns.Add("RegisterKeyId", typeof(int));
-        telemetryTable.Columns.Add("Value", typeof(decimal));
-        foreach (var (registerKey, value) in telemetry)
+        var telemetries = new DataTable();
+        telemetries.Columns.Add("RegisterId", typeof(int));
+        telemetries.Columns.Add("Value", typeof(decimal));
+
+        foreach (var (registerId, value) in telemetry)
         {
-            telemetryTable.Rows.Add(registerKey, value);
+            telemetries.Rows.Add(registerId, value);
         }
 
-        await Context
-            .Database
-            .ExecuteSqlRawAsync($"EXEC [dbo].[uspUpsertTelemetry] @DeviceId, @Timestamp, @Telemetry",
-                new SqlParameter("@DeviceId", deviceId),
-                new SqlParameter("@Timestamp", timestamp),
-                new SqlParameter
-                {
-                    ParameterName = "@Telemetry",
-                    TypeName = "dbo.TelemetriesType",
-                    SqlDbType = SqlDbType.Structured,
-                    Value = telemetryTable
-                });
+        await dbProvider.Execute("dbo.UpsertTelemetry",
+            new
+            {
+                DeviceId = deviceId,
+                Timestamp = timestamp,
+                Telemetry = telemetries.AsTableValuedParameter("dbo.TelemetriesType")
+            },
+            token
+            );
     }
 }

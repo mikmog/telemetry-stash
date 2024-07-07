@@ -6,29 +6,16 @@ namespace TelemetryStash.Functions.Services;
 
 public interface IRegisterService
 {
-    Task<Register> GetOrAdd(int registerSetId, string registerIdentifier, CancellationToken token = default);
+    Task<Register> GetOrCreate(int registerId, string registerSubset, CancellationToken token = default);
 }
 
 public class RegisterService(IRegisterRepository registerRepository, HybridCache cache) : IRegisterService
 {
-    public async Task<Register> GetOrAdd(int registerSetId, string registerIdentifier, CancellationToken token = default)
+    public async Task<Register> GetOrCreate(int registerId, string registerSubset, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
-            $"{nameof(Register)}{registerSetId}{registerIdentifier}",
-            async token => await GetOrAdd(registerSetId, registerIdentifier, registerRepository, token),
+            $"{nameof(Register)}{registerId}{registerSubset}",
+            async token => await registerRepository.Upsert(registerId, registerSubset, token),
             token: token);
-    }
-
-    private static async Task<Register> GetOrAdd(int registerSetId, string registerIdentifier, IRegisterRepository repository, CancellationToken token)
-    {
-        var register = await repository.GetRegister(registerSetId, registerIdentifier, opts => opts.AsNoTracking(), token);
-        if (register == null)
-        {
-            register = repository.Add(new Register(registerSetId, registerIdentifier));
-            await repository.SaveChangesAsync(token);
-            repository.StopTracking(register);
-        }
-
-        return register;
     }
 }

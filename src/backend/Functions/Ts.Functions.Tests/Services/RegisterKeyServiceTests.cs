@@ -10,16 +10,16 @@ public class RegisterKeyServiceTests
     {
         // Arrange
         using var cacheProvider = new CacheProvider();
-        var repository = Substitute.For<IRegisterKeyRepository>();
+        var repository = Substitute.For<IRegisterTemplateRepository>();
 
-        var sut = new RegisterKeyService(repository, cacheProvider.HybridCache);
+        var sut = new RegisterService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "PowerMeter");
-        await sut.GetOrAdd(1, "PowerMeter");
+        await sut.GetOrCreate(1, "PowerMeter");
+        await sut.GetOrCreate(1, "PowerMeter");
 
         // Assert
-        await repository.Received(1).GetRegisterKey(1, "PowerMeter", Arg.Any<Opts<RegisterKey>>(), Arg.Any<CancellationToken>());
+        await repository.Received(1).GetRegisterKey(1, "PowerMeter", Arg.Any<Opts<Register>>(), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -27,15 +27,15 @@ public class RegisterKeyServiceTests
     {
         // Arrange
         using var cacheProvider = new CacheProvider();
-        var repository = Substitute.For<IRegisterKeyRepository>();
+        var repository = Substitute.For<IRegisterTemplateRepository>();
 
-        var sut = new RegisterKeyService(repository, cacheProvider.HybridCache);
+        var sut = new RegisterService(repository, cacheProvider.HybridCache);
 
         // Act
-        await sut.GetOrAdd(1, "PowerMeter");
+        await sut.GetOrCreate(1, "PowerMeter");
 
         // Assert
-        repository.Received(1).Add(Arg.Any<RegisterKey>());
+        repository.Received(1).Add(Arg.Any<Register>());
         await repository.Received(1).SaveChangesAsync();
     }
 }

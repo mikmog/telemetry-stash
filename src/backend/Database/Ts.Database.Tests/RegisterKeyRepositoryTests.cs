@@ -16,7 +16,7 @@ public class RegisterKeyRepositoryTests : SqLiteTestBase
         var device = deviceRepo.Add(new Device(DeviceId: "ESP32"));
         var regSet = registerSetRepo.Add(new RegisterSet(DeviceId: device.Id, Identifier: "P1"));
         var reg = registerRepo.Add(new Register(RegisterSetId: regSet.Id, RegisterIdentifier: "L1"));
-        var regKey = sut.Add(new RegisterKey(RegisterId: reg.Id, Subset: "K1"));
+        var regKey = sut.Add(new Register(RegisterId: reg.Id, Subset: "K1"));
 
         await deviceRepo.SaveChangesAsync();
 

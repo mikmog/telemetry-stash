@@ -15,16 +15,16 @@ public class TelemetryServiceTests
         var telemetryRepository = Substitute.For<ITelemetryRepository>();
 
         var deviceService = Substitute.For<IDeviceService>();
-        deviceService.GetOrAdd(Arg.Any<string>()).Returns(new Device("MyTestDevice") { Id = 1 });
+        deviceService.GetOrCreate(Arg.Any<string>()).Returns(new Device("MyTestDevice") { Id = 1 });
 
-        var registerKeyService = Substitute.For<IRegisterKeyService>();
-        registerKeyService.GetOrAdd(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterKey(1, "PowerMeter"));
+        var registerKeyService = Substitute.For<IRegisterService>();
+        registerKeyService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "PowerMeter"));
 
         var registerSetService = Substitute.For<IRegisterSetService>();
-        registerSetService.GetOrAdd(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterSet(1, "PowerMeter"));
+        registerSetService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterSet(1, "PowerMeter"));
 
-        var registerService = Substitute.For<IRegisterService>();
-        registerService.GetOrAdd(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "L1Current"));
+        var registerService = Substitute.For<IRegisterTemplateService>();
+        registerService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "L1Current"));
 
         var sut = new TelemetryService(telemetryRepository, deviceService, registerSetService, registerService, registerKeyService);
 
@@ -32,7 +32,7 @@ public class TelemetryServiceTests
         await sut.Process("MyTestDevice", CreateTelemetry());
 
         // Assert
-        await telemetryRepository.Received(1).UpsertTelemetry(
+        await telemetryRepository.Received(1).Upsert(
             Arg.Is(1),
             Arg.Any<DateTimeOffset>(),
             Arg.Is<List<(int RegisterKey, decimal Value)>>(a => a.Count == 5));

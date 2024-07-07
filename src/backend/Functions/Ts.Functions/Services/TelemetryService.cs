@@ -12,29 +12,29 @@ public class TelemetryService(
     ITelemetryRepository telemetryRepository,
     IDeviceService deviceService,
     IRegisterSetService registerSetService,
-    IRegisterService registerService,
-    IRegisterKeyService registerKeyService) : ITelemetryService
+    IRegisterTemplateService registerTemplateService,
+    IRegisterService registerService) : ITelemetryService
 {
     public async Task Process(string deviceId, TelemetryRequest telemetry)
     {
         var telemetryMap = new List<(int RegisterKey, decimal Value)>(telemetry.Registers.Sum(r => r.Value.Count));
 
-        var device = await deviceService.GetOrAdd(deviceId);
+        var device = await deviceService.GetOrCreate(deviceId);
         foreach (var registerRequests in telemetry.Registers)
         {
             var registerSetRequest = telemetry.RegisterSet ?? registerRequests.Key;
             var registerSubset = registerRequests.Key;
 
-            var registerSet = await registerSetService.GetOrAdd(device.Id, registerSetRequest);
+            var registerSet = await registerSetService.GetOrCreate(device.Id, registerSetRequest);
 
             foreach (var registerRequest in registerRequests.Value)
             {
-                var register = await registerService.GetOrAdd(registerSet.Id, registerRequest.Key);
-                var registerKey = await registerKeyService.GetOrAdd(register.Id, registerSubset);
-                telemetryMap.Add((registerKey.Id, registerRequest.Value));
+                var registerTemplate = await registerTemplateService.GetOrCreate(registerSet.Id, registerRequest.Key);
+                var register = await registerService.GetOrCreate(registerTemplate.Id, registerSubset);
+                telemetryMap.Add((register.Id, registerRequest.Value));
             }
         }
 
-        await telemetryRepository.UpsertTelemetry(device.Id, telemetry.Timestamp, telemetryMap);
+        await telemetryRepository.Upsert(device.Id, telemetry.Timestamp, telemetryMap);
     }
 }
