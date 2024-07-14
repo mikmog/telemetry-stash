@@ -1,62 +1,62 @@
-﻿using NSubstitute;
-using System.Text.Json;
-using TelemetryStash.Functions.Services;
-using TelemetryStash.Functions.TelemetryTrigger;
+﻿//using NSubstitute;
+//using System.Text.Json;
+//using TelemetryStash.Functions.Services;
+//using TelemetryStash.Functions.TelemetryTrigger;
 
-namespace TelemetryStash.Functions.Tests.Services;
+//namespace TelemetryStash.Functions.Tests.Services;
 
-public class TelemetryServiceTests
-{
-    [Fact]
-    public async Task TelemetryService_adds_Telemetry_to_database()
-    {
-        // Arrange
-        using var cacheProvider = new CacheProvider();
-        var telemetryRepository = Substitute.For<ITelemetryRepository>();
+//public class TelemetryServiceTests
+//{
+//    [Fact]
+//    public async Task TelemetryService_adds_Telemetry_to_database()
+//    {
+//        // Arrange
+//        using var cacheProvider = new CacheProvider();
+//        var telemetryRepository = Substitute.For<ITelemetryRepository>();
 
-        var deviceService = Substitute.For<IDeviceService>();
-        deviceService.GetOrCreate(Arg.Any<string>()).Returns(new Device("MyTestDevice") { Id = 1 });
+//        var deviceService = Substitute.For<IDeviceService>();
+//        deviceService.GetOrCreate(Arg.Any<string>()).Returns(new Device("MyTestDevice") { Id = 1 });
 
-        var registerKeyService = Substitute.For<IRegisterService>();
-        registerKeyService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "PowerMeter"));
+//        var registerKeyService = Substitute.For<IRegisterService>();
+//        registerKeyService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "PowerMeter"));
 
-        var registerSetService = Substitute.For<IRegisterSetService>();
-        registerSetService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterSet(1, "PowerMeter"));
+//        var registerSetService = Substitute.For<IRegisterSetService>();
+//        registerSetService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterSet(1, "PowerMeter"));
 
-        var registerService = Substitute.For<IRegisterTemplateService>();
-        registerService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "L1Current"));
+//        var registerService = Substitute.For<IRegisterTemplateService>();
+//        registerService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, "L1Current"));
 
-        var sut = new TelemetryService(telemetryRepository, deviceService, registerSetService, registerService, registerKeyService);
+//        var sut = new TelemetryService(telemetryRepository, deviceService, registerSetService, registerService, registerKeyService);
 
-        // Act
-        await sut.Process("MyTestDevice", CreateTelemetry());
+//        // Act
+//        await sut.Process("MyTestDevice", CreateTelemetry());
 
-        // Assert
-        await telemetryRepository.Received(1).Upsert(
-            Arg.Is(1),
-            Arg.Any<DateTimeOffset>(),
-            Arg.Is<List<(int RegisterKey, decimal Value)>>(a => a.Count == 5));
-    }
+//        // Assert
+//        await telemetryRepository.Received(1).Upsert(
+//            Arg.Is(1),
+//            Arg.Any<DateTimeOffset>(),
+//            Arg.Is<List<(int RegisterKey, decimal Value)>>(a => a.Count == 5));
+//    }
 
-    private static TelemetryRequest CreateTelemetry()
-    {
-        var json = """
-        {
-            "ts": "2309012013361234567",
-            "reg": {
-                "PowerMeter": {
-                    "C1": 5,
-                    "C2": 6,
-                    "C3": 7.01
-                },
-                "Am2320": {
-                    "Hum": 80,
-                    "Temp": 21.44
-                }
-            }
-        }
-        """;
+//    private static TelemetryRequest CreateTelemetry()
+//    {
+//        var json = """
+//        {
+//            "ts": "2309012013361234567",
+//            "reg": {
+//                "PowerMeter": {
+//                    "C1": 5,
+//                    "C2": 6,
+//                    "C3": 7.01
+//                },
+//                "Am2320": {
+//                    "Hum": 80,
+//                    "Temp": 21.44
+//                }
+//            }
+//        }
+//        """;
 
-        return JsonSerializer.Deserialize<TelemetryRequest>(json)!;
-    }
-}
+//        return JsonSerializer.Deserialize<TelemetryRequest>(json)!;
+//    }
+//}

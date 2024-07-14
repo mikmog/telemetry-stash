@@ -13,14 +13,14 @@ public class RegisterTemplateRepository(IDbProvider dbProvider) : IRegisterTempl
 {
     public async Task<RegisterTemplate?> GetRegister(int registerSetId, string registerIdentifier, CancellationToken token = default)
     {
-        return await dbProvider.ExecuteScalar<RegisterTemplate?>("dbo.GetRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token);
+        return await dbProvider.ExecuteStoredProcedure<RegisterTemplate?>("dbo.GetRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token);
     }
 
     // TODO: Handle missing fields
     public async Task<RegisterTemplate> Upsert(int registerSetId, string registerIdentifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteScalar<RegisterTemplate>("dbo.UpsertRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token)
+            .ExecuteStoredProcedure<RegisterTemplate>("dbo.UpsertRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token)
             ?? throw new InvalidOperationException("UpsertRegisterTemplate not null expected");
     }
 }

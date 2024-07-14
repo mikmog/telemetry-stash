@@ -22,7 +22,14 @@ BEGIN
             )
         END
 
-        EXEC GetDevice @DeviceId;
+        SELECT TOP 1
+            Id
+            ,DeviceId
+        FROM
+            dbo.Devices
+        WHERE
+            DeviceId = @DeviceId
+
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(MAX);

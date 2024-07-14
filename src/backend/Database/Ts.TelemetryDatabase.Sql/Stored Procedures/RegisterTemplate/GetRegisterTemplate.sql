@@ -5,7 +5,7 @@
 CREATE PROCEDURE dbo.GetRegisterTemplate
 (
     @RegisterSetId INT,
-    @RegisterIdentifier NVARCHAR
+    @RegisterIdentifier NVARCHAR(MAX)
 )
 AS
 BEGIN

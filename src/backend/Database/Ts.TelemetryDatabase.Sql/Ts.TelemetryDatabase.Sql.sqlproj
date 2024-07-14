@@ -28,7 +28,6 @@
     <Build Include="Tables\Registers.sql" />
     <Build Include="Tables\Telemetries.sql" />
     <Build Include="Tables\Timestamps.sql" />
-    <Build Include="Stored Procedures\Device\GetDevice.sql" />
     <Build Include="Stored Procedures\Device\UpsertDevice.sql" />
     <Build Include="Stored Procedures\Register\GetRegister.sql" />
     <Build Include="Stored Procedures\Register\UpsertRegister.sql" />
@@ -42,5 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Compares\SqlSchemaCompare.Prod.scmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TelemetryDatabaseSql.cs" />
   </ItemGroup>
 </Project>

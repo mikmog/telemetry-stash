@@ -14,13 +14,13 @@ public class RegisterSetRepository(IDbProvider dbProvider) : IRegisterSetReposit
     public async Task<RegisterSet?> GetByDeviceAndIdentifier(int deviceId, string identifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteScalar<RegisterSet>("dbo.GetRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token);
+            .ExecuteStoredProcedure<RegisterSet>("dbo.GetRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token);
     }
 
     public async Task<RegisterSet> Upsert(int deviceId, string identifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteScalar<RegisterSet>("dbo.UpsertRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token)
+            .ExecuteStoredProcedure<RegisterSet>("dbo.UpsertRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token)
             ?? throw new Exception("UpsertRegisterSet not null expected");
     }
 }

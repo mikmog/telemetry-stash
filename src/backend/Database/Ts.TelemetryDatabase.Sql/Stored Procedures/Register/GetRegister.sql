@@ -5,7 +5,7 @@
 CREATE PROCEDURE dbo.GetRegister
 (
     @RegisterTemplateId INT,
-    @Subset NVARCHAR
+    @Subset NVARCHAR(MAX)
 )
 AS
 BEGIN

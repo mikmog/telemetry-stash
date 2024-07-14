@@ -1,5 +1,4 @@
-﻿using Dapper;
-using System.Data;
+﻿using System.Data;
 
 namespace TelemetryStash.Database.Repositories;
 
@@ -12,7 +11,11 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
 {
     public async Task Upsert(int deviceId, DateTimeOffset timestamp, List<(int RegisterId, decimal Value)> telemetry, CancellationToken token = default)
     {
-        var telemetries = new DataTable();
+        var telemetries = new DataTable()
+        {
+            TableName = "dbo.TelemetriesType"
+        };
+
         telemetries.Columns.Add("RegisterId", typeof(int));
         telemetries.Columns.Add("Value", typeof(decimal));
 
@@ -21,12 +24,12 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
             telemetries.Rows.Add(registerId, value);
         }
 
-        await dbProvider.Execute("dbo.UpsertTelemetry",
+        await dbProvider.ExecuteStoredProcedure("dbo.UpsertTelemetry",
             new
             {
                 DeviceId = deviceId,
                 Timestamp = timestamp,
-                Telemetry = telemetries.AsTableValuedParameter("dbo.TelemetriesType")
+                Telemetry = telemetries
             },
             token
             );

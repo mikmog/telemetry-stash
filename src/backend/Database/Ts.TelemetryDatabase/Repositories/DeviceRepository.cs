@@ -1,4 +1,5 @@
-﻿using TelemetryStash.Database.Models;
+﻿using RepoDb;
+using TelemetryStash.Database.Models;
 
 namespace TelemetryStash.Database.Repositories;
 
@@ -13,14 +14,17 @@ public class DeviceRepository(IDbProvider dbProvider) : IDeviceRepository
 {
     public async Task<Device?> GetByDeviceId(string deviceId, CancellationToken token = default)
     {
-        return await dbProvider
-            .ExecuteScalar<Device>("dbo.GetDevice", new { DeviceId = deviceId }, token);
+        using var connection = dbProvider.CreateConnection();
+        var devices = await connection
+            .QueryAsync<Device>("Devices", d => d.DeviceId == deviceId, cancellationToken: token);
+
+        return devices.SingleOrDefault();
     }
 
     public async Task<Device> Upsert(string deviceId, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteScalar<Device>("dbo.UpsertDevice", new { DeviceId = deviceId }, token)
+            .ExecuteStoredProcedure<Device>("dbo.UpsertDevice", new { DeviceId = deviceId }, token)
             ?? throw new Exception("UpsertDevice not null expected");
     }
 }

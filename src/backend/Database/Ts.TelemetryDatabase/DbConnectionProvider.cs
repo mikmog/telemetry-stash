@@ -1,55 +1,42 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.SqlClient;
+using RepoDb;
 using System.Data;
 
 namespace TelemetryStash.Database;
 
-#pragma warning disable IDE0290 // Use primary constructor
-
 public interface IDbProvider
 {
     IDbConnection CreateConnection();
-    Task<T?> ExecuteScalar<T>(string storedProcedure, object? parameters, CancellationToken token);
-    Task Execute(string storedProcedure, object? parameters, CancellationToken token);
+    Task<T?> ExecuteStoredProcedure<T>(string storedProcedure, object? parameters, CancellationToken token);
+    Task ExecuteStoredProcedure(string storedProcedure, object? parameters, CancellationToken token);
 }
 
-public class DbConnectionProvider : IDbProvider
+public class DbConnectionProvider(string connectionString) : IDbProvider
 {
-    private readonly string _connectionString;
-
-    public DbConnectionProvider(IConfiguration configuration)
-    {
-        _connectionString = configuration.GetConnectionString("TelemetryStashDatabase") ??
-            throw new Exception("Missing TelemetryStashDatabase connection string");
-    }
-
     public IDbConnection CreateConnection()
     {
-        return new SqlConnection(_connectionString);
+        return new SqlConnection(connectionString);
     }
 
-    public async Task<T?> ExecuteScalar<T>(string storedProcedure, object? parameters, CancellationToken token)
+    public async Task<T?> ExecuteStoredProcedure<T>(string storedProcedure, object? parameters, CancellationToken token)
     {
-        var definition = new CommandDefinition(
-            commandText: storedProcedure,
-            parameters: parameters,
-            commandType: CommandType.StoredProcedure,
-            cancellationToken: token);
-
         using var connection = CreateConnection();
-        return await connection.ExecuteScalarAsync<T>(definition);
+        return (await connection.ExecuteQueryAsync<T>(
+            commandText: storedProcedure,
+            param: parameters,
+            commandType: CommandType.StoredProcedure,
+            cancellationToken: token
+            )).FirstOrDefault();
     }
 
-    public async Task Execute(string storedProcedure, object? parameters, CancellationToken token)
+    public async Task ExecuteStoredProcedure(string storedProcedure, object? parameters, CancellationToken token)
     {
-        var definition = new CommandDefinition(
-            commandText: storedProcedure,
-            parameters: parameters,
-            commandType: CommandType.StoredProcedure,
-            cancellationToken: token);
-
         using var connection = CreateConnection();
-        await connection.ExecuteAsync(definition);
+        await connection.ExecuteNonQueryAsync(
+            commandText: storedProcedure,
+            param: parameters,
+            commandType: CommandType.StoredProcedure,
+            cancellationToken: token
+            );
     }
 }

@@ -1,13 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RepoDb;
 using TelemetryStash.Database.Repositories;
 
 namespace TelemetryStash.Database.Extensions;
 
 public static class StartupExtensions
 {
-    public static IServiceCollection AddTelemetryDatabase(this IServiceCollection services)
+    public static IServiceCollection AddTelemetryDatabase(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IDbProvider, DbConnectionProvider>();
+        GlobalConfiguration.Setup().UseSqlServer();
+
+        var connectionString = configuration.GetConnectionString("TelemetryStashDatabase") ?? throw new Exception("Missing TelemetryStashDatabase connection string");
+        services.AddSingleton<IDbProvider>(_ => new DbConnectionProvider(connectionString));
 
         services.AddSingleton<IDeviceRepository, DeviceRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();

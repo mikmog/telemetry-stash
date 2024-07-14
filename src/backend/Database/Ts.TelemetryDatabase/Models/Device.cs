@@ -1,6 +1,3 @@
 ﻿namespace TelemetryStash.Database.Models;
 
-public record Device(string DeviceId)
-{
-    public short Id { get; set; }
-};
+public record Device(short Id, string DeviceId);

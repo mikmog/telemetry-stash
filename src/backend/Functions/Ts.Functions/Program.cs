@@ -19,7 +19,7 @@ var host = new HostBuilder()
         services.AddHttpClientLogger();
 
         services.AddFunctionServices();
-        services.AddTelemetryDatabase();
+        services.AddTelemetryDatabase(context.Configuration);
     })
     .Build();
 
