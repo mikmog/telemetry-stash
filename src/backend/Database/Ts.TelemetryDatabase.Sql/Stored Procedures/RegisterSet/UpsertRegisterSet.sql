@@ -24,7 +24,16 @@ BEGIN
             )
         END
 
-        EXEC GetRegisterSet @DeviceId, @Identifier;
+        SELECT TOP 1
+            Id
+            ,DeviceId
+            ,Identifier
+        FROM
+            dbo.RegisterSets
+        WHERE
+            DeviceId = @DeviceId
+            AND Identifier = @Identifier
+
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(MAX);

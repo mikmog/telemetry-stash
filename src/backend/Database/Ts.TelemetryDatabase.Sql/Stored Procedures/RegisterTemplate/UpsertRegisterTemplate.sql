@@ -5,11 +5,11 @@
 CREATE PROCEDURE dbo.UpsertRegisterTemplate
 (
     @RegisterSetId INT,
-    @RegisterIdentifier NVARCHAR(MAX),
-    @Name NVARCHAR(MAX),
-    @Type NVARCHAR(MAX),
-    @Unit NVARCHAR(MAX),
-    @Description NVARCHAR(MAX)
+    @Identifier NVARCHAR(MAX),
+    @Name NVARCHAR(MAX) = NULL,
+    @Type NVARCHAR(MAX) = NULL,
+    @Unit NVARCHAR(MAX) = NULL,
+    @Description NVARCHAR(MAX) = NULL
 )
 AS
 BEGIN
@@ -17,12 +17,12 @@ BEGIN
     SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
     BEGIN TRY  
-        IF NOT EXISTS (SELECT 1 FROM dbo.RegisterTemplates WHERE RegisterSetId = @RegisterSetId AND RegisterIdentifier = @RegisterIdentifier)
+        IF NOT EXISTS (SELECT 1 FROM dbo.RegisterTemplates WHERE RegisterSetId = @RegisterSetId AND Identifier = @Identifier)
         BEGIN
             INSERT INTO dbo.RegisterTemplates
             (
                 RegisterSetId
-                ,RegisterIdentifier
+                ,Identifier
                 ,Name
                 ,Type
                 ,Unit
@@ -32,7 +32,7 @@ BEGIN
             VALUES
             (
                 @RegisterSetId
-                ,@RegisterIdentifier
+                ,@Identifier
                 ,@Name
                 ,@Type
                 ,@Unit
@@ -43,7 +43,20 @@ BEGIN
 
         -- TODO Update if not null
 
-        EXEC GetRegisterTemplate @RegisterSetId, @RegisterIdentifier;
+        SELECT TOP 1
+            Id
+            ,RegisterSetId
+            ,Identifier
+            ,Name
+            ,Type
+            ,Unit
+            ,Description
+        FROM
+            dbo.RegisterTemplates
+        WHERE
+            RegisterSetId = @RegisterSetId
+            AND Identifier = @Identifier
+
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(MAX);

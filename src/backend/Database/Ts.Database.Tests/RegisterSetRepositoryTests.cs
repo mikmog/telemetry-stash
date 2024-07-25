@@ -1,25 +1,42 @@
-﻿//namespace TelemetryStash.Database.Tests;
+﻿namespace TelemetryStash.Database.Tests;
 
-//public class RegisterSetRepositoryTests : SqLiteTestBase
-//{
-//    [Fact]
-//    public async Task Repository_returns_all()
-//    {
-//        // Arrange
-//        using var context = GetDbContext();
+[Collection("SharedTestDbServer")]
+public class RegisterSetRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(dbFixture)
+{
+    [Fact]
+    public async Task RegisterSetRepository_Upsert_returns_created()
+    {
+        // Arrange
+        var deviceRepository = new DeviceRepository(GetDbProvider());
+        var device = await deviceRepository.Upsert("TestDeviceId");
 
-//        var deviceRepo = new DeviceRepository(context);
-//        var sut = new RegisterSetRepository(context);
+        var sut = new RegisterSetRepository(GetDbProvider());
 
-//        var device = deviceRepo.Add(new Device(DeviceId: "ESP32"));
-//        var regSet = sut.Add(new RegisterSet(DeviceId: device.Id, Identifier: "P1"));
+        // Act
+        var registerSet = await sut.Upsert(device.Id, "RegisterSetIdentifier");
 
-//        await deviceRepo.SaveChangesAsync();
+        // Assert
+        Assert.NotEqual(0, registerSet.Id);
+        Assert.Equal(device.Id, registerSet.DeviceId);
+        Assert.Equal("RegisterSetIdentifier", registerSet.Identifier);
+    }
 
-//        // Act
-//        var result = await sut.All();
+    [Fact]
+    public async Task RegisterSetRepository_Get_returns_single()
+    {
+        // Arrange
+        var device = await SeedDevice("TestDeviceId");
+        await SeedRegisterSet(device, "RegisterSetIdentifier");
 
-//        // Assert
-//        Assert.Single(result);
-//    }
-//}
+        var sut = new RegisterSetRepository(GetDbProvider());
+
+        // Act
+        var registerSet = await sut.GetByDeviceAndIdentifier(device.Id, "RegisterSetIdentifier");
+
+        // Assert
+        Assert.NotNull(registerSet);
+        Assert.NotEqual(0, registerSet.Id);
+        Assert.Equal(device.Id, registerSet.DeviceId);
+        Assert.Equal("RegisterSetIdentifier", registerSet.Identifier);
+    }
+}

@@ -19,6 +19,7 @@
     <Folder Include="Stored Procedures\Register" />
     <Folder Include="Stored Procedures\RegisterSet" />
     <Folder Include="Stored Procedures\RegisterTemplate" />
+    <Folder Include="Stored Procedures\Telemetry" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="User Defined Types\TelemetriesType.sql" />
@@ -29,20 +30,13 @@
     <Build Include="Tables\Telemetries.sql" />
     <Build Include="Tables\Timestamps.sql" />
     <Build Include="Stored Procedures\Device\UpsertDevice.sql" />
-    <Build Include="Stored Procedures\Register\GetRegister.sql" />
     <Build Include="Stored Procedures\Register\UpsertRegister.sql" />
-    <Build Include="Stored Procedures\RegisterSet\GetRegisterSet.sql" />
     <Build Include="Stored Procedures\RegisterSet\UpsertRegisterSet.sql" />
-    <Build Include="Stored Procedures\RegisterTemplate\GetRegisterTemplate.sql" />
     <Build Include="Stored Procedures\RegisterTemplate\UpsertRegisterTemplate.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="Stored Procedures\UpsertTelemetry.sql" />
+    <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
+    <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Compares\SqlSchemaCompare.Prod.scmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="TelemetryDatabaseSql.cs" />
   </ItemGroup>
 </Project>

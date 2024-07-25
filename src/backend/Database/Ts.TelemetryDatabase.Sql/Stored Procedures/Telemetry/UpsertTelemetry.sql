@@ -6,7 +6,7 @@
 CREATE PROCEDURE dbo.UpsertTelemetry
 (
     @DeviceId SMALLINT,
-    @Timestamp DATETIMEOFFSET(4),
+    @ClientTimestamp DATETIMEOFFSET(4),
 	@Telemetry dbo.TelemetriesType READONLY
 )
 AS
@@ -23,7 +23,7 @@ BEGIN
             dbo.Timestamps
         WHERE
             DeviceId = @DeviceId
-            AND Timestamp = @Timestamp;
+            AND ClientTimestamp = @ClientTimestamp;
 
         IF @TsId IS NULL
         BEGIN
@@ -33,7 +33,7 @@ BEGIN
                 dbo.Timestamps
                 (
                     DeviceId
-                    ,Timestamp
+                    ,ClientTimestamp
                     ,Created
                 )
             OUTPUT
@@ -41,7 +41,7 @@ BEGIN
             VALUES
             (
                 @DeviceId
-                ,@Timestamp
+                ,@ClientTimestamp
                 ,GETUTCDATE()
             );
 
@@ -73,6 +73,7 @@ BEGIN
                 TimestampId = @TsId
                 AND RegisterId = T.RegisterId
 	    );
+
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(MAX);

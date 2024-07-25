@@ -1,6 +1,4 @@
-﻿using TelemetryStash.Database.Models;
-
-namespace TelemetryStash.Database.Repositories;
+﻿namespace TelemetryStash.Database.Repositories;
 
 public interface IRegisterSetRepository
 {
@@ -14,13 +12,21 @@ public class RegisterSetRepository(IDbProvider dbProvider) : IRegisterSetReposit
     public async Task<RegisterSet?> GetByDeviceAndIdentifier(int deviceId, string identifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteStoredProcedure<RegisterSet>("dbo.GetRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token);
+            .QuerySingle<RegisterSet>
+            (
+                where: set => set.DeviceId == deviceId && set.Identifier == identifier,
+                cancellationToken: token
+            );
     }
 
     public async Task<RegisterSet> Upsert(int deviceId, string identifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteStoredProcedure<RegisterSet>("dbo.UpsertRegisterSet", new { DeviceId = deviceId, Identifier = identifier }, token)
-            ?? throw new Exception("UpsertRegisterSet not null expected");
+            .ExecuteSingle<RegisterSet>
+            (
+                storedProcedure: "dbo.UpsertRegisterSet",
+                parameters: new { DeviceId = deviceId, Identifier = identifier },
+                cancellationToken: token
+            );
     }
 }

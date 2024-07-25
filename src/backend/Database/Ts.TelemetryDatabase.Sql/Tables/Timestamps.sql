@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Timestamps] (
     [Id]                    INT IDENTITY (1, 1)         NOT NULL,
     [DeviceId]              SMALLINT                    NOT NULL,
-    [Timestamp]             DATETIMEOFFSET (4)          NOT NULL,
+    [ClientTimestamp]       DATETIMEOFFSET (4)          NOT NULL,
     [Created]               DATETIMEOFFSET (4)          NOT NULL,
 
     CONSTRAINT [PK_Timestamps] PRIMARY KEY CLUSTERED ( [Id] ASC ),
@@ -9,8 +9,8 @@
 );
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_DeviceId_Timestamp] ON [dbo].[Timestamps]
+CREATE UNIQUE NONCLUSTERED INDEX [IX_DeviceId_ClientTimestamp] ON [dbo].[Timestamps]
 (
 	[DeviceId] ASC,
-	[Timestamp] ASC
+	[ClientTimestamp] ASC
 )

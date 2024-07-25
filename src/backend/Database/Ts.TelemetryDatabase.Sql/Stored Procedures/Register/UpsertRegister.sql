@@ -24,7 +24,16 @@ BEGIN
             )
         END
 
-        EXEC GetRegister @RegisterTemplateId, @Subset;
+        SELECT TOP 1
+            Id
+            ,RegisterTemplateId
+            ,Subset
+        FROM
+            dbo.Registers
+        WHERE
+            RegisterTemplateId = @RegisterTemplateId
+            AND Subset = @Subset
+
     END TRY
     BEGIN CATCH
         DECLARE @ErrorMessage NVARCHAR(MAX);

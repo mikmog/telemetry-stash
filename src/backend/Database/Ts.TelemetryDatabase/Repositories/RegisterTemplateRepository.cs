@@ -1,26 +1,33 @@
-﻿using TelemetryStash.Database.Models;
-
-namespace TelemetryStash.Database.Repositories;
+﻿namespace TelemetryStash.Database.Repositories;
 
 public interface IRegisterTemplateRepository
 {
-    Task<RegisterTemplate?> GetRegister(int registerSetId, string registerIdentifier, CancellationToken token = default);
+    Task<RegisterTemplate?> GetRegisterTemplate(int registerSetId, string identifier, CancellationToken token = default);
 
-    Task<RegisterTemplate> Upsert(int registerSetId, string registerIdentifier, CancellationToken token = default);
+    Task<RegisterTemplate> Upsert(int registerSetId, string identifier, CancellationToken token = default);
 }
 
 public class RegisterTemplateRepository(IDbProvider dbProvider) : IRegisterTemplateRepository
 {
-    public async Task<RegisterTemplate?> GetRegister(int registerSetId, string registerIdentifier, CancellationToken token = default)
+    public async Task<RegisterTemplate?> GetRegisterTemplate(int registerSetId, string identifier, CancellationToken token = default)
     {
-        return await dbProvider.ExecuteStoredProcedure<RegisterTemplate?>("dbo.GetRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token);
+        return await dbProvider
+            .QuerySingle<RegisterTemplate>
+            (
+                where: template => template.RegisterSetId == registerSetId && template.Identifier == identifier,
+                cancellationToken: token
+            );
     }
 
     // TODO: Handle missing fields
-    public async Task<RegisterTemplate> Upsert(int registerSetId, string registerIdentifier, CancellationToken token = default)
+    public async Task<RegisterTemplate> Upsert(int registerSetId, string identifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteStoredProcedure<RegisterTemplate>("dbo.UpsertRegisterTemplate", new { RegisterSetId = registerSetId, RegisterIdentifier = registerIdentifier }, token)
-            ?? throw new InvalidOperationException("UpsertRegisterTemplate not null expected");
+            .ExecuteSingle<RegisterTemplate>
+            (
+                storedProcedure: "dbo.UpsertRegisterTemplate",
+                parameters: new { RegisterSetId = registerSetId, Identifier = identifier },
+                cancellationToken: token
+            );
     }
 }

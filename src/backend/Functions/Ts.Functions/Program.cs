@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using TelemetryStash.Database.Extensions;
+using TelemetryStash.Database;
 using TelemetryStash.Functions.Extensions;
 
 var host = new HostBuilder()

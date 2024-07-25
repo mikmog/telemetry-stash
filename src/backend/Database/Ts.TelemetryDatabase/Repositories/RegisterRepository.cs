@@ -1,6 +1,4 @@
-﻿using TelemetryStash.Database.Models;
-
-namespace TelemetryStash.Database.Repositories;
+﻿namespace TelemetryStash.Database.Repositories;
 
 public interface IRegisterRepository
 {
@@ -14,13 +12,21 @@ public class RegisterRepository(IDbProvider dbProvider) : IRegisterRepository
     public async Task<Register?> GetByTemplateAndSubset(int registerTemplateId, string subset, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteStoredProcedure<Register>("dbo.GetRegister", new { RegisterTemplateId = registerTemplateId, Subset = subset }, token);
+            .QuerySingle<Register>
+            (
+                where: register => register.RegisterTemplateId == registerTemplateId && register.Subset == subset,
+                cancellationToken: token
+            );
     }
 
     public async Task<Register> Upsert(int registerTemplateId, string subset, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteStoredProcedure<Register>("dbo.UpsertRegister", new { RegisterTemplateId = registerTemplateId, Subset = subset }, token)
-            ?? throw new Exception("UpsertRegister not null expected");
+            .ExecuteSingle<Register>
+            (
+                storedProcedure: "dbo.UpsertRegister",
+                parameters: new { RegisterTemplateId = registerTemplateId, Subset = subset },
+                cancellationToken: token
+            );
     }
 }

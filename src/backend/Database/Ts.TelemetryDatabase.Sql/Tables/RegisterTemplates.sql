@@ -3,7 +3,7 @@
 CREATE TABLE [dbo].[RegisterTemplates] (
     [Id]                    INT IDENTITY (1, 1)         NOT NULL,
     [RegisterSetId]         INT                         NOT NULL,
-    [RegisterIdentifier]    NVARCHAR (450)              NOT NULL,
+    [Identifier]            NVARCHAR (450)              NOT NULL,
     [Name]                  NVARCHAR (MAX)              NULL,
     [Type]                  NVARCHAR (MAX)              NULL,
     [Unit]                  NVARCHAR (MAX)              NULL,
@@ -15,8 +15,8 @@ CREATE TABLE [dbo].[RegisterTemplates] (
 );
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Registers_RegisterSetId_RegisterIdentifier] ON [dbo].[RegisterTemplates]
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Registers_RegisterSetId_Identifier] ON [dbo].[RegisterTemplates]
 (
 	[RegisterSetId] ASC,
-	[RegisterIdentifier] ASC
+	[Identifier] ASC
 )

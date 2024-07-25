@@ -1,26 +1,46 @@
-﻿//namespace TelemetryStash.Database.Tests;
+﻿namespace TelemetryStash.Database.Tests;
 
-//public class RegisterRepositoryTests : SqLiteTestBase
-//{
-//    [Fact]
-//    public async Task Repository_returns_all()
-//    {
-//        // Arrange
-//        using var context = GetDbContext();
+[Collection("SharedTestDbServer")]
+public class RegisterRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(dbFixture)
+{
+    [Fact]
+    public async Task RegisterRepository_Upsert_returns_created()
+    {
+        // Arrange
+        var device = await SeedDevice("TestDeviceId");
+        var registerSet = await SeedRegisterSet(device, "TestRegisterSet");
+        var registerTemplate = await SeedRegisterTemplate(registerSet, "RegisterTemplateIdentifier");
 
-//        var deviceRepo = new DeviceRepository(context);
-//        var registerSetRepo = new RegisterSetRepository(context);
-//        var sut = new RegisterTemplateRepository(context);
+        var sut = new RegisterRepository(GetDbProvider());
 
-//        var device = deviceRepo.Add(new Device(DeviceId: "ESP32"));
-//        var regSet = registerSetRepo.Add(new RegisterSet(DeviceId: device.Id, Identifier: "P1"));
-//        var reg = sut.Add(new Register(RegisterSetId: regSet.Id, RegisterIdentifier: "L1"));
-//        await deviceRepo.SaveChangesAsync();
+        // Act
+        var register = await sut.Upsert(registerTemplate.Id, "Subset");
 
-//        // Act
-//        var result = await sut.All();
+        // Assert
+        Assert.NotEqual(0, register.Id);
+        Assert.NotEqual(0, register.RegisterTemplateId);
+        Assert.Equal("Subset", register.Subset);
+        Assert.Equal(registerTemplate.Id, register.RegisterTemplateId);
+    }
 
-//        // Assert
-//        Assert.Single(result);
-//    }
-//}
+    [Fact]
+    public async Task RegisterRepository_Get_returns_single()
+    {
+        // Arrange
+        var device = await SeedDevice("TestDeviceId");
+        var registerSet = await SeedRegisterSet(device, "TestRegisterSet");
+        var registerTemplate = await SeedRegisterTemplate(registerSet, "RegisterTemplateIdentifier");
+        await SeedRegister(registerTemplate, "Subset");
+
+        var sut = new RegisterRepository(GetDbProvider());
+
+        // Act
+        var register = await sut.GetByTemplateAndSubset(registerTemplate.Id, "Subset");
+
+        // Assert
+        Assert.NotNull(register);
+        Assert.NotEqual(0, register.Id);
+        Assert.Equal(registerTemplate.Id, register.RegisterTemplateId);
+        Assert.Equal("Subset", register.Subset);
+    }
+}

@@ -4,7 +4,7 @@
 
 CREATE PROCEDURE dbo.UpsertDevice
 (
-    @DeviceId NVARCHAR(MAX)
+    @Identifier NVARCHAR(MAX)
 )
 AS
 BEGIN
@@ -12,23 +12,23 @@ BEGIN
     SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
     BEGIN TRY  
-        IF NOT EXISTS (SELECT 1 FROM dbo.Devices WHERE DeviceId = @DeviceId) 
+        IF NOT EXISTS (SELECT 1 FROM dbo.Devices WHERE Identifier = @Identifier) 
         BEGIN
-            INSERT INTO dbo.Devices (DeviceId, Created)
+            INSERT INTO dbo.Devices (Identifier, Created)
             VALUES
             (
-                @DeviceId
+                @Identifier
                 ,GETUTCDATE()
             )
         END
 
         SELECT TOP 1
             Id
-            ,DeviceId
+            ,Identifier
         FROM
             dbo.Devices
         WHERE
-            DeviceId = @DeviceId
+            Identifier = @Identifier
 
     END TRY
     BEGIN CATCH

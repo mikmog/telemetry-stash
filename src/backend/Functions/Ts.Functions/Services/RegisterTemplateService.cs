@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Hybrid;
-using TelemetryStash.Database.Models;
+using TelemetryStash.Database;
 using TelemetryStash.Database.Repositories;
 
 namespace TelemetryStash.Functions.Services;

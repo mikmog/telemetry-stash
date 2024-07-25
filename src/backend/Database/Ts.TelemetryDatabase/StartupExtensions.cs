@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RepoDb;
 using TelemetryStash.Database.Repositories;
 
-namespace TelemetryStash.Database.Extensions;
+namespace TelemetryStash.Database;
 
 public static class StartupExtensions
 {
