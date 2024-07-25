@@ -2,7 +2,7 @@
 -- Description: Upsert Register
 -- =============================================
 
-CREATE PROCEDURE dbo.UpsertRegister
+CREATE PROCEDURE dbo.GetOrCreateRegister
 (
     @RegisterTemplateId INT,
     @Subset NVARCHAR(MAX)

@@ -9,7 +9,7 @@ public class TelemetryHistoryManager(ILoggerFactory loggerFactory)
     private readonly ILogger _logger = loggerFactory.CreateLogger<TelemetryHistoryManager>();
 
     [Function("TelemetryHistoryManager")]
-    public async Task Run([TimerTrigger(RunEveryDayAt03Utc, RunOnStartup = true)] TimerInfo timerInfo)
+    public async Task Run([TimerTrigger(RunEveryDayAt03Utc, RunOnStartup = false)] TimerInfo timerInfo)
     {
         _logger.LogInformation($"Timer trigger function executed");
 

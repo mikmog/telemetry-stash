@@ -2,7 +2,7 @@
 -- Description: Upsert Device
 -- =============================================
 
-CREATE PROCEDURE dbo.UpsertDevice
+CREATE PROCEDURE dbo.GetOrCreateDevice
 (
     @Identifier NVARCHAR(MAX)
 )

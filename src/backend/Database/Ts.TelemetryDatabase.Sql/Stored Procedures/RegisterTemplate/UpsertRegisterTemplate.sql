@@ -2,7 +2,7 @@
 -- Description: Upsert RegisterTemplate all fields
 -- =============================================
 
-CREATE PROCEDURE dbo.UpsertRegisterTemplate
+CREATE PROCEDURE dbo.GetOrCreateRegisterTemplate
 (
     @RegisterSetId INT,
     @Identifier NVARCHAR(MAX),
@@ -40,8 +40,6 @@ BEGIN
                 ,GETUTCDATE()
             )
         END
-
-        -- TODO Update if not null
 
         SELECT TOP 1
             Id

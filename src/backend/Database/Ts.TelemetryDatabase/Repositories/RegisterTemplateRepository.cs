@@ -25,7 +25,7 @@ public class RegisterTemplateRepository(IDbProvider dbProvider) : IRegisterTempl
         return await dbProvider
             .ExecuteSingle<RegisterTemplate>
             (
-                storedProcedure: "dbo.UpsertRegisterTemplate",
+                storedProcedure: "dbo.GetOrCreateRegisterTemplate",
                 parameters: new { RegisterSetId = registerSetId, Identifier = identifier },
                 cancellationToken: token
             );

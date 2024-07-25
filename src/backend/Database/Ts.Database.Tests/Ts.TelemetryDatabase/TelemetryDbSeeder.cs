@@ -1,6 +1,6 @@
-﻿namespace TelemetryStash.Database.Tests.Util;
+﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
-public class TestDbSeeder(TestDbFixture dbFixture)
+public class TelemetryDbSeeder(SharedTestDbFixture dbFixture)
 {
     protected IDbProvider GetDbProvider(string? databaseName = null)
     {

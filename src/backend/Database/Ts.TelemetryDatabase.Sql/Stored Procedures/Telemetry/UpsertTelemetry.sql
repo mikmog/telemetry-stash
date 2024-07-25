@@ -1,13 +1,12 @@
 ﻿-- =============================================
 -- Description: Upsert timestamp/telemetry.
--- TODO: Add error handling.
 -- TODO: Refactor
 -- =============================================
 CREATE PROCEDURE dbo.UpsertTelemetry
 (
     @DeviceId SMALLINT,
     @ClientTimestamp DATETIMEOFFSET(4),
-	@Telemetry dbo.TelemetriesType READONLY
+	@Telemetry [dbo].[TelemetriesType] READONLY
 )
 AS
 BEGIN
@@ -15,20 +14,19 @@ BEGIN
     SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
     BEGIN TRY  
-        DECLARE @TsId INT;
+        DECLARE @TimestampId INT;
 
-        SELECT
-            @TsId = Id
+        SELECT TOP 1
+            @TimestampId = Id
         FROM
             dbo.Timestamps
         WHERE
             DeviceId = @DeviceId
             AND ClientTimestamp = @ClientTimestamp;
 
-        IF @TsId IS NULL
+        IF @TimestampId IS NULL
         BEGIN
 		    -- Insert timestamp
-		    DECLARE @Id TABLE(Id INT);
             INSERT INTO
                 dbo.Timestamps
                 (
@@ -36,8 +34,6 @@ BEGIN
                     ,ClientTimestamp
                     ,Created
                 )
-            OUTPUT
-                inserted.Id INTO @Id
             VALUES
             (
                 @DeviceId
@@ -45,34 +41,26 @@ BEGIN
                 ,GETUTCDATE()
             );
 
-		    SELECT
-                @TsId = Id
-            FROM
-                @Id
+		    SET @TimestampId = SCOPE_IDENTITY() 
         END
 
-        -- Insert telemetry
-	    INSERT INTO dbo.Telemetries
+        -- Upsert telemetry
+        MERGE dbo.Telemetries AS Target
+        USING @Telemetry AS Source
+        ON (Target.TimestampId = @TimestampId AND Target.RegisterId = Source.RegisterId)
+
+        WHEN NOT MATCHED BY Target THEN
+        INSERT (RegisterId, TimestampId ,Value)
+        VALUES
         (
-            TimestampId
-            ,RegisterId
-            ,Value
+            Source.RegisterId
+            ,@TimestampId
+            ,Source.Value
         )
-	    SELECT
-            @TsId
-            ,RegisterId
-            ,Value 
-	    FROM
-            @Telemetry AS T
-	    WHERE NOT EXISTS (
-		    SELECT
-                1 
-		    FROM
-                dbo.Telemetries 
-		    WHERE
-                TimestampId = @TsId
-                AND RegisterId = T.RegisterId
-	    );
+
+        WHEN MATCHED THEN UPDATE SET
+            Target.Value = Source.Value
+            ;
 
     END TRY
     BEGIN CATCH

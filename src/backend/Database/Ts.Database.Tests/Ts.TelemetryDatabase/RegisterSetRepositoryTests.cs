@@ -1,7 +1,7 @@
-﻿namespace TelemetryStash.Database.Tests;
+﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 [Collection("SharedTestDbServer")]
-public class RegisterSetRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(dbFixture)
+public class RegisterSetRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)
 {
     [Fact]
     public async Task RegisterSetRepository_Upsert_returns_created()

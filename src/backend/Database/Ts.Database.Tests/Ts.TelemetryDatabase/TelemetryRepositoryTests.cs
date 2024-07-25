@@ -1,7 +1,7 @@
-﻿namespace TelemetryStash.Database.Tests;
+﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 [Collection("SharedTestDbServer")]
-public class TelemetryRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(dbFixture)
+public class TelemetryRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)
 {
     [Fact]
     public async Task RegisterRepository_Upsert_telemetry_is_added()
@@ -16,7 +16,7 @@ public class TelemetryRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(db
         await sut.Upsert(device.Id, timestamp, telemetry);
 
         var telemetryValues = new List<TelemetryValue>();
-        await foreach(var values in sut.GetTelemetry(device.Id, timestamp, timestamp))
+        await foreach (var values in sut.GetTelemetry(device.Id, timestamp, timestamp))
         {
             telemetryValues.AddRange(values);
         }
@@ -50,7 +50,7 @@ public class TelemetryRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(db
         await sut.Upsert(device.Id, timestamp, telemetry2);
 
         var telemetryValues = new List<TelemetryValue>();
-        await foreach(var values in sut.GetTelemetry(device.Id, timestamp, timestamp))
+        await foreach (var values in sut.GetTelemetry(device.Id, timestamp, timestamp))
         {
             telemetryValues.AddRange(values);
         }
@@ -74,7 +74,7 @@ public class TelemetryRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(db
         // Act
         await sut.Upsert(device.Id, timestamp, telemetry);
         await sut.Upsert(device.Id, timestamp, telemetry2);
-        
+
         var telemetryValues = new List<TelemetryValue>();
         await foreach (var values in sut.GetTelemetry(device.Id, timestamp, timestamp))
         {

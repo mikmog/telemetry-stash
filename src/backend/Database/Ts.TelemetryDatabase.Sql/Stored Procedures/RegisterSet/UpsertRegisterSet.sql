@@ -2,7 +2,7 @@
 -- Description: Upsert RegisterSet
 -- =============================================
 
-CREATE PROCEDURE dbo.UpsertRegisterSet
+CREATE PROCEDURE dbo.GetOrCreateRegisterSet
 (
     @DeviceId INT,
     @Identifier NVARCHAR(MAX)

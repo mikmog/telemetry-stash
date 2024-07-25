@@ -24,7 +24,7 @@ public class RegisterSetRepository(IDbProvider dbProvider) : IRegisterSetReposit
         return await dbProvider
             .ExecuteSingle<RegisterSet>
             (
-                storedProcedure: "dbo.UpsertRegisterSet",
+                storedProcedure: "dbo.GetOrCreateRegisterSet",
                 parameters: new { DeviceId = deviceId, Identifier = identifier },
                 cancellationToken: token
             );

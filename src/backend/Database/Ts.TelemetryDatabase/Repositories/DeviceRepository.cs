@@ -24,7 +24,7 @@ public class DeviceRepository(IDbProvider dbProvider) : IDeviceRepository
         return await dbProvider
             .ExecuteSingle<Device>
             (
-                storedProcedure: "dbo.UpsertDevice",
+                storedProcedure: "dbo.GetOrCreateDevice",
                 parameters: new { Identifier = identifier },
                 cancellationToken: token
             );

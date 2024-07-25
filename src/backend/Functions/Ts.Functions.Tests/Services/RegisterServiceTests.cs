@@ -1,41 +1,42 @@
-﻿//using NSubstitute;
-//using TelemetryStash.Functions.Services;
+﻿using NSubstitute;
+using TelemetryStash.Database.Repositories;
+using TelemetryStash.Functions.Services;
 
-//namespace TelemetryStash.Functions.Tests.TelemetryTrigger;
+namespace TelemetryStash.Functions.Tests.Services;
 
-//public class RegisterServiceTests
-//{
-//    [Fact]
-//    public async Task RegisterService_caches_Register()
-//    {
-//        // Arrange
-//        using var cacheProvider = new CacheProvider();
-//        var repository = Substitute.For<IRegisterTemplateRepository>();
+public class RegisterServiceTests
+{
 
-//        var sut = new RegisterTemplateService(repository, cacheProvider.HybridCache);
+    [Fact]
+    public async Task RegisterKeyService_GetOrCreate_adds_Register_to_database()
+    {
+        // Arrange
+        using var cacheProvider = new CacheProvider();
+        var repository = Substitute.For<IRegisterRepository>();
 
-//        // Act
-//        await sut.GetOrCreate(1, "OutdoorTemp");
-//        await sut.GetOrCreate(1, "OutdoorTemp");
+        var sut = new RegisterService(repository, cacheProvider.HybridCache);
 
-//        // Assert
-//        await repository.Received(1).GetRegister(1, "OutdoorTemp", Arg.Any<Opts<Register>>(), Arg.Any<CancellationToken>());
-//    }
+        // Act
+        await sut.GetOrCreate(registerId: 1, "OutdoorTemp");
 
-//    [Fact]
-//    public async Task RegisterService_AddAndGet_adds_Register_to_database()
-//    {
-//        // Arrange
-//        using var cacheProvider = new CacheProvider();
-//        var repository = Substitute.For<IRegisterTemplateRepository>();
+        // Assert
+        await repository.Received(1).Upsert(Arg.Is(1), Arg.Is("OutdoorTemp"), Arg.Any<CancellationToken>());
+    }
 
-//        var sut = new RegisterTemplateService(repository, cacheProvider.HybridCache);
+    [Fact]
+    public async Task RegisterService_caches_Register()
+    {
+        // Arrange
+        using var cacheProvider = new CacheProvider();
+        var repository = Substitute.For<IRegisterRepository>();
 
-//        // Act
-//        await sut.GetOrCreate(1, "OutdoorTemp");
+        var sut = new RegisterService(repository, cacheProvider.HybridCache);
 
-//        // Assert
-//        repository.Received(1).Add(Arg.Any<Register>());
-//        await repository.Received(1).SaveChangesAsync();
-//    }
-//}
+        // Act
+        await sut.GetOrCreate(registerId: 1, "OutdoorTemp");
+        await sut.GetOrCreate(registerId: 1, "OutdoorTemp");
+
+        // Assert
+        await repository.Received(1).Upsert(Arg.Is(1), Arg.Is("OutdoorTemp"), Arg.Any<CancellationToken>());
+    }
+}

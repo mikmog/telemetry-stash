@@ -3,18 +3,18 @@ using Microsoft.SqlServer.Dac;
 using RepoDb;
 using Testcontainers.MsSql;
 
-namespace TelemetryStash.Database.Tests.Util;
+namespace TelemetryStash.Database.Tests;
 
 // Single instance of the database for all tests
 [CollectionDefinition("SharedTestDbServer")]
-public class CollectionState : ICollectionFixture<TestDbFixture> { }
+public class CollectionState : ICollectionFixture<SharedTestDbFixture> { }
 
-public class TestDbFixture : IAsyncLifetime
+public class SharedTestDbFixture : IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
     private readonly Dictionary<string, IDbProvider> _dbProviders = [];
 
-    public TestDbFixture()
+    public SharedTestDbFixture()
     {
         // https://hub.docker.com/r/microsoft/mssql-server
         _msSqlContainer = new MsSqlBuilder()
@@ -58,11 +58,11 @@ public class TestDbFixture : IAsyncLifetime
                     services.Message += (sender, args) => Console.WriteLine(args.Message);
                     services.ProgressChanged += (sender, args) => Console.WriteLine(args.Status);
 
-                    #if DEBUG
-                        var buildConfiguration = "Debug";
-                    #else
+#if DEBUG
+                    var buildConfiguration = "Debug";
+#else
                         var buildConfiguration = "Release";
-                    #endif
+#endif
 
                     // Apply dacpac SQL schema
                     services.Deploy(

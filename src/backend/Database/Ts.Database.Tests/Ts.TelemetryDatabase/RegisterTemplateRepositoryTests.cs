@@ -1,7 +1,7 @@
-﻿namespace TelemetryStash.Database.Tests;
+﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 [Collection("SharedTestDbServer")]
-public class RegisterTemplateRepositoryTests(TestDbFixture dbFixture) : TestDbSeeder(dbFixture)
+public class RegisterTemplateRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)
 {
     [Fact]
     public async Task RegisterTemplateRepository_Upsert_returns_created()
@@ -41,22 +41,4 @@ public class RegisterTemplateRepositoryTests(TestDbFixture dbFixture) : TestDbSe
         Assert.Equal(registerSet.Id, registerTemplate.RegisterSetId);
         Assert.Equal("RegisterTemplateIdentifier", registerTemplate.Identifier);
     }
-
-    //private async Task<Device> UpsertDevice(string deviceId)
-    //{
-    //    var repository = new DeviceRepository(_dbProvider);
-    //    return await repository.Upsert(deviceId);
-    //}
-
-    //private async Task<RegisterSet> UpsertRegisterSet(Device device, string identifier)
-    //{
-    //    var repository = new RegisterSetRepository(_dbProvider);
-    //    return await repository.Upsert(device.Id, identifier);
-    //}
-
-    //private async Task<RegisterTemplate> UpsertRegisterTemplate(RegisterSet registerSet, string identifier)
-    //{
-    //    var repository = new RegisterTemplateRepository(_dbProvider);
-    //    return await repository.Upsert(registerSet.Id, identifier);
-    //}
 }
