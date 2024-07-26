@@ -15,7 +15,7 @@ public class RegisterTemplateService(IRegisterTemplateRepository registerTemplat
     {
         return await cache.GetOrCreateAsync(
             $"{nameof(RegisterTemplate)}{registerSetId}{registerIdentifier}",
-            async token => await registerTemplateRepository.Upsert(registerSetId, registerIdentifier, token),
+            async innerToken => await registerTemplateRepository.Upsert(registerSetId, registerIdentifier, innerToken),
             token: token);
     }
 }

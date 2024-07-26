@@ -35,7 +35,7 @@ internal class HttpClientLogger(ILogger<HttpClientLogger> logger) : IHttpClientL
     public void LogRequestStop(object? context, HttpRequestMessage request, HttpResponseMessage response, TimeSpan elapsed)
     {
         _logger.LogInformation(
-            "{Method} {Url} - {(StatusCode} {StatusCodeDescription} in {Duration}ms",
+            "{Method} {Url} - {StatusCode} {StatusCodeDescription} in {Duration}ms",
             request.Method,
             ((Context)context!).OriginalRequestUrl,
             (int)response.StatusCode,

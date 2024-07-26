@@ -15,7 +15,7 @@ public class DeviceService(IDeviceRepository deviceRepository, HybridCache cache
     {
         return await cache.GetOrCreateAsync(
             $"{nameof(Device)}{deviceId}",
-            async token => await deviceRepository.Upsert(deviceId, token),
+            async innerToken => await deviceRepository.Upsert(deviceId, innerToken),
             token: token);
     }
 }

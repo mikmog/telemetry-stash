@@ -15,7 +15,7 @@ public class RegisterSetService(IRegisterSetRepository registerSetRepository, Hy
     {
         return await cache.GetOrCreateAsync(
             $"{nameof(RegisterSet)}{deviceId}{registerSet}",
-            async token => await registerSetRepository.Upsert(deviceId, registerSet, token),
+            async innerToken => await registerSetRepository.Upsert(deviceId, registerSet, innerToken),
             token: token);
     }
 }

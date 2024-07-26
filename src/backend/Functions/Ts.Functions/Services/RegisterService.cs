@@ -15,7 +15,7 @@ public class RegisterService(IRegisterRepository registerRepository, HybridCache
     {
         return await cache.GetOrCreateAsync(
             $"{nameof(Register)}{registerId}{registerSubset}",
-            async token => await registerRepository.Upsert(registerId, registerSubset, token),
+            async innerToken => await registerRepository.Upsert(registerId, registerSubset, innerToken),
             token: token);
     }
 }
