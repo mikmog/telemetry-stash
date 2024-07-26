@@ -15,8 +15,9 @@ az group create --name {RESOURCE_GROUP_NAME} --location swedencentral
 2. Run the az cli command to deploy resources
 
 ```shell
-az deployment group create --resource-group {RESOURCE_GROUP_NAME} --parameters infrastructure/ts.dev.bicepparam
+az deployment group create --resource-group {RESOURCE_GROUP_NAME} --parameters ts.{ENV}.bicepparam
 ```
+> :bulb: Note. Publish __Ts.Functions__ and run again if deployment fails
 
 ## Testing
 
