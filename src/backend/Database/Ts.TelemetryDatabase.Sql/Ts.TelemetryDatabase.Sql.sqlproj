@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build">
+  <Sdk Name="Microsoft.Build.Sql" Version="0.1.19-preview" />
+  <PropertyGroup>
+    <Name>Ts.TelemetryDatabase.Sql</Name>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <ModelCollation>1033, CI</ModelCollation>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <ProjectVersion>4.1</ProjectVersion>
+    <LangVersion>latest</LangVersion>
+    <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="User Defined Types" />
+    <Folder Include="Stored Procedures" />
+    <Folder Include="Tables" />
+    <Folder Include="Compares" />
+    <Folder Include="Stored Procedures\Device" />
+    <Folder Include="Stored Procedures\Register" />
+    <Folder Include="Stored Procedures\RegisterSet" />
+    <Folder Include="Stored Procedures\RegisterTemplate" />
+    <Folder Include="Stored Procedures\Telemetry" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="User Defined Types\TelemetriesType.sql" />
+    <Build Include="Tables\Devices.sql" />
+    <Build Include="Tables\RegisterSets.sql" />
+    <Build Include="Tables\RegisterTemplates.sql" />
+    <Build Include="Tables\Registers.sql" />
+    <Build Include="Tables\Telemetries.sql" />
+    <Build Include="Tables\Timestamps.sql" />
+    <Build Include="Stored Procedures\Device\UpsertDevice.sql" />
+    <Build Include="Stored Procedures\Register\UpsertRegister.sql" />
+    <Build Include="Stored Procedures\RegisterSet\UpsertRegisterSet.sql" />
+    <Build Include="Stored Procedures\RegisterTemplate\UpsertRegisterTemplate.sql" />
+    <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
+    <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Compares\SqlSchemaCompare.Prod.scmp" />
+  </ItemGroup>
+</Project>
