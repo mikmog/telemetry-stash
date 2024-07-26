@@ -14,7 +14,7 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
 {
     public async IAsyncEnumerable<List<TelemetryValue>> GetTelemetry(int deviceId, DateTimeOffset fromClientTimestamp, DateTimeOffset toClientTimestamp, int preferredBatchSize = 1000, [EnumeratorCancellation] CancellationToken token = default)
     {
-        var connection = dbProvider.CreateConnection();
+        using var connection = dbProvider.CreateConnection();
 
         var skip = 0;
         var take = preferredBatchSize;
