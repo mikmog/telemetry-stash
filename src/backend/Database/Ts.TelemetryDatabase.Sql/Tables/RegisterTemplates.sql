@@ -8,7 +8,7 @@ CREATE TABLE [dbo].[RegisterTemplates] (
     [Type]                  NVARCHAR (MAX)              NULL,
     [Unit]                  NVARCHAR (MAX)              NULL,
     [Description]           NVARCHAR (MAX)              NULL,
-    [Created]               DATETIMEOFFSET (4)          NOT NULL,
+    [Created]               DATETIME2                   NOT NULL,
 
     CONSTRAINT [PK_RegisterTemplates] PRIMARY KEY CLUSTERED ( [Id] ASC ),
     CONSTRAINT [FK_RegisterTemplates_RegisterSets] FOREIGN KEY ( [RegisterSetId] ) REFERENCES [dbo].[RegisterSets] ( [Id] )
