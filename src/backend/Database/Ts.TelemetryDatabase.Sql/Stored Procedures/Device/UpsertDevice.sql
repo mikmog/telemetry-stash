@@ -4,7 +4,7 @@
 
 CREATE PROCEDURE dbo.GetOrCreateDevice
 (
-    @Identifier NVARCHAR(MAX)
+    @Identifier NVARCHAR(450)
 )
 AS
 BEGIN

@@ -5,11 +5,11 @@
 CREATE PROCEDURE dbo.GetOrCreateRegisterTemplate
 (
     @RegisterSetId INT,
-    @Identifier NVARCHAR(MAX),
-    @Name NVARCHAR(MAX) = NULL,
-    @Type NVARCHAR(MAX) = NULL,
-    @Unit NVARCHAR(MAX) = NULL,
-    @Description NVARCHAR(MAX) = NULL
+    @Identifier NVARCHAR(450),
+    @Name NVARCHAR(450) = NULL,
+    @Type NVARCHAR(450) = NULL,
+    @Unit NVARCHAR(450) = NULL,
+    @Description NVARCHAR(450) = NULL
 )
 AS
 BEGIN
