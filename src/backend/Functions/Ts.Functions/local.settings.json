@@ -1,13 +1,10 @@
-﻿// ********************************************************************
-// Enable/disable AzureWebJobs.* to run individually
-// during development
-// ********************************************************************
-
-{
+﻿{
   "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+
+    "_comment": "Enable/disable AzureWebJobs.* to run individually during development",
     "AzureWebJobs.TelemetryHistoryManager.Disabled": true
   }
 }
