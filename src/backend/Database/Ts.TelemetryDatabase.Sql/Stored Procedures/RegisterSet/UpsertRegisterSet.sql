@@ -5,7 +5,7 @@
 CREATE PROCEDURE dbo.GetOrCreateRegisterSet
 (
     @DeviceId INT,
-    @Identifier NVARCHAR(MAX)
+    @Identifier NVARCHAR(450)
 )
 AS
 BEGIN
