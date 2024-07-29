@@ -51,18 +51,19 @@ namespace TelemetryStash.DeviceServices
             Debug.WriteLine();
             foreach (var drive in DriveInfo.GetDrives())
             {
-                Debug.WriteLine("Drive: " + drive);
-                foreach (var file in Directory.GetFiles(drive.ToString()))
+                Debug.WriteLine("Drive: " + drive.Name);
+                Debug.WriteLine("> Drive type: " + drive.DriveType);
+                Debug.WriteLine("> Total size: " + drive.TotalSize);
+
+                foreach (var file in Directory.GetFiles(drive.Name))
                 {
                     Debug.WriteLine(
-                        "> " + file + 
-                        ", Modified: " + File.GetLastWriteTime(file) +
-                        ", Attributes: " + File.GetAttributes(file));
+                        "> File: " + file + ", Attributes: " + File.GetAttributes(file));
                 }
 
-                foreach (var dir in Directory.GetDirectories(drive.ToString()))
+                foreach (var directory in Directory.GetDirectories(drive.Name))
                 {
-                    Debug.WriteLine("> Directory: " + dir);
+                    Debug.WriteLine("> Directory: " + directory);
                 }
             }
 

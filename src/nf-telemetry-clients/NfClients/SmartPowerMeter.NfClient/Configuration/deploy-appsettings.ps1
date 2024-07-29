@@ -7,12 +7,16 @@
 #   - OpenSSL https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL
 #   - Azure CLI https://learn.microsoft.com/en-gb/cli/azure/install-azure-cli
 #   - Azure Key Vault with secrets
-#       - Certificate--ClientPassword
-#       - Certificate--RootCaPassword
+#       - Client--CertificatePassword
+#   - Azure Key Vault with client certificates
+#       - {CERTIFICATE_NAME}
 #
 #	Usage:
-#	./deploy-appsettings.ps1 -settingsFile AppSettings.S3WROOM1.Dev.json -keyVaultName kv1-telemetrystash-dev -serialPort COM3
-#	./deploy-appsettings.ps1 -settingsFile AppSettings.XIAOC3.Dev.json -keyVaultName kv1-telemetrystash-dev -serialPort COM9
+#	./deploy-appsettings.ps1 -settingsFile AppSettings.{IDENTIFIER}.Dev.json -keyVaultName kv-ts-dev -serialPort {COM_PORT}
+#	./deploy-appsettings.ps1 -settingsFile AppSettings.{IDENTIFIER}.Prod.json -keyVaultName kv-ts-prod -serialPort {COM_PORT}
+#
+#	E.g.
+#	./deploy-appsettings.ps1 -settingsFile AppSettings.XIAOC3.Prod.json -keyVaultName kv-ts-prod -serialPort COM3
 #
 #	Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 #

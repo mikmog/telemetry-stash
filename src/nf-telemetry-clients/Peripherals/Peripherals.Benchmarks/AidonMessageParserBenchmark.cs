@@ -5,15 +5,23 @@ using TelemetryStash.ServiceModels;
 
 /*
     Platform: ESP32
-    Manufacturer: MinSizeRel build, chip rev. >= 0, without support for PSRAM
-    TargetName: ESP32_REV0
-    NanoFramework version: 1.9.1.0
+    Manufacturer: MinSizeRel build, chip rev. >= 0, support for PSRAM, support for BLE
+    TargetName: ESP32_S3_ALL
+    NanoFramework version: 1.10.0.49
     Floating point precision: 1
+    | MethodName               | IterationCount | Mean                  | Ratio | Min   | Max   |
+    | ----------------------------------------------------------------------------------------- |
+    | AidonMessageParser_Parse | 10             | 37.999999999999998 ms | 1.0   | 30 ms | 40 ms |
 
-    Console export: P1MessageParserBenchmark benchmark class.
-    | MethodName            | IterationCount | Mean  | Ratio | Min   | Max   |
-    | ---------------------------------------------------------------------- |
-    | P1MessageParser_Parse | 10             | 52 ms | 1.0   | 50 ms | 60 ms |
+
+    Platform: ESP32
+    Manufacturer: MinSizeRel build, chip rev. >= 3, without support for PSRAM
+    TargetName: XIAO_ESP32C3
+    NanoFramework version: 1.10.0.62
+    Floating point precision: 1
+    | MethodName               | IterationCount | Mean  | Ratio | Min   | Max   |
+    | ------------------------------------------------------------------------- |
+    | AidonMessageParser_Parse | 10             | 62 ms | 1.0   | 60 ms | 70 ms |
  */
 
 namespace TelemetryStash.Peripherals.Benchmarks

@@ -8,15 +8,25 @@ namespace TelemetryStash.Services.Benchmarks
 {
     /*
         Platform: ESP32
-        Manufacturer: MinSizeRel build, chip rev. >= 0, without support for PSRAM
-        TargetName: ESP32_REV0
-        NanoFramework version: 1.9.1.0
+        Manufacturer: MinSizeRel build, chip rev. >= 0, support for PSRAM, support for BLE
+        TargetName: ESP32_S3_ALL
+        NanoFramework version: 1.10.0.49
         Floating point precision: 1
+        | MethodName               | IterationCount | Mean                  | Ratio   | Min    | Max    |
+        | --------------------------------------------------------------------------------------------- |
+        | SerializeJson            | 10             | 27.999999999999998 ms | 1.0     | 20 ms  | 30 ms  |
+        | SerializeJsonConvertJson | 10             | 428 ms                | 15.2857 | 420 ms | 430 ms |
 
-        Console export: JsonBenchmark benchmark class.
-        | MethodName    | IterationCount | Mean  | Ratio | Min   | Max   |
-        | -------------------------------------------------------------- |
-        | SerializeJson | 10             | 45 ms | 1.0   | 40 ms | 50 ms |
+
+        Platform: ESP32
+        Manufacturer: MinSizeRel build, chip rev. >= 3, without support for PSRAM
+        TargetName: XIAO_ESP32C3
+        NanoFramework version: 1.10.0.62
+        Floating point precision: 1
+        | MethodName               | IterationCount | Mean                  | Ratio   | Min    | Max    |
+        | --------------------------------------------------------------------------------------------- |
+        | SerializeJson            | 10             | 57 ms                 | 1.0     | 50 ms  | 60 ms  |
+        | SerializeJsonConvertJson | 10             | 709.99999999999996 ms | 12.4561 | 710 ms | 710 ms |
     */
 
     [ConsoleParser]

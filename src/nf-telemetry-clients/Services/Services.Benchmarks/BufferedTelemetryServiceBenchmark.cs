@@ -16,7 +16,14 @@ namespace TelemetryStash.Services.Benchmarks
         public void Setup()
         {
             Wifi.EnsureConnected();
-            _bufferedTelemetryService = new(new MqttService(null));
+
+            var config = new ConfigurationService();
+            var dictionary = config.ReadConfiguration();
+
+            var mqttSettings = new MqttSettings();
+            mqttSettings.Configure(dictionary);
+
+            _bufferedTelemetryService = new(new MqttService(mqttSettings));
         }
 
         [Benchmark, Baseline]

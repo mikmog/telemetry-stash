@@ -25,13 +25,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Am2320">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.570\lib\Iot.Device.Am2320.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.601\lib\Iot.Device.Am2320.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
-      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.15\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.19\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
@@ -40,19 +40,19 @@
       <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
-      <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.418\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.586\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.I2c">
       <HintPath>..\..\packages\nanoFramework.System.Device.I2c.1.1.16\lib\System.Device.I2c.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.418\lib\System.Device.Model.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.586\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.51.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.55.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.51.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.55.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
