@@ -4,14 +4,15 @@
 #   Prerequisites:
 #   - A root CA certificate
 #   - OpenSSL https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL
-#   - Azure CLI https://learn.microsoft.com/en-gb/cli/azure/install-azure-cli
+#   - Azure CLI 
+#		Install-Module -Name Az -Force -AllowClobber -Scope CurrentUser
 #   - Azure Key Vault with secrets
 #       - Client--CertificatePassword
 #       - Certificate--RootCaPassword
 #
 #	Usage:
-#	./generate-client-cert.ps1 -deviceId Client-Dev1
-#	./generate-client-cert.ps1 -deviceId Client-Prod -env prod
+#	./generate-client-cert.ps1 -deviceId Client-Dev1 -env dev
+#	./generate-client-cert.ps1 -deviceId Client-Prod1 -env prod
 #
 #	Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 #
@@ -29,7 +30,7 @@ function Get-Password([int] $length) {
 
 $root = "C:/IoTCerts/$env"
 $deviceRoot = "$root/devices/$deviceId"
-$keyVaultName = "kv1-telemetrystash-$env"
+$keyVaultName = "kv-ts-$env"
 
 Write-Output "
  ______      __                 __                ____ __              __ 
