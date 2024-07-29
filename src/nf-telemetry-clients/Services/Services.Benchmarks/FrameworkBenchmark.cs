@@ -5,18 +5,27 @@ using TelemetryStash.ServiceModels;
 
 /*
     Platform: ESP32
-    Manufacturer: MinSizeRel build, chip rev. >= 0, without support for PSRAM
-    TargetName: ESP32_REV0
-    NanoFramework version: 1.9.1.0
+    Manufacturer: MinSizeRel build, chip rev. >= 0, support for PSRAM, support for BLE
+    TargetName: ESP32_S3_ALL
+    NanoFramework version: 1.10.0.49
     Floating point precision: 1
-
-    Console export: FrameworkBenchmark benchmark class.
     | MethodName           | IterationCount | Mean                  | Ratio  | Min    | Max    |
     | ---------------------------------------------------------------------------------------- |
-    | Concat_Plus          | 10             | 36 ms                 | 1.0    | 30 ms  | 40 ms  |
-    | Concat_PlusConstants | 10             | 36 ms                 | 1.0000 | 30 ms  | 40 ms  |
-    | ConcatStringBuilder  | 10             | 107 ms                | 2.9722 | 100 ms | 110 ms |
-    | Concat_Interpolation | 10             | 343.99999999999999 ms | 9.5556 | 330 ms | 370 ms |
+    | Concat_Plus          | 10             | 20 ms                 | 1.0    | 20 ms  | 20 ms  |
+    | ConcatStringBuilder  | 10             | 49 ms                 | 2.4500 | 40 ms  | 50 ms  |
+    | Concat_Interpolation | 10             | 162.99999999999999 ms | 8.1500 | 160 ms | 170 ms |
+
+
+    Platform: ESP32
+    Manufacturer: MinSizeRel build, chip rev. >= 3, without support for PSRAM
+    TargetName: XIAO_ESP32C3
+    NanoFramework version: 1.10.0.62
+    Floating point precision: 1
+    | MethodName           | IterationCount | Mean                  | Ratio  | Min    | Max    |
+    | ---------------------------------------------------------------------------------------- |
+    | Concat_Plus          | 10             | 50.999999999999996 ms | 1.0    | 50 ms  | 60 ms  |
+    | ConcatStringBuilder  | 10             | 116.99999999999999 ms | 2.2941 | 110 ms | 120 ms |
+    | Concat_Interpolation | 10             | 329.99999999999998 ms | 6.4706 | 320 ms | 340 ms |
  */
 
 namespace TelemetryStash.Services.Benchmarks

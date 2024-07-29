@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
-using System.IO;
 using TelemetryStash.DeviceServices.Mqtt;
 using TelemetryStash.ServiceModels;
 
@@ -22,7 +21,7 @@ namespace TelemetryStash.DeviceServices
             _telemetryQueue = new();
 
             // I:\insight.db
-            var telemetryDb = Directory.GetLogicalDrives()[0] + "insight.db";
+            var telemetryDb = @"I:\insight.db";
             _localStorage = new(telemetryDb);
             _localStorage.DeleteIfExist();
         }
