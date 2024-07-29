@@ -61,6 +61,7 @@ GRANT EXECUTE ON SCHEMA ::dbo TO [{IDENTITY}]
 - Generate a root certificate
     - /src/misc/generate-root-cert.ps1    
 - Optional: Generate a client certificates to Key Vault
++ Optional: Generate client certificates to Key Vault
     - /src/misc/generate-client-cert.ps1
 
 ### Configure IoT Hub
