@@ -28,6 +28,10 @@ namespace TelemetryStash.Aidon.Sensor
             _serialPort = CreateSerialPort();
             _serialPort.DataReceived += Serial_DataReceived;
             _serialPort.Open();
+            //_serialPort.Close();
+            //_serialPort.Dispose();
+            //_serialPort = CreateSerialPort();
+            Debug.WriteLine("C# InvertSignalLevels: " + _serialPort.InvertSignalLevels);
         }
 
         public void Dispose()
@@ -50,6 +54,9 @@ namespace TelemetryStash.Aidon.Sensor
             }
 
             var message = _serialPort.ReadExisting();
+
+            Debug.WriteLine("Message: " + message);
+            return;
 
             if (!AidonMessageValidator.IsValid(message, out var error))
             {

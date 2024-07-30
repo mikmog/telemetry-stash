@@ -38,6 +38,8 @@ nanoff -v d --target ESP32_S3_ALL --serialport COM3 --update --masserase
 nanoff -v d --target ESP32_REV3 --serialport COM3 --update --masserase
 ```
 
+nanoff -v d --target ESP32_S3_ALL --serialport COM3 --update --masserase --clrfile "C:\Temp\nanoCLR.bin"
+
 ## Misc
 
 ### Tools
