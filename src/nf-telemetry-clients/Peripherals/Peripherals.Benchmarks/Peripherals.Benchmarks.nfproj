@@ -19,6 +19,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="AidonSensorBenchmark.cs" />
     <Compile Include="Am23XXBenchmark.cs" />
     <Compile Include="AidonMessageParserBenchmark.cs" />
     <Compile Include="AidonMessageValidatorBenchmark.cs" />
@@ -32,8 +33,14 @@
     <Reference Include="nanoFramework.Benchmark">
       <HintPath>..\..\packages\nanoFramework.Benchmark.1.0.72\lib\nanoFramework.Benchmark.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.Hardware.Esp32">
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.19\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Logging">
       <HintPath>..\..\packages\nanoFramework.Logging.1.1.107\lib\nanoFramework.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.18\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native">
       <HintPath>..\..\packages\nanoFramework.Runtime.Native.1.6.12\lib\nanoFramework.Runtime.Native.dll</HintPath>

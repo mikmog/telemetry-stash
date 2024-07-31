@@ -14,7 +14,8 @@ namespace TelemetryStash.Peripherals.Benchmarks
             //BenchmarkRunner.RunClass(typeof(Am23XXBenchmark));
             //BenchmarkRunner.RunClass(typeof(AidonMessageParserBenchmark));
             //BenchmarkRunner.RunClass(typeof(AidonMessageValidatorBenchmark));
-            
+            //BenchmarkRunner.RunClass(typeof(AidonSensorBenchmark));
+
             Debug.WriteLine("Benchmarks completed");
             Thread.Sleep(Timeout.Infinite);
         }
