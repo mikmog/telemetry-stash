@@ -28,6 +28,7 @@ namespace TelemetryStash.Aidon.Sensor
             _serialPort = CreateSerialPort();
             _serialPort.DataReceived += Serial_DataReceived;
             _serialPort.Open();
+            Debug.WriteLine($"Serial port {_serialPort.InvertSignalLevels}");
         }
 
         public void Dispose()
