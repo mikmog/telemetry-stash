@@ -1,6 +1,7 @@
 ﻿using nanoFramework.Hardware.Esp32;
 using System.Diagnostics;
 using System.IO.Ports;
+using System.Threading;
 using TelemetryStash.ServiceModels;
 
 namespace TelemetryStash.Aidon.Sensor
@@ -50,6 +51,8 @@ namespace TelemetryStash.Aidon.Sensor
                 return;
             }
 
+            Thread.Sleep(100);
+
             var message = _serialPort.ReadExisting();
 
             if (!AidonMessageValidator.IsValid(message, out var error))
@@ -72,7 +75,7 @@ namespace TelemetryStash.Aidon.Sensor
                 Parity = Parity.None,
                 ReadBufferSize = 900,
                 InvertSignalLevels = true,
-                ReceivedBytesThreshold = 500,
+                ReceivedBytesThreshold = 650,
                 Handshake = Handshake.None
             };
         }
