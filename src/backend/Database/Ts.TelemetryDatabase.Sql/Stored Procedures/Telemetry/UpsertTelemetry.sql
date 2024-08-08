@@ -14,14 +14,14 @@ BEGIN
 
     DECLARE @TimestampId INT;
 
-    -- Insert timestamp. Happy path
-    -- If timestamp already exists, get the Id
+    -- Insert timestamp.
+    -- Happy path, assume not exists
     BEGIN TRY
 
         INSERT INTO
-            dbo.Timestamps(DeviceId ,ClientTimestamp ,Created)
+            dbo.Timestamps(DeviceId, ClientTimestamp, Created)
         VALUES
-            (@DeviceId ,@ClientTimestamp ,GETUTCDATE());
+            (@DeviceId, @ClientTimestamp, GETUTCDATE());
 
 		SET @TimestampId = SCOPE_IDENTITY()
 
