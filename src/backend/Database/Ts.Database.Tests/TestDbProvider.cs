@@ -13,6 +13,7 @@ public class SharedTestDbFixture : IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer;
     private readonly Dictionary<string, IDbProvider> _dbProviders = [];
+    private readonly DacPackage _dacPackage;
 
     public SharedTestDbFixture()
     {
@@ -20,6 +21,8 @@ public class SharedTestDbFixture : IAsyncLifetime
         _msSqlContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .Build();
+
+        _dacPackage = DacPackage.Load($@"..\..\..\..\Ts.TelemetryDatabase.Sql\bin\Ts.TelemetryDatabase.Sql.dacpac");
     }
 
     public IDbProvider GetTestDbProvider(string databaseName)
@@ -33,7 +36,7 @@ public class SharedTestDbFixture : IAsyncLifetime
                     var masterDbConnectionString = _msSqlContainer.GetConnectionString();
                     using var connection = new SqlConnection(masterDbConnectionString);
 
-                    // Create database if it doesn't exist
+                    // Drop database if exist
                     using var createDbCommand = connection.CreateCommand();
                     createDbCommand.CommandText =
                         $"""
@@ -41,7 +44,6 @@ public class SharedTestDbFixture : IAsyncLifetime
                             BEGIN
                                 DROP DATABASE {databaseName}
                             END
-                            CREATE DATABASE {databaseName}
                         """;
 
                     connection.Open();
@@ -58,17 +60,8 @@ public class SharedTestDbFixture : IAsyncLifetime
                     services.Message += (sender, args) => Console.WriteLine(args.Message);
                     services.ProgressChanged += (sender, args) => Console.WriteLine(args.Status);
 
-#if DEBUG
-                    var buildConfiguration = "Debug";
-#else
-                        var buildConfiguration = "Release";
-#endif
-
-                    // Apply dacpac SQL schema
-                    services.Deploy(
-                        DacPackage.Load($@"..\..\..\..\Ts.TelemetryDatabase.Sql\bin\{buildConfiguration}\Ts.TelemetryDatabase.Sql.dacpac"),
-                        databaseName,
-                        upgradeExisting: true);
+                    // Create database and apply dacpac SQL schema
+                    services.Deploy(_dacPackage, databaseName);
 
                     value = new DbConnectionProvider(connectionString.ToString());
                     _dbProviders[databaseName] = value;
@@ -81,7 +74,6 @@ public class SharedTestDbFixture : IAsyncLifetime
     public async Task InitializeAsync()
     {
         GlobalConfiguration.Setup().UseSqlServer();
-
         await _msSqlContainer.StartAsync();
     }
 
