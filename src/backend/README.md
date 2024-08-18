@@ -2,10 +2,7 @@
 
 ## Testing
 
-Integration tests are done on SQL server with TestContainers and Docker on WSL2.
-
-### Configure Docker on WSL2
-- TBD
+See [TelemetryStash, Database](Database/README.md) about running integration tests.
 
 ## Infrastructure as code
 
@@ -72,8 +69,6 @@ GRANT EXECUTE ON SCHEMA ::dbo TO [{IDENTITY}]
     - Device ID: Must match the client certificate CN, eg: Client-Dev1
     - Authentication type: _X.509 CA signed_
     
-```bash
-
 ## Ways of working
 
 ### Pull requests
