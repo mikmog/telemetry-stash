@@ -1,4 +1,6 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using DotNet.Testcontainers.Builders;
+using DotNet.Testcontainers.Configurations;
+using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Dac;
 using RepoDb;
 using Testcontainers.MsSql;
@@ -17,9 +19,14 @@ public class SharedTestDbFixture : IAsyncLifetime
 
     public SharedTestDbFixture()
     {
+        TestcontainersSettings.DockerHostOverride = "127.0.0.1";
+
         // https://hub.docker.com/r/microsoft/mssql-server
         _msSqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
+            .WithImage("mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04")
+
+            // https://github.com/testcontainers/testcontainers-dotnet/issues/1220
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilCommandIsCompleted("/opt/mssql-tools18/bin/sqlcmd", "-C", "-Q", "SELECT 1;"))
             .Build();
 
         _dacPackage = DacPackage.Load($@"..\..\..\..\Ts.TelemetryDatabase.Sql\bin\Ts.TelemetryDatabase.Sql.dacpac");
