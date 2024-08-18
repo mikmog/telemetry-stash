@@ -4,9 +4,7 @@
 
 Integration tests are done on SQL server with [TestContainers](https://dotnet.testcontainers.org/modules/mssql/) and Docker on [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 
-## Configure Docker on WSL2
-
-### Install Docker container engine via PowerShell
+### Install WSL2 via PowerShell
 
 ```PowerShell
 wsl --install

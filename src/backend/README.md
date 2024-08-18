@@ -2,11 +2,7 @@
 
 ## Testing
 
-Integration tests are done on SQL server with TestContainers and Docker on WSL2.
-
-### Configure Docker on WSL2
-
-See [TelemetryStash, Database](Database/README.md)
+See [TelemetryStash, Database](Database/README.md) about running integration tests.
 
 ## Infrastructure as code
 
