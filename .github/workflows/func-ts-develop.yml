@@ -1,8 +1,15 @@
-name: Build and deploy .NET Core application to Function App func-ts-develop
+name: CI/CD Telemetry Stash
+
 on:
-  push:
-    branches:
-    - main
+    push:
+        paths:
+        - src/backend/**
+        - '.github/workflows/**'
+    pull_request:
+        paths:
+        - src/backend/**
+        - '.github/workflows/**'
+        branches: [ "main" ]
 env:
   AZURE_FUNCTIONAPP_NAME: func-ts-develop
   AZURE_FUNCTIONAPP_PACKAGE_PATH: Functions/Ts.Functions/published
