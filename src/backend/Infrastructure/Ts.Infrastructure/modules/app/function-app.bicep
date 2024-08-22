@@ -3,20 +3,17 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, functionParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, functionParams, getResourceName }  from '../../parameter-types.bicep'
 
 param applicationParameters applicationParams
 param functionParameters functionParams
 param appServicePlanId string
 param appStorageName string
-param appInsightsName string
+param appInsightsConnectionString string
+param appInsightsInstrumentationKey string
 
 resource appStorage 'Microsoft.Storage/storageAccounts@2023-01-01' existing = {
   name: appStorageName
-}
-
-resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
-  name: appInsightsName
 }
 
 resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
@@ -33,6 +30,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
       linuxFxVersion: functionParameters.linuxFxVersion
       use32BitWorkerProcess: false
       publicNetworkAccess: 'Enabled'
+      alwaysOn: false
       ipSecurityRestrictions: [
         {
           ipAddress: 'Any'
@@ -52,11 +50,11 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: appInsights.properties.ConnectionString
+          value: appInsightsConnectionString
         }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: appInsights.properties.InstrumentationKey
+          value: appInsightsInstrumentationKey
         }
         {
           name: 'AzureWebJobsStorage'
@@ -95,4 +93,5 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' = {
 }
 
 output identityPrincipalId string = functionApp.identity.principalId
-output name string = functionApp.name
+output functionsAppId string = functionApp.id
+output functionsAppName string = functionApp.name

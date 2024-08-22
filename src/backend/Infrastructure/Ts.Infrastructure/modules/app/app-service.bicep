@@ -3,16 +3,13 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.web/sites?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, appServiceParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, appServiceParams, getResourceName }  from '../../parameter-types.bicep'
 
 param applicationParameters applicationParams
 param appServiceParameters appServiceParams
 param appServicePlanId string
-param appInsightsName string
-
-resource appInsights 'Microsoft.Insights/components@2020-02-02' existing = {
-  name: appInsightsName
-}
+param appInsightsConnectionString string
+param appInsightsInstrumentationKey string
 
 resource webApp 'Microsoft.Web/sites@2022-09-01' = {
   name: getResourceName({ resourceAbbr: 'app', resourceName: appServiceParameters.resourceName }, applicationParameters)
@@ -27,6 +24,7 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
     siteConfig: {
       linuxFxVersion: appServiceParameters.linuxFxVersion
       publicNetworkAccess: 'Enabled'
+      alwaysOn: false
       ipSecurityRestrictions: [
         {
           ipAddress: 'Any'
@@ -46,11 +44,11 @@ resource webApp 'Microsoft.Web/sites@2022-09-01' = {
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: appInsights.properties.ConnectionString
+          value: appInsightsConnectionString
         }
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: appInsights.properties.InstrumentationKey
+          value: appInsightsInstrumentationKey
         }
         {
           name: 'WEBSITE_RUN_FROM_PACKAGE'

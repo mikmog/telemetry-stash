@@ -1,9 +1,9 @@
-// ********************************************************************
+﻿// ********************************************************************
 // MAIN.BICEP
 // https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
 // ********************************************************************
 
-import { applicationParams, appParams, iotHubParams, keyVaultParams, monitorParams, sqlParams, getResourceName }  from './parameters.bicep'
+import { applicationParams, appParams, iotHubParams, keyVaultParams, monitorParams, sqlParams, getResourceName }  from './parameter-types.bicep'
 
 targetScope = 'resourceGroup'
 
@@ -13,12 +13,6 @@ param iotHubParameters iotHubParams
 param keyVaultParameters keyVaultParams
 param monitorParameters monitorParams
 param sqlParameters sqlParams
-
-// User Assigned Identity
-module userAssignedIdentityModule 'modules/identity/user-assigned-identity.bicep' = {
-  name: getResourceName({ resourceAbbr: 'id' }, applicationParameters)
-  params: { applicationParameters: applicationParameters }
-}
 
 // Key Vault
 module keyVaultModule 'modules/key-vault/key-vault.bicep' = {
@@ -71,7 +65,8 @@ module functionAppModule 'modules/app/function-app.bicep' = {
     functionParameters: appParameters.functions
     appServicePlanId: functionsAppServicePlanModule.outputs.appServicePlanId
     appStorageName: functionsStorageModule.outputs.appStorageName
-    appInsightsName: appInsightsModule.outputs.appInsightsName
+    appInsightsConnectionString: appInsightsModule.outputs.appInsightsConnectionString
+    appInsightsInstrumentationKey: appInsightsModule.outputs.appInsightsInstrumentationKey
   }
 }
 
@@ -92,7 +87,8 @@ module apiModule 'modules/app/app-service.bicep' = {
     applicationParameters: applicationParameters
     appServiceParameters: appParameters.api
     appServicePlanId: apiAppServicePlanModule.outputs.appServicePlanId
-    appInsightsName: appInsightsModule.outputs.appInsightsName
+    appInsightsConnectionString: appInsightsModule.outputs.appInsightsConnectionString
+    appInsightsInstrumentationKey: appInsightsModule.outputs.appInsightsInstrumentationKey
   }
 }
 
@@ -121,7 +117,7 @@ module iotHubModule 'modules/iot-hub/iot-hub.bicep' = {
   params: { 
     applicationParameters: applicationParameters
     iotHubParameters: iotHubParameters
-    functionsAppName: functionAppModule.outputs.name
+    functionsAppName: functionAppModule.outputs.functionsAppName
   }
 }
 
@@ -145,7 +141,7 @@ module keyVaultRoleAssignmentModule 'modules/key-vault/role-assignment.bicep' = 
   }
 }
 
-module lockModule 'modules/lock/delete-lock.bicep' = {
-  name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
-  params: { applicationParameters: applicationParameters }
-}
+// module lockModule 'modules/lock/delete-lock.bicep' = {
+//   name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
+//   params: { applicationParameters: applicationParameters }
+// }

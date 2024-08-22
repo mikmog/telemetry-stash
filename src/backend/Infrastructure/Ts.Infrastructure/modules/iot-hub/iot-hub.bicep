@@ -6,7 +6,7 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.eventgrid/2023-12-15-preview/systemtopics/eventsubscriptions?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, iotHubParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, iotHubParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 param iotHubParameters iotHubParams
 param functionsAppName string
@@ -26,7 +26,7 @@ resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
     eventHubEndpoints: {
       events: {
         retentionTimeInDays: iotHubParameters.retentionTimeInDays
-        partitionCount: iotHubParameters.partitionCount
+        partitionCount: iotHubParameters.sku.partitionCount
       }
     }
     routing: {

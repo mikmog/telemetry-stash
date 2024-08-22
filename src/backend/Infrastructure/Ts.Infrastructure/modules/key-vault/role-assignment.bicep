@@ -3,7 +3,7 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.authorization/2022-04-01/roleassignments?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { roleAssignment }  from '../../parameters.bicep'
+import { roleAssignment }  from '../../parameter-types.bicep'
 param roleAssignments roleAssignment[]
 param keyVaultName string
 

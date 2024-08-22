@@ -1,11 +1,11 @@
-using './main.bicep'
+﻿using './main.bicep'
 import { defaultTagDefinitions, userDefinitions }  from './definitions.bicep'
 
 // Application
 param applicationParameters = {
   appName: 'ts'
   environment: 'Development'
-  envAbbr: 'dev'
+  envAbbr: 'develop'
   location: 'swedencentral'
   tags: union(defaultTagDefinitions, { Environment: 'Development' })
 }
@@ -16,12 +16,11 @@ param monitorParameters = {
   retentionInDays: 30
 }
 
-// API + Functions
 param appParameters = {
   api: {
     sku: {
       name: 'F1'
-      tier: 'Basic'
+      tier: 'Free'
       size: 'F1'
       family: 'F'
       capacity: 1
@@ -58,8 +57,8 @@ param sqlParameters = {
     name: 'Basic'
     tier: 'Basic'
     capacity: 5
+    maxSizeBytes: 2147483648
   }
-  maxSizeBytes: 2147483648
   server: {
     adminLoginName: userDefinitions.Administrator_NonProd.name
     adminGroupSid: userDefinitions.Administrator_NonProd.principalId
@@ -69,10 +68,10 @@ param sqlParameters = {
 // Iot Hub
 param iotHubParameters = {
     sku: {
-      name: 'B1'
+      name: 'F1'
       capacity: 1
+      partitionCount: 2
     }
-    location: 'westeurope'
+    location: 'norwayeast'
     retentionTimeInDays: 1
-    partitionCount: 4
 }
