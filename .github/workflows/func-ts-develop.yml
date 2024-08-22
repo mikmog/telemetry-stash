@@ -12,10 +12,10 @@ on:
         branches: [ "main" ]
 env:
   AZURE_FUNCTIONAPP_NAME: func-ts-develop
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: Functions/Ts.Functions/published
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: Functions/Ts.Functions
+  WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
   DOTNET_CORE_VERSION_INPROC: 6.0.x
 jobs:
   build:
