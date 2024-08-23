@@ -17,6 +17,7 @@ env:
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
   WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
+  BASE_DIRECTORY: src/backend
   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
@@ -29,14 +30,14 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         global-json-file: src/backend/global.json
-    - name: Restore
+    - name: Dotnet restore
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-    - name: Build
+    - name: Dotnet build
       run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Publish
+    - name: Dotnet test
+      run: dotnet test "${{ env.BASE_DIRECTORY }}" --no-build
+    - name: Dotnet publish
       run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
-    - name: Run tests
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}"
     - name: Publish Artifacts
       uses: actions/upload-artifact@v4
       with:
