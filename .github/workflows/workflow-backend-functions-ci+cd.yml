@@ -12,6 +12,7 @@ on:
       - src/backend/Database/**
       - '.github/workflows/**'
     branches: [ "main" ]
+  workflow_dispatch:
    
 # env:
 #   AZURE_FUNCTIONAPP_NAME: func-ts-develop
@@ -23,8 +24,24 @@ on:
 #   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
-  call-workflow:
-    uses: ./src/github-action-workflows.yml
+  build-and-publish:
+    uses: ./.github/workflows/workflow-backend-build.yml
+    with:
+      buildStage: 'FUNCTIONS'
+ 
+  deploy-dev:
+    uses: ./.github/workflows/workflow-backend-deploy.yml
+    needs: build-and-publish
+    with:
+      environment: 'dev'
+      deployStage: 'FUNCTIONS'
+ 
+  deploy-prod:
+    uses: ./.github/workflows/workflow-backend-deploy.yml
+    needs: deploy-dev
+    with:
+      environment: 'prod'
+      deployStage: 'FUNCTIONS'
 
   # build:
   #   runs-on: ubuntu-latest

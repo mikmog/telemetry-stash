@@ -1,0 +1,15 @@
+name: Build backend
+
+on:
+  workflow_call:
+    inputs:
+      buildStage:
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Test & Publish
+    steps:
+    - name: Test Echo
+      run: echo "Test Echo Build & Test & Publish pipeline is called"

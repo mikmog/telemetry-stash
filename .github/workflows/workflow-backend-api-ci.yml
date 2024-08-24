@@ -1,0 +1,75 @@
+name: CI/CD Telemetry Stash
+
+on:
+  push:
+    paths:
+      - src/backend/Functions/**
+      - src/backend/Database/**
+      - '.github/workflows/**'
+  pull_request:
+    paths:
+      - src/backend/Functions/**
+      - src/backend/Database/**
+      - '.github/workflows/**'
+    branches: [ "main" ]
+  workflow_dispatch:
+   
+# env:
+#   AZURE_FUNCTIONAPP_NAME: func-ts-develop
+#   AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
+#   CONFIGURATION: Release
+#   DOTNET_CORE_VERSION: 8.0.x
+#   WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
+#   BASE_DIRECTORY: src/backend
+#   DOTNET_CORE_VERSION_INPROC: 8.0.x
+
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/github-action-workflows.yml
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   name: Build & Test
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v4
+    #   - name: Call github-action-build
+    #     uses: ./.github/workflows/github-action-workflows.yml
+        # with:
+        #     test: '*.sln'
+
+    # steps:
+    # - name: Checkout
+    #   uses: actions/checkout@v4
+    # - name: Setup .NET SDK
+    #   uses: actions/setup-dotnet@v4
+    #   with:
+    #     global-json-file: src/backend/global.json
+    # - name: Dotnet restore
+    #   run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    # - name: Dotnet build
+    #   run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    # - name: Dotnet test
+    #   run: dotnet test "${{ env.BASE_DIRECTORY }}"
+    # - name: Dotnet publish
+    #   run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
+    # - name: Publish Artifacts
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: ts-functions
+    #     path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #   - name: Download artifact from build job
+  #     uses: actions/download-artifact@v3
+  #     with:
+  #       name: functionapp
+  #       path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+  #   - name: Deploy to Azure Function App
+  #     uses: Azure/functions-action@v1
+  #     with:
+  #       app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+  #       publish-profile: ${{ secrets.func_ts_develop_5119 }}
+  #       package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
