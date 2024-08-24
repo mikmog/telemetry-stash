@@ -26,7 +26,7 @@ jobs:
     name: Build & Test
     steps:
       - name: Call build
-        uses: src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml
+        uses: telemetry-stash/src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@ref
         # with:
         #     test: '*.sln'
 
