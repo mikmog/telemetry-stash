@@ -20,7 +20,6 @@ env:
   BASE_DIRECTORY: src/backend
   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +27,11 @@ jobs:
     steps:
       - name: Checkout
         uses: src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@main
+        with:
+            solutionsToCheck: '*.sln'
+            exclusionList: "device-listing,Amqp.Samples"
+            workingDirectory: '${{ github.workspace }}/samples'
+            nugetConfig: Nuget.config 
 
     # steps:
     # - name: Checkout

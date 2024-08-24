@@ -1,23 +1,41 @@
-﻿# name: CI/CD Telemetry Stash
+﻿name: Build & Test & Publish
 
-# on:
-#   push:
-#     paths:
-#       - src/backend/**
-#       - '.github/workflows/**'
-#   pull_request:
-#     paths:
-#       - src/backend/**
-#       - '.github/workflows/**'
-#     branches: [ "main" ]
-   
+on:
+  workflow_call:
+    inputs:
+      AZURE_FUNCTIONAPP_PACKAGE_PATH:
+        required: false
+        type: string
+      CONFIGURATION:
+        required: false
+        type: string
+      WORKING_DIRECTORY:
+        required: false
+        type: string
+      BASE_DIRECTORY:
+        required: false
+        type: string
+      nugetConfig:
+        required: false
+        type: string
+      repoOwner:
+        required: false
+        type: string
+      timeout-minutes:
+        required: false
+        default: 15
+        type: number
+    secrets:
+      githubAuth:
+        required: false
+
 env:
   AZURE_FUNCTIONAPP_NAME: func-ts-develop
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: /src/backend/Functions/Ts.Functions/published
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
-  BASE_DIRECTORY: src/backend
+  WORKING_DIRECTORY: /src/backend/Functions/Ts.Functions
+  BASE_DIRECTORY: /src/backend
   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
@@ -32,7 +50,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        global-json-file: src/backend/global.json
+        global-json-file: /src/backend/global.json
 
     - name: Dotnet restore
       run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
@@ -43,14 +61,14 @@ jobs:
     - name: Dotnet test
       run: dotnet test "${{ env.BASE_DIRECTORY }}"
 
-    - name: Dotnet publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
+    # - name: Dotnet publish
+    #   run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
 
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ts-functions
-        path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+    # - name: Publish Artifacts
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: ts-functions
+    #     path: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
   # deploy:
   #   runs-on: ubuntu-latest
   #   needs: build
