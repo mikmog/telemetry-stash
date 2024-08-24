@@ -26,8 +26,7 @@ jobs:
     name: Build & Test
     steps:
       - name: Call build
-        run: echo "Build & Test & Publish pipeline is called"
-        # uses: /src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@dev
+        uses: src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@dev
         # with:
         #     test: '*.sln'
 

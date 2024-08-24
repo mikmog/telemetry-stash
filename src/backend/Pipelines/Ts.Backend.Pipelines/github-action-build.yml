@@ -21,23 +21,25 @@ jobs:
     runs-on: ubuntu-latest
     name: Build & Test 2
     steps:
+      - name: Test Echo
+      run: echo "Test Echo Build & Test & Publish pipeline is called"
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    # - name: Checkout repository
+    #   uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        global-json-file: /src/backend/global.json
+    # - name: Setup .NET SDK
+    #   uses: actions/setup-dotnet@v4
+    #   with:
+    #     global-json-file: /src/backend/global.json
 
-    - name: Dotnet restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+    # - name: Dotnet restore
+    #   run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
 
-    - name: Dotnet build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    # - name: Dotnet build
+    #   run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
 
-    - name: Dotnet test
-      run: dotnet test "${{ env.BASE_DIRECTORY }}"
+    # - name: Dotnet test
+    #   run: dotnet test "${{ env.BASE_DIRECTORY }}"
 
     # - name: Dotnet publish
     #   run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}"
