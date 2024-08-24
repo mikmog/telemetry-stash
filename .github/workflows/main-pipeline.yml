@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Call github-action-build
-        uses: ./src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml
+        uses: ./.github/workflows/github-action-workflows.yml
         # with:
         #     test: '*.sln'
 
