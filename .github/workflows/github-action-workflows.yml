@@ -13,4 +13,4 @@ jobs:
     name: Build & Test 2
     steps:
     - name: Test Echo
-    run: echo "Test Echo Build & Test & Publish pipeline is called"
+      run: echo "Test Echo Build & Test & Publish pipeline is called"
