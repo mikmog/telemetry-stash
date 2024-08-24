@@ -11,27 +11,24 @@ on:
       - '.github/workflows/**'
     branches: [ "main" ]
    
-env:
-  AZURE_FUNCTIONAPP_NAME: func-ts-develop
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
-  CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
-  BASE_DIRECTORY: src/backend
-  DOTNET_CORE_VERSION_INPROC: 8.0.x
+# env:
+#   AZURE_FUNCTIONAPP_NAME: func-ts-develop
+#   AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
+#   CONFIGURATION: Release
+#   DOTNET_CORE_VERSION: 8.0.x
+#   WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
+#   BASE_DIRECTORY: src/backend
+#   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build & Test
     steps:
-      - name: Checkout
-        uses: src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@main
+      - name: Call build
+        uses: src/backend/Pipelines/Ts.Backend.Pipelines/github-action-build.yml@dev
         with:
-            solutionsToCheck: '*.sln'
-            exclusionList: "device-listing,Amqp.Samples"
-            workingDirectory: '${{ github.workspace }}/samples'
-            nugetConfig: Nuget.config 
+            test: '*.sln'
 
     # steps:
     # - name: Checkout
