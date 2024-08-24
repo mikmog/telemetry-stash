@@ -28,7 +28,6 @@ jobs:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
       projectDirectory: 'Functions/Ts.Functions'
-      testsDirectory: 'Functions/Ts.Functions.Tests'
       artifactsDirectory: 'Functions/Ts.Functions/Publish'
  
   deploy-dev:

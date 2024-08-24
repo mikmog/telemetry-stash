@@ -6,9 +6,6 @@ on:
       projectDirectory:
         required: true
         type: string
-      testsDirectory:
-        required: true
-        type: string
       artifactsDirectory:
         required: true
         type: string
@@ -38,7 +35,7 @@ jobs:
       run: dotnet build "${{ env.BASE_DIRECTORY }}/${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}"  --no-restore
 
     - name: Test
-      run: dotnet test "${{ env.BASE_DIRECTORY }}/${{ inputs.testsDirectory }}"
+      run: dotnet test "${{ env.BASE_DIRECTORY }}"
 
     - name: Publish
       run: dotnet publish "${{ env.BASE_DIRECTORY }}/${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ env.BASE_DIRECTORY }}/${{ inputs.artifactsDirectory }}"
