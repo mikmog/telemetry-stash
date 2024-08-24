@@ -24,7 +24,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: ./src/backend/Pipelines/Ts.Backend.Pipelines/github-action-workflows.yml
+    uses: ./src/github-action-workflows.yml
 
   # build:
   #   runs-on: ubuntu-latest
