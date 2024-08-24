@@ -7,22 +7,22 @@ on:
         required: false
         type: string
 
-env:
-  AZURE_FUNCTIONAPP_NAME: func-ts-develop
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: /src/backend/Functions/Ts.Functions/published
-  CONFIGURATION: Release
-  DOTNET_CORE_VERSION: 8.0.x
-  WORKING_DIRECTORY: /src/backend/Functions/Ts.Functions
-  BASE_DIRECTORY: /src/backend
-  DOTNET_CORE_VERSION_INPROC: 8.0.x
+# env:
+#   AZURE_FUNCTIONAPP_NAME: func-ts-develop
+#   AZURE_FUNCTIONAPP_PACKAGE_PATH: /src/backend/Functions/Ts.Functions/published
+#   CONFIGURATION: Release
+#   DOTNET_CORE_VERSION: 8.0.x
+#   WORKING_DIRECTORY: /src/backend/Functions/Ts.Functions
+#   BASE_DIRECTORY: /src/backend
+#   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build & Test 2
     steps:
-      - name: Test Echo
-      run: echo "Test Echo Build & Test & Publish pipeline is called"
+    - name: Test Echo
+    run: echo "Test Echo Build & Test & Publish pipeline is called"
 
     # - name: Checkout repository
     #   uses: actions/checkout@v4
