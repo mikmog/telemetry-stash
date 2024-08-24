@@ -3,11 +3,13 @@ name: CI/CD Telemetry Stash
 on:
   push:
     paths:
-      - src/backend/**
+      - src/backend/Functions/**
+      - src/backend/Database/**
       - '.github/workflows/**'
   pull_request:
     paths:
-      - src/backend/**
+      - src/backend/Functions/**
+      - src/backend/Database/**
       - '.github/workflows/**'
     branches: [ "main" ]
    
@@ -21,8 +23,8 @@ on:
 #   DOTNET_CORE_VERSION_INPROC: 8.0.x
 
 jobs:
-  call-workflow-in-local-repo:
-    uses: ./.github/workflows/github-action-workflows.yml
+  call-workflow:
+    uses: ./src/backend/Pipelines/Ts.Backend.Pipelines/github-action-workflows.yml
 
   # build:
   #   runs-on: ubuntu-latest
