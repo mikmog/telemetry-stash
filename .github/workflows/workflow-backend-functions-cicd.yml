@@ -27,7 +27,9 @@ jobs:
   build-and-publish:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
-      buildStage: 'FUNCTIONS'
+      projectDirectory: 'Functions/Ts.Functions'
+      testsDirectory: 'Functions/Ts.Functions.Tests'
+      artifactsDirectory: 'Functions/Ts.Functions/Publish'
  
   deploy-dev:
     uses: ./.github/workflows/workflow-backend-deploy.yml
