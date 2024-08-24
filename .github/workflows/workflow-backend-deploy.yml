@@ -6,6 +6,10 @@ on:
       deployStage:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
+
 jobs:
   build:
     runs-on: ubuntu-latest
