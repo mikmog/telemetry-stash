@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 env:
-    ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/published
+    ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/output
     PROJECT_DIRECTORY: src/backend/Functions/Ts.Functions
     
 jobs:
@@ -24,7 +24,7 @@ jobs:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
       projectDirectory: src/backend/Functions/Ts.Functions
-      artifactsDirectory: src/backend/Functions/Ts.Functions/published
+      artifactsDirectory: src/backend/Functions/Ts.Functions/output
  
   deploy-dev:
     uses: ./.github/workflows/workflow-backend-functions-deploy.yml
@@ -32,7 +32,7 @@ jobs:
     with:
       environment: 'dev'
       functionAppName: 'func-ts-develop'
-      artifactsDirectory: src/backend/Functions/Ts.Functions/published
+      artifactsDirectory: src/backend/Functions/Ts.Functions/output
  
   deploy-prod:
     uses: ./.github/workflows/workflow-backend-functions-deploy.yml
@@ -40,7 +40,7 @@ jobs:
     with:
       environment: 'prod'
       functionAppName: 'func-ts-prod'
-      artifactsDirectory: src/backend/Functions/Ts.Functions/published
+      artifactsDirectory: src/backend/Functions/Ts.Functions/output
 
   # build:
   #   runs-on: ubuntu-latest
