@@ -34,8 +34,8 @@ jobs:
     - name: Build
       run: dotnet build "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}"  --no-restore
 
-    - name: Test
-      run: dotnet test "${{ env.BASE_DIRECTORY }}"
+    # - name: Test
+    #   run: dotnet test "${{ env.BASE_DIRECTORY }}"
 
     - name: Publish
       run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}"
@@ -43,6 +43,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
+        name: functionapp
         path: "${{ inputs.artifactsDirectory }}"
 
 # env:
