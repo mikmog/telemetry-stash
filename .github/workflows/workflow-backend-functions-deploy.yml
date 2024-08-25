@@ -15,7 +15,7 @@ on:
 
 jobs:
   deploy-functions:
-    environment: ${{ inputs.environment }}
+    environment: dev
     runs-on: ubuntu-latest
     steps:
       - name: Download artifact from publish
