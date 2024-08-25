@@ -16,7 +16,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
-env:
+ env:
   ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/published
   PROJECT_DIRECTORY: src/backend/Functions/Ts.Functions
 
@@ -24,8 +24,8 @@ jobs:
   build-and-publish:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
-      projectDirectory: "${{ env.PROJECT_DIRECTORY }}"
-      artifactsDirectory: "${{ env.ARTIFACTS_DIRECTORY }}"
+      projectDirectory: ${{ env.PROJECT_DIRECTORY }}
+      artifactsDirectory: ${{ env.ARTIFACTS_DIRECTORY }}
  
   deploy-dev:
     uses: ./.github/workflows/workflow-backend-functions-deploy.yml
