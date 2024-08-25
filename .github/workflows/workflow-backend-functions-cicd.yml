@@ -1,3 +1,5 @@
+# https://cloudlumberjack.com/posts/github-actions-approvals/#approvals-in-action
+
 name: CI/CD Telemetry Stash
 
 on:
@@ -14,35 +16,32 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
    
-# env:
-#   AZURE_FUNCTIONAPP_NAME: func-ts-develop
-#   AZURE_FUNCTIONAPP_PACKAGE_PATH: src/backend/Functions/Ts.Functions/published
-#   CONFIGURATION: Release
-#   DOTNET_CORE_VERSION: 8.0.x
-#   WORKING_DIRECTORY: src/backend/Functions/Ts.Functions
-#   BASE_DIRECTORY: src/backend
-#   DOTNET_CORE_VERSION_INPROC: 8.0.x
+env:
+  ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/published
+  PROJECT_DIRECTORY: src/backend/Functions/Ts.Functions
 
 jobs:
   build-and-publish:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
-      projectDirectory: 'Functions/Ts.Functions'
-      artifactsDirectory: 'Functions/Ts.Functions/Publish'
+      projectDirectory: env.PROJECT_DIRECTORY
+      artifactsDirectory: env.ARTIFACTS_DIRECTORY
  
   deploy-dev:
-    uses: ./.github/workflows/workflow-backend-deploy.yml
+    uses: ./.github/workflows/workflow-backend-functions-deploy.yml
     needs: build-and-publish
     with:
       environment: 'dev'
-      deployStage: 'FUNCTIONS'
+      functionAppName: 'func-ts-develop'
+      artifactsDirectory: env.ARTIFACTS_DIRECTORY
  
   deploy-prod:
-    uses: ./.github/workflows/workflow-backend-deploy.yml
+    uses: ./.github/workflows/workflow-backend-functions-deploy.yml
     needs: deploy-dev
     with:
       environment: 'prod'
-      deployStage: 'FUNCTIONS'
+      functionAppName: 'func-ts-prod'
+      artifactsDirectory: env.ARTIFACTS_DIRECTORY
 
   # build:
   #   runs-on: ubuntu-latest

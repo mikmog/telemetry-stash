@@ -29,21 +29,21 @@ jobs:
         global-json-file: "${{ env.BASE_DIRECTORY }}/global.json"
 
     - name: Restore
-      run: dotnet restore "${{ env.BASE_DIRECTORY }}/${{ inputs.projectDirectory }}"
+      run: dotnet restore "${{ inputs.projectDirectory }}"
 
     - name: Build
-      run: dotnet build "${{ env.BASE_DIRECTORY }}/${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}"  --no-restore
+      run: dotnet build "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}"  --no-restore
 
     - name: Test
       run: dotnet test "${{ env.BASE_DIRECTORY }}"
 
     - name: Publish
-      run: dotnet publish "${{ env.BASE_DIRECTORY }}/${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ env.BASE_DIRECTORY }}/${{ inputs.artifactsDirectory }}"
+      run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}"
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        path: "${{ env.BASE_DIRECTORY }}/${{ inputs.artifactsDirectory }}"
+        path: "${{ inputs.artifactsDirectory }}"
 
 # env:
 #   AZURE_FUNCTIONAPP_NAME: func-ts-develop
