@@ -27,6 +27,7 @@ jobs:
         uses: Azure/functions-action@v1
         id: functionapp
         with:
+          environment: ${{ inputs.environment }}
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ secrets.FUNC_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.FUNC_PUBLISH_PROFILE2 }}
           package: ${{ inputs.artifactsDirectory }}
