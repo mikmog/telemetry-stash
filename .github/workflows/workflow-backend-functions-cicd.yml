@@ -1,5 +1,3 @@
-# https://cloudlumberjack.com/posts/github-actions-approvals/#approvals-in-action
-
 name: CI/CD Telemetry Stash
 
 on:
@@ -16,16 +14,17 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
- env:
-  ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/published
-  PROJECT_DIRECTORY: src/backend/Functions/Ts.Functions
-
+env:
+    ARTIFACTS_DIRECTORY: src/backend/Functions/Ts.Functions/published
+    PROJECT_DIRECTORY: src/backend/Functions/Ts.Functions
+    
 jobs:
+
   build-and-publish:
     uses: ./.github/workflows/workflow-backend-build.yml
     with:
-      projectDirectory: ${{ env.PROJECT_DIRECTORY }}
-      artifactsDirectory: ${{ env.ARTIFACTS_DIRECTORY }}
+      projectDirectory: src/backend/Functions/Ts.Functions
+      artifactsDirectory: src/backend/Functions/Ts.Functions/published
  
   deploy-dev:
     uses: ./.github/workflows/workflow-backend-functions-deploy.yml
@@ -33,7 +32,7 @@ jobs:
     with:
       environment: 'dev'
       functionAppName: 'func-ts-develop'
-      artifactsDirectory: "${{ env.ARTIFACTS_DIRECTORY }}"
+      artifactsDirectory: src/backend/Functions/Ts.Functions/published
  
   deploy-prod:
     uses: ./.github/workflows/workflow-backend-functions-deploy.yml
@@ -41,7 +40,7 @@ jobs:
     with:
       environment: 'prod'
       functionAppName: 'func-ts-prod'
-      artifactsDirectory: "${{ env.ARTIFACTS_DIRECTORY }}"
+      artifactsDirectory: src/backend/Functions/Ts.Functions/published
 
   # build:
   #   runs-on: ubuntu-latest
@@ -89,3 +88,4 @@ jobs:
   #       app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
   #       publish-profile: ${{ secrets.func_ts_develop_5119 }}
   #       package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+  # https://cloudlumberjack.com/posts/github-actions-approvals/#approvals-in-action
