@@ -1,3 +1,4 @@
 ﻿# Telemetry Stash Pipelines
 
-// TBD
+
+Located in [.github folder](/.github)

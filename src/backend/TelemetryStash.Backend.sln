@@ -9,6 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{19E8FEF9-8A0E-4ADA-9F06-20B7887573A3}"
+	ProjectSection(SolutionItems) = preProject
+		Pipelines\README.md = Pipelines\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{C9161958-70AD-46D7-BEDA-6BEAD7880C54}"
 	ProjectSection(SolutionItems) = preProject
