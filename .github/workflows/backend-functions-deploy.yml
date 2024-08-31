@@ -12,9 +12,9 @@ on:
       functionAppName:
         required: true
         type: string
+    secrets:
       publishProfile:
         required: true
-        type: string
 
 jobs:
   deploy-functions:
@@ -31,5 +31,5 @@ jobs:
         id: functionapp
         with:
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ inputs.publishProfile }}
+          publish-profile: ${{ secrets.publishProfile }}
           package: ${{ inputs.artifactsDirectory }}
