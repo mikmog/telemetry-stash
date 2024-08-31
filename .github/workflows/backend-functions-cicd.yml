@@ -21,13 +21,13 @@ env:
 jobs:
 
   build-and-publish:
-    uses: ./.github/workflows/workflow-backend-build.yml
+    uses: ./.github/workflows/backend-build.yml
     with:
       projectDirectory: src/backend/Functions/Ts.Functions
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
  
   deploy-dev:
-    uses: ./.github/workflows/workflow-backend-functions-deploy.yml
+    uses: ./.github/workflows/backend-functions-deploy.yml
     needs: build-and-publish
     with:
       environment: 'dev'
@@ -35,7 +35,7 @@ jobs:
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
  
   deploy-prod:
-    uses: ./.github/workflows/workflow-backend-functions-deploy.yml
+    uses: ./.github/workflows/backend-functions-deploy.yml
     needs: deploy-dev
     with:
       environment: 'prod'
