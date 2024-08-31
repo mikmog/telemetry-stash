@@ -2,7 +2,7 @@
 // DELETE LOCK
 // ********************************************************************
 
-import { applicationParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 
  resource resourceDeleteLock 'Microsoft.Authorization/locks@2016-09-01' = {

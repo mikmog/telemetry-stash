@@ -1,10 +1,10 @@
-// ********************************************************************
+﻿// ********************************************************************
 // SQL SERVER 
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/2021-11-01/servers?pivots=deployment-language-bicep
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.sql/servers/firewallrules?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, sqlParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, sqlParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 param sqlParameters sqlParams
 

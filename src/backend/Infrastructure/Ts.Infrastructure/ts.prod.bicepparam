@@ -21,7 +21,7 @@ param appParameters = {
   api: {
     sku: {
       name: 'F1'
-      tier: 'Basic'
+      tier: 'Free'
       size: 'F1'
       family: 'F'
       capacity: 1
@@ -58,8 +58,8 @@ param sqlParameters = {
     name: 'Basic'
     tier: 'Basic'
     capacity: 5
+    maxSizeBytes: 2147483648
   }
-  maxSizeBytes: 2147483648
   server: {
     adminLoginName: userDefinitions.Administrator_Prod.name
     adminGroupSid: userDefinitions.Administrator_Prod.principalId
@@ -71,8 +71,8 @@ param iotHubParameters = {
     sku: {
       name: 'B1'
       capacity: 1
+      partitionCount: 4
     }
     location: 'westeurope'
     retentionTimeInDays: 1
-    partitionCount: 4
 }

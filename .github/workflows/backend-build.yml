@@ -1,0 +1,50 @@
+name: Build backend
+
+on:
+  workflow_call:
+    inputs:
+      projectDirectory:
+        required: true
+        type: string
+      artifactsDirectory:
+        required: true
+        type: string
+      artifactsName:
+        required: true
+        type: string
+
+env:
+  CONFIGURATION: Release
+  BACKEND_BASE_DIRECTORY: src/backend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build & Test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        global-json-file: "${{ env.BACKEND_BASE_DIRECTORY }}/global.json"
+
+    - name: Restore
+      run: dotnet restore "${{ inputs.projectDirectory }}"
+
+    - name: Build
+      run: dotnet build "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-restore
+
+    - name: All backend tests
+      run: dotnet test "${{ env.BACKEND_BASE_DIRECTORY }}"
+
+    - name: Publish
+      run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}"
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifactsName }}
+        path: ${{ inputs.artifactsDirectory }}

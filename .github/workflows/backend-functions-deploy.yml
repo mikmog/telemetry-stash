@@ -1,0 +1,37 @@
+name: Deploy Functions
+
+on:
+  workflow_call:
+    inputs:
+      artifactsDirectory:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      functionAppName:
+        required: true
+        type: string
+      artifactsName:
+        required: true
+        type: string
+    secrets:
+      publishProfile:
+        required: true
+
+jobs:
+  deploy-functions:
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact from publish
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifactsName }}
+          path: ${{ inputs.artifactsDirectory }}
+      - name: Deploy Azure Function App
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ inputs.functionAppName }}
+          publish-profile: ${{ secrets.publishProfile }}
+          package: ${{ inputs.artifactsDirectory }}

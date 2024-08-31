@@ -29,7 +29,7 @@ public class SharedTestDbFixture : IAsyncLifetime
             .WithWaitStrategy(Wait.ForUnixContainer().UntilCommandIsCompleted("/opt/mssql-tools18/bin/sqlcmd", "-C", "-Q", "SELECT 1;"))
             .Build();
 
-        _dacPackage = DacPackage.Load($@"..\..\..\..\Ts.TelemetryDatabase.Sql\bin\Ts.TelemetryDatabase.Sql.dacpac");
+        _dacPackage = DacPackage.Load($@"../../../../Ts.TelemetryDatabase.Sql/bin/Ts.TelemetryDatabase.Sql.dacpac");
     }
 
     public IDbProvider GetTestDbProvider(string databaseName)

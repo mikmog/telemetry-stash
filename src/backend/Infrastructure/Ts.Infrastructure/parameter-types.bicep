@@ -1,4 +1,4 @@
-// ********************************************************************
+﻿// ********************************************************************
 // PARAMETER TYPE DEFINITIONS
 // ********************************************************************
 
@@ -12,7 +12,7 @@ type name = {
 @export()
 type applicationParams = {
   appName: string
-  envAbbr: 'dev' | 'prod'
+  envAbbr: 'dev' | 'develop' | 'prod'
   environment: 'Development' | 'Production'
   location: 'swedencentral'
   tags: object
@@ -27,24 +27,53 @@ type appParams = {
 @export()
 type appServiceParams = {
   sku: { 
-    name: 'F1' | 'B1'
-    tier: 'Free' | 'Basic'
-    size: 'F1' | 'B1'
-    family: 'F' | 'B'
+    name: 'F1'
+    tier: 'Free'
+    size: 'F1'
+    family: 'F'
+    capacity: 1
+  } | {
+    name: 'B1'
+    tier: 'Basic'
+    size: 'B1'
+    family: 'B'
     capacity: 1
   }
   linuxFxVersion: ('DOTNET-ISOLATED|8.0')
   resourceName: string
 }
 
+// @export()
+// type skuParams = {
+//   sku: { 
+//     name: 'F1'
+//     tier: 'Free'
+//     size: 'F1'
+//     family: 'F'
+//     capacity: 1
+//   } | {
+//     name: 'B1'
+//     tier: 'Basic'
+//     size: 'B1'
+//     family: 'B'
+//     capacity: 1
+//   }
+// }
+
 @export()
 type functionParams = {
   sku: { 
-    name: 'Y1' | 'B1'
-    tier: 'Dynamic' | 'Basic'
-    size: 'Y1' | 'B1'
-    family: 'Y' | 'B'
-    capacity: 0 | 1
+    name: 'Y1'
+    tier: 'Dynamic'
+    size: 'Y1'
+    family: 'Y'
+    capacity: 0
+  } | {
+    name: 'B1'
+    tier: 'Basic'
+    size: 'B1'
+    family: 'B'
+    capacity: 1
   }
   linuxFxVersion: ('DOTNET-ISOLATED|8.0')
   resourceName: string
@@ -55,11 +84,15 @@ type iotHubParams = {
   sku: { 
     name: 'B1'
     capacity: 1
+    partitionCount: 4
+  } | {
+    name: 'F1'
+    capacity: 1
+    partitionCount: 2
   }
   
   retentionTimeInDays: 1 | 7 | 30
-  partitionCount: 4
-  location: 'westeurope' | 'swedencentral'
+  location: 'westeurope' | 'swedencentral' | 'norwayeast'
 }
 
 @export()
@@ -82,12 +115,18 @@ type roleAssignment = {
 
 @export()
 type sqlParams = {
+  resourceName: string?
   sku: { 
-    name: 'Basic' | 'Standard'
-    tier: 'Basic' | 'Standard'
-    capacity: 5 | 10
+    name: 'Basic'
+    tier: 'Basic'
+    capacity: 5
+    maxSizeBytes: 2147483648
+  } | {
+    name: 'Standard'
+    tier: 'Standard'
+    capacity: 10
+    maxSizeBytes: 268435456000
   }
-  maxSizeBytes: 2147483648 | 268435456000
   server: {
     adminLoginName: string
     adminGroupSid: string

@@ -3,7 +3,7 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/allversions
 // ********************************************************************
 
-import { applicationParams, monitorParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, monitorParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 param monitorParameters monitorParams
 

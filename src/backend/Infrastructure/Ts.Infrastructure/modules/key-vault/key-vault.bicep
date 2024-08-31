@@ -1,9 +1,9 @@
-// ********************************************************************
+﻿// ********************************************************************
 // KEY VAULT
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.keyvault/vaults?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 
 resource keyVault 'Microsoft.KeyVault/vaults@2023-07-01' = {

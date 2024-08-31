@@ -1,9 +1,9 @@
-// ********************************************************************
+﻿// ********************************************************************
 // LINUX APP SERVICE PLAN
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, appServiceParams, functionParams, getResourceName }  from '../../parameters.bicep'
+import { applicationParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 param skuParameters skuParams 
 param resourceName string

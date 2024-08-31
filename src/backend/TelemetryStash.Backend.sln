@@ -47,6 +47,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Ts.TelemetryDatabase.Sql", 
 EndProject
 Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Ts.Infrastructure", "Infrastructure\Ts.Infrastructure\Ts.Infrastructure.msbuildproj", "{DECB9EA3-BC17-4C06-A09E-7E70BFD48ECD}"
 EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "Ts.Pipelines.GitHub", "..\..\.github\Ts.Pipelines.GitHub.msbuildproj", "{BDC289BC-01B1-40DF-8426-1A02F7C2BACC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{DECB9EA3-BC17-4C06-A09E-7E70BFD48ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DECB9EA3-BC17-4C06-A09E-7E70BFD48ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC289BC-01B1-40DF-8426-1A02F7C2BACC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDC289BC-01B1-40DF-8426-1A02F7C2BACC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDC289BC-01B1-40DF-8426-1A02F7C2BACC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDC289BC-01B1-40DF-8426-1A02F7C2BACC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{4A7E329B-DB4A-4A4A-9DE6-5A20AF17EECD} = {19F05283-86C3-4D40-A5D7-C70017DF9EFC}
 		{D6B56A08-B5C2-4C8B-9E49-51994F67FF4B} = {7807ABF0-CB83-4EE8-A735-094CABD47A56}
 		{DECB9EA3-BC17-4C06-A09E-7E70BFD48ECD} = {FBF8F9D0-CADA-4B53-B63F-D0E5B972A3BB}
+		{BDC289BC-01B1-40DF-8426-1A02F7C2BACC} = {19E8FEF9-8A0E-4ADA-9F06-20B7887573A3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {73B6DB14-9569-4D5F-BEF4-D33784E84725}
