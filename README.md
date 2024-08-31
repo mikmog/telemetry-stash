@@ -1,7 +1,7 @@
 # Telemetry Stash
 
 _The_ repository for **Telemetry Stash**'s systems.  
-It a monorepository, and includes code written in C#/Dotnet hosted in Azure
+It is a monorepository that includes code written in C#/Dotnet hosted in Azure.
 
 ## Getting started
 
