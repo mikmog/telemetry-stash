@@ -31,6 +31,5 @@ jobs:
         id: functionapp
         with:
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: publishProfile
-#          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ inputs.publishProfile }}
           package: ${{ inputs.artifactsDirectory }}

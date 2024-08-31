@@ -1,3 +1,6 @@
+
+# https://cloudlumberjack.com/posts/github-actions-approvals/#approvals-in-action
+
 name: CI/CD Telemetry Stash
 
 on:
