@@ -12,6 +12,9 @@ on:
       functionAppName:
         required: true
         type: string
+      artifactsName:
+        required: true
+        type: string
     secrets:
       publishProfile:
         required: true
@@ -24,11 +27,10 @@ jobs:
       - name: Download artifact from publish
         uses: actions/download-artifact@v4
         with:
-          name: functionapp
+          name: ${{ inputs.artifactsName }}
           path: ${{ inputs.artifactsDirectory }}
       - name: Deploy Azure Function App
         uses: Azure/functions-action@v1
-        id: functionapp
         with:
           app-name: ${{ inputs.functionAppName }}
           publish-profile: ${{ secrets.publishProfile }}
