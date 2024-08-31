@@ -1,10 +1,8 @@
-name: CI/CD Telemetry Stash
+name: CI/CD Backend Functions - Telemetry Stash
 
 on:
   push:
     paths:
-      - src/backend/Functions/**
-      - src/backend/Database/**
       - '.github/workflows/**'
   pull_request:
     paths:
@@ -12,6 +10,7 @@ on:
       - src/backend/Database/**
       - '.github/workflows/**'
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
 
@@ -39,4 +38,4 @@ jobs:
       functionAppName: func-ts-prod
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
     secrets:
-      publishProfile: ${{ secrets.xxx }}
+      publishProfile: ${{ secrets.func_ts_prod_C090 }}

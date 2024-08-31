@@ -12,7 +12,7 @@ on:
 
 env:
   CONFIGURATION: Release
-  BASE_DIRECTORY: src/backend
+  BACKEND_BASE_DIRECTORY: src/backend
 
 jobs:
   build:
@@ -26,16 +26,16 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        global-json-file: "${{ env.BASE_DIRECTORY }}/global.json"
+        global-json-file: "${{ env.BACKEND_BASE_DIRECTORY }}/global.json"
 
     - name: Restore
       run: dotnet restore "${{ inputs.projectDirectory }}"
 
     - name: Build
-      run: dotnet build "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}"  --no-restore
+      run: dotnet build "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-restore
 
-    # - name: Test
-    #   run: dotnet test "${{ env.BASE_DIRECTORY }}"
+    - name: All backend tests
+      run: dotnet test "${{ env.BACKEND_BASE_DIRECTORY }}"
 
     - name: Publish
       run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}"

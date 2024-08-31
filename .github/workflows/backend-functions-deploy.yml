@@ -26,10 +26,10 @@ jobs:
         with:
           name: functionapp
           path: ${{ inputs.artifactsDirectory }}
-      - name: Deploy to Azure Function App
+      - name: Deploy Azure Function App
         uses: Azure/functions-action@v1
         id: functionapp
         with:
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.publishProfile }}
           package: ${{ inputs.artifactsDirectory }}
