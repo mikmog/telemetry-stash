@@ -29,7 +29,7 @@ jobs:
       functionAppName: func-ts-develop
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
     secrets:
-      func_ts_develop_5119: ${{ secrets.func_ts_develop_5119 }}
+      publishProfile: ${{ secrets.func_ts_develop_5119 }}
  
   deploy-prod:
     uses: ./.github/workflows/backend-functions-deploy.yml
@@ -38,4 +38,5 @@ jobs:
       environment: prod
       functionAppName: func-ts-prod
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
-      publishProfile: xxx
+    secrets:
+      publishProfile: ${{ secrets.xxx }}
