@@ -29,5 +29,6 @@ jobs:
         with:
           environment: ${{ inputs.environment }}
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.func_ts_develop_5119 }}
+#          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: ${{ inputs.artifactsDirectory }}
