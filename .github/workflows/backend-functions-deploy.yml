@@ -12,6 +12,9 @@ on:
       functionAppName:
         required: true
         type: string
+      publishProfile:
+        required: true
+        type: string
 
 jobs:
   deploy-functions:
@@ -27,8 +30,7 @@ jobs:
         uses: Azure/functions-action@v1
         id: functionapp
         with:
-          environment: ${{ inputs.environment }}
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ secrets.func_ts_develop_5119 }}
+          publish-profile: publishProfile
 #          publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
           package: ${{ inputs.artifactsDirectory }}
