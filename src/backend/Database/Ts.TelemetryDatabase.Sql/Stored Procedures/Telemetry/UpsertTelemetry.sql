@@ -58,3 +58,8 @@ BEGIN
 
 END
 GO
+
+GRANT EXECUTE
+    ON OBJECT::[dbo].[UpsertTelemetry] TO [db_execute_procedure_role]
+    AS [dbo];
+GO

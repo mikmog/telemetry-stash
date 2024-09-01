@@ -29,14 +29,14 @@ A SQL database with [RepoDb](https://github.com/mikependon/RepoDB) ORM is used. 
 
 ### Publish database project
 
-Publish the database project via Visual Studio Schema Compare... or CLI.
+Publish the database project via Visual Studio Schema Compare or CLI.
 
 ```bash
 dotnet tool install -g microsoft.sqlpackage
 ```
 
 ```bash
-./SqlPackage /Action:Publish /SourceFile:bin/{DEBUG_OR_RELEASE}/Ts.TelemetryDatabase.Sql.dacpac /TargetServerName:{SQL_SERVER} /TargetDatabaseName:Ts.TelemetryDatabase.Sql
+./SqlPackage /Action:Publish /SourceFile:bin/Ts.TelemetryDatabase.Sql.dacpac /TargetServerName:{SQL_SERVER} /TargetDatabaseName:Ts.TelemetryDatabase.Sql
 ```
 
 ### Allow functions to access database
@@ -45,9 +45,8 @@ dotnet tool install -g microsoft.sqlpackage
 USE [{DATABASE_NAME}]
 CREATE USER [{IDENTITY}] FROM EXTERNAL PROVIDER;
 EXEC sp_addrolemember 'db_datareader', [{IDENTITY}];
-EXEC sp_addrolemember 'db_datawriter', [{IDENTITY}];
+ALTER ROLE [db_execute_procedure_role] ADD MEMBER [{IDENTITY}]
 
-GRANT EXECUTE ON SCHEMA ::dbo TO [{IDENTITY}]
 ```
 
 ### Create certificates

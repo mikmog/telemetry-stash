@@ -1,6 +1,6 @@
 ﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
-[Collection("SharedTestDbServer")]
+[Collection(CollectionState.SharedTestDbServer)]
 public class RegisterTemplateRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)
 {
     [Fact]

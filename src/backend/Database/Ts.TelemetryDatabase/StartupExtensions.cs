@@ -12,7 +12,7 @@ public static class StartupExtensions
         GlobalConfiguration.Setup().UseSqlServer();
 
         var connectionString = configuration.GetConnectionString("TelemetryStashDatabase") ?? throw new Exception("Missing TelemetryStashDatabase connection string");
-        services.AddSingleton<IDbProvider>(_ => new DbConnectionProvider(connectionString));
+        services.AddSingleton<IDbProvider>(_ => new DbProvider(connectionString));
 
         services.AddSingleton<IDeviceRepository, DeviceRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();
