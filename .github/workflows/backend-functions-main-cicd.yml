@@ -1,9 +1,6 @@
 name: CI/CD Backend Functions - Telemetry Stash
 
 on:
-  push:
-    paths:
-      - '.github/workflows/**'
   pull_request:
     paths:
       - src/backend/Functions/**
