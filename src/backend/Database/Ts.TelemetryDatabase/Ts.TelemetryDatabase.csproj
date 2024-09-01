@@ -16,4 +16,8 @@
     <PackageReference Include="System.Text.RegularExpressions" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Ts.Database.Tests" />
+  </ItemGroup>
+
 </Project>

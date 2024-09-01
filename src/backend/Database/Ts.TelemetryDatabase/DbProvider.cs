@@ -13,7 +13,7 @@ public interface IDbProvider
     Task<T> QuerySingle<T>(Expression<Func<T, bool>> where, string? tableName = null, CancellationToken cancellationToken = default) where T : class;
 }
 
-public class DbConnectionProvider(string connectionString) : IDbProvider
+internal class DbProvider(string connectionString) : IDbProvider
 {
     public IDbConnection CreateConnection()
     {

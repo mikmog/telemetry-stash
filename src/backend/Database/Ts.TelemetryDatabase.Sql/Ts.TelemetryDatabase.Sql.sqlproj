@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build">
-  <Sdk Name="Microsoft.Build.Sql" Version="0.1.19-preview" />
+  <Sdk Name="Microsoft.Build.Sql" Version="0.2.0-preview" />
   <PropertyGroup>
     <Name>Ts.TelemetryDatabase.Sql</Name>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
@@ -9,6 +9,7 @@
     <ProjectVersion>4.1</ProjectVersion>
     <LangVersion>latest</LangVersion>
     <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
+    <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin</OutputPath>
@@ -26,6 +27,7 @@
     <Folder Include="Stored Procedures\RegisterSet" />
     <Folder Include="Stored Procedures\RegisterTemplate" />
     <Folder Include="Stored Procedures\Telemetry" />
+    <Folder Include="Security" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="User Defined Types\TelemetriesType.sql" />
@@ -41,6 +43,8 @@
     <Build Include="Stored Procedures\RegisterTemplate\UpsertRegisterTemplate.sql" />
     <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
     <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
+    <Build Include="Security\db_execute_procedure_role.sql" />
+    <Build Include="Security\create_user.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Compares\SqlSchemaCompare.Prod.scmp" />
