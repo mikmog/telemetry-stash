@@ -43,7 +43,7 @@
     <Build Include="Stored Procedures\RegisterTemplate\UpsertRegisterTemplate.sql" />
     <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
     <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
-    <Build Include="security\db_execute_procedure_role.sql" />
+    <Build Include="Security\db_execute_procedure_role.sql" />
     <Build Include="Security\create_user.sql" />
   </ItemGroup>
   <ItemGroup>
