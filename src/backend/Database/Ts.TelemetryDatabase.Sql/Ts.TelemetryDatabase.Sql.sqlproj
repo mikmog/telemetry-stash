@@ -11,11 +11,6 @@
     <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
     <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(MSBuildRuntimeType)' != 'Core'">
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkMoniker>.NETFramework,Version=$(TargetFrameworkVersion)</TargetFrameworkMoniker>
-    <IncludeCompositeObjects>True</IncludeCompositeObjects>
-  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin</OutputPath>
   </PropertyGroup>
