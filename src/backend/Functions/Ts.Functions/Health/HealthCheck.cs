@@ -8,7 +8,7 @@ namespace TelemetryStash.Functions.Health;
 public class HealthCheck(HealthCheckService healthCheckService)
 {
     [Function("HealthCheck")]
-    public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req, FunctionContext executionContext)
+    public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequestData req, FunctionContext executionContext)
     {
         var status = await healthCheckService.CheckHealthAsync();
 
