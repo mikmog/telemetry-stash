@@ -15,11 +15,13 @@ public static class AppSettings
 
     public static string GetRequiredConnectionString(this IConfiguration configuration, string name)
     {
-        return configuration.GetConnectionString(name) ?? throw new Exception($"Missing required connection string '{name}'");
+        return configuration.GetConnectionString(name) ?? throw new ConfigurationErrorException($"Missing required connection string '{name}'");
     }
 
     public static string GetRequiredSetting(this IConfiguration configuration, string name) 
     {
-        return configuration[name]  ?? throw new Exception($"Missing required configuration '{name}'");
+        return configuration[name]  ?? throw new ConfigurationErrorException($"Missing required configuration '{name}'");
     }
 }
+
+public class ConfigurationErrorException(string message) : Exception(message) { }

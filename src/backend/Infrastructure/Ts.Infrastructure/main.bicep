@@ -156,7 +156,7 @@ module keyVaultRoleAssignmentModule 'modules/key-vault/role-assignment.bicep' = 
   }
 }
 
-module lockModule 'modules/lock/delete-lock.bicep' = {
-  name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
-  params: { applicationParameters: applicationParameters }
-}
+// module lockModule 'modules/lock/delete-lock.bicep' = {
+//   name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
+//   params: { applicationParameters: applicationParameters }
+// }

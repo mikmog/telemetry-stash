@@ -111,7 +111,8 @@ type monitorParams = {
 type roleAssignment = {
   principalId: string
   principalType: 'Device' | 'ForeignGroup' | 'Group' | 'ServicePrincipal' | 'User'
-  roleDefinition: string // See role-assigment.bicep for definitions
+  roleDefinition: 'Administrator' | 'SecretsUser'   // Key Vault
+                  | 'IoTHubDataReader'              // Iot Hub
 }
 
 @export()
