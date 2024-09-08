@@ -41,7 +41,7 @@ jobs:
     #   run: dotnet test "${{ env.BACKEND_BASE_DIRECTORY }}"
 
     - name: Publish
-      run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}"
+      run: dotnet publish "${{ inputs.projectDirectory }}" --configuration "${{ env.CONFIGURATION }}" --no-build --output "${{ inputs.artifactsDirectory }}" -r linux-x64 --self-contained
 
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
