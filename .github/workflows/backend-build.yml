@@ -16,7 +16,6 @@ on:
 env:
   CONFIGURATION: Release
   BACKEND_BASE_DIRECTORY: src/backend
-  DOTNET_CORE_VERSION_INPROC: 6.0.x
 
 jobs:
   build:
@@ -32,11 +31,6 @@ jobs:
       with:
         global-json-file: "${{ env.BACKEND_BASE_DIRECTORY }}/global.json"
     
-    - name: Setup .NET Core (for inproc extensions)
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION_INPROC }}
-
     - name: Restore
       run: dotnet restore "${{ env.BACKEND_BASE_DIRECTORY }}"
 
