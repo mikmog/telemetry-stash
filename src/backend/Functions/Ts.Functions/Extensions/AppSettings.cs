@@ -12,4 +12,14 @@ public static class AppSettings
 
         return builder;
     }
+
+    public static string GetRequiredConnectionString(this IConfiguration configuration, string name)
+    {
+        return configuration.GetConnectionString(name) ?? throw new Exception($"Missing required connection string '{name}'");
+    }
+
+    public static string GetRequiredSetting(this IConfiguration configuration, string name) 
+    {
+        return configuration[name]  ?? throw new Exception($"Missing required configuration '{name}'");
+    }
 }

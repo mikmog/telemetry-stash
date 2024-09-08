@@ -74,4 +74,10 @@ param iotHubParameters = {
     }
     location: 'norwayeast'
     retentionTimeInDays: 1
-}
+    roleAssignments: [
+    {
+      principalId: userDefinitions.Administrator_NonProd.principalId
+      principalType: 'Group'
+      roleDefinition: 'IoTHubDataReader'
+    }
+  ]}

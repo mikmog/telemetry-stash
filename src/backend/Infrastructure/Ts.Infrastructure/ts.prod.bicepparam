@@ -75,4 +75,5 @@ param iotHubParameters = {
     }
     location: 'westeurope'
     retentionTimeInDays: 1
-}
+    roleAssignments: []
+  }

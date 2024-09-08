@@ -121,9 +121,24 @@ module iotHubModule 'modules/iot-hub/iot-hub.bicep' = {
   }
 }
 
+// Iot Hub - Role Assignments
+module iotHubRoleAssignmentModule 'modules/iot-hub/role-assignment.bicep' = {
+  name: getResourceName({ resourceAbbr: 'ras', resourceName: 'iot' }, applicationParameters)
+  params: { 
+    iotHubName: iotHubModule.outputs.iotHubName
+    roleAssignments: concat([
+      {
+        principalId: functionAppModule.outputs.identityPrincipalId
+        principalType: 'ServicePrincipal'
+        roleDefinition: 'IoTHubDataReader'
+      }
+    ], iotHubParameters.roleAssignments)
+  }
+}
+
 // Key Vault - Role Assignments
 module keyVaultRoleAssignmentModule 'modules/key-vault/role-assignment.bicep' = {
-  name: getResourceName({ resourceAbbr: 'ras' }, applicationParameters)
+  name: getResourceName({ resourceAbbr: 'ras', resourceName: 'kv' }, applicationParameters)
   params: { 
     keyVaultName: keyVaultModule.outputs.keyVaultName
     roleAssignments: concat([
