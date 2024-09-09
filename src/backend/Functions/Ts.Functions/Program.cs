@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using TelemetryStash.Database;
 using TelemetryStash.Functions.Extensions;
+using TelemetryStash.Functions.Health;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults()
@@ -18,6 +19,7 @@ var host = new HostBuilder()
 
         services.AddFunctionServices();
         services.AddTelemetryDatabase(context.Configuration);
+        services.AddHealthCheck(context.Configuration);
     })
     .Build();
 

@@ -83,3 +83,5 @@ resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@
     }
   }
 }
+
+output iotHubName string = iotHub.name

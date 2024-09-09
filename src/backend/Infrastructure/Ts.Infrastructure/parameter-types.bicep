@@ -93,6 +93,7 @@ type iotHubParams = {
   
   retentionTimeInDays: 1 | 7 | 30
   location: 'westeurope' | 'swedencentral' | 'norwayeast'
+  roleAssignments: roleAssignment[]
 }
 
 @export()
@@ -110,7 +111,8 @@ type monitorParams = {
 type roleAssignment = {
   principalId: string
   principalType: 'Device' | 'ForeignGroup' | 'Group' | 'ServicePrincipal' | 'User'
-  roleDefinition: 'Administrator' | 'CertificateOfficer' | 'Contributor' | 'CryptoOfficer' | 'CryptoServiceEncryptionUser' | 'CryptoUser' | 'Reader' | 'SecretsOfficer' | 'SecretsUser'
+  roleDefinition: 'Administrator' | 'SecretsUser'   // Key Vault
+                  | 'IoTHubDataReader'              // Iot Hub
 }
 
 @export()

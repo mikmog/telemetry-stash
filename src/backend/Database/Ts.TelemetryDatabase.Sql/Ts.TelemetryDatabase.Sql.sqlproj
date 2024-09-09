@@ -8,6 +8,7 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <ProjectVersion>4.1</ProjectVersion>
     <LangVersion>latest</LangVersion>
+	<TargetFramework>net472</TargetFramework>
     <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
     <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
   </PropertyGroup>
