@@ -37,7 +37,7 @@ jobs:
     - name: 'Resolve Project Dependencies Using Dotnet'
       shell: bash
       run: |
-        pushd './${{ inputs.projectDirectory }}'
+        pushd '${{ inputs.projectDirectory }}'
         dotnet build --configuration Release --output "${{ inputs.artifactsDirectory }}"
         popd
 
