@@ -27,7 +27,7 @@ jobs:
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
     secrets:
-      publishProfile: ${{ secrets.func_ts_develop_AF50 }}
+      publishProfile: ${{ secrets.func_ts_develop_5119 }}
  
   deploy-prod:
     uses: ./.github/workflows/backend-functions-deploy.yml
