@@ -36,7 +36,7 @@
       <HintPath>..\..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Json">
-      <HintPath>..\..\..\packages\nanoFramework.Json.2.2.122\lib\nanoFramework.Json.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.Json.2.2.134\lib\nanoFramework.Json.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>..\..\..\packages\nanoFramework.System.Collections.1.5.31\lib\nanoFramework.System.Collections.dll</HintPath>
