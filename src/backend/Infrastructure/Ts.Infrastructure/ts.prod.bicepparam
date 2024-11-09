@@ -31,11 +31,11 @@ param appParameters = {
   }
   functions: {
     sku: {
-      name: 'B1'
-      tier: 'Basic'
-      size: 'B1'
-      family: 'B'
-      capacity: 1
+      name: 'Y1'
+      tier: 'Dynamic'
+      size: 'Y1'
+      family: 'Y'
+      capacity: 0
     }
     linuxFxVersion: 'DOTNET-ISOLATED|8.0'
     resourceName: 'func'
@@ -76,4 +76,4 @@ param iotHubParameters = {
     location: 'westeurope'
     retentionTimeInDays: 1
     roleAssignments: []
-  }
+ }
