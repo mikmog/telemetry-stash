@@ -7,8 +7,8 @@ public static class AppSettings
 {
     public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder builder, IHostEnvironment hostingEnvironment)
     {
-        builder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        builder.AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
+        builder.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+        builder.AddJsonFile($"appsettings.{hostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: false);
 
         return builder;
     }
