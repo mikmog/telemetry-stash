@@ -7,7 +7,7 @@
       "Worker": "Warning",
       "System": "Warning",
       "Host.Aggregator": "Warning",
-      "Host.Results": "Information",
+      "Host.Results": "Warning",
       "Azure.Core": "Warning",
       "Azure.Messaging": "Warning",
       "Function": "Warning",
@@ -17,9 +17,13 @@
     "applicationInsights": {
       "samplingSettings": {
         "isEnabled": true,
-        "excludedTypes": "Exception"
+        "initialSamplingPercentage": 0.0,
+        "minSamplingPercentage": 0.0,
+        "maxSamplingPercentage": 0.0,
+        "excludedTypes": "Event;Exception"
       },
       "enableLiveMetricsFilters": true,
+      "enablePerformanceCountersCollection": false,
       "enableDependencyTracking": false
     }
   }
