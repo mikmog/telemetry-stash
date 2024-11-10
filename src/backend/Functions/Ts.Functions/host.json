@@ -1,5 +1,4 @@
-﻿// https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring?tabs=v2
-{
+﻿{
   "version": "2.0",
   "logging": {
     "logLevel": {
@@ -13,7 +12,7 @@
       "Azure.Messaging": "Warning",
       "Function": "Warning",
       "Function.TelemetryTrigger": "Warning",
-      "Function.TelemetryTrigger.User": "Information"
+      "Function.TelemetryTrigger.User": "Warning"
     },
     "applicationInsights": {
       "samplingSettings": {
