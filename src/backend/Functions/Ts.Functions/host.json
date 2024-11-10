@@ -8,11 +8,11 @@
       "Worker": "Warning",
       "System": "Warning",
       "Host.Aggregator": "Warning",
-      "Host.Results": "Warning",
+      "Host.Results": "Information",
       "Azure.Core": "Warning",
       "Azure.Messaging": "Warning",
       "Function": "Warning",
-      "Function.TelemetryTrigger": "Information",
+      "Function.TelemetryTrigger": "Warning",
       "Function.TelemetryTrigger.User": "Information"
     },
     "applicationInsights": {
