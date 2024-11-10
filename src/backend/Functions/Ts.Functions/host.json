@@ -5,7 +5,8 @@
       "samplingSettings": {
         "isEnabled": false
       },
-      "enableLiveMetricsFilters": true
+      "enableLiveMetricsFilters": true,
+      "enablePerformanceCountersCollection": false
     }
   }
 }

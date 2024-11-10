@@ -9,27 +9,7 @@ public static class TelemetryProcessor
 {
     public static IServiceCollection ConfigureApplicationInsightsTelemetryFilter(this IServiceCollection services)
     {
-        var configDescriptor = services.SingleOrDefault(tc => tc.ServiceType == typeof(TelemetryConfiguration));
-        if (configDescriptor?.ImplementationFactory == null)
-        {
-            return services;
-        }
-
-        var implFactory = configDescriptor.ImplementationFactory;
-
-        services.Remove(configDescriptor);
-        services.AddSingleton(provider =>
-        {
-            if (implFactory.Invoke(provider) is not TelemetryConfiguration config)
-            {
-                throw new InvalidOperationException("Failed to create TelemetryConfiguration");
-            }
-
-            config.TelemetryProcessorChainBuilder.Use(next => new TelemetryProcessorFilter(next));
-            config.TelemetryProcessorChainBuilder.Build();
-            return config;
-        });
-
+        services.AddApplicationInsightsTelemetryProcessor<TelemetryProcessorFilter>();
         return services;
     }
 }
@@ -44,16 +24,16 @@ internal class TelemetryProcessorFilter(ITelemetryProcessor next) : ITelemetryPr
         }
     }
 
-    private static bool ShouldProcess(ITelemetry item)
+    private static bool ShouldProcess(ITelemetry telemetry)
     {
-        if (item is DependencyTelemetry dependency)
+        if (telemetry is DependencyTelemetry dependency)
         {
             // Only send failed dependencies
             return dependency.Success.HasValue && dependency.Success.Value == false;
         }
 
         // TODO: Does not work
-        if (item is TraceTelemetry trace)
+        if (telemetry is TraceTelemetry trace)
         {
             const string eventName = "FunctionStarted";
             if (trace.Properties.TryGetValue("EventName", out var name))
@@ -71,7 +51,7 @@ internal class TelemetryProcessorFilter(ITelemetryProcessor next) : ITelemetryPr
         // TelemetryTrigger MaxDurationMs
         // TelemetryTrigger AvgDurationMs
         // TelemetryTrigger Count
-        if (item is MetricTelemetry)
+        if (telemetry is MetricTelemetry)
         {
             return false;
         }
