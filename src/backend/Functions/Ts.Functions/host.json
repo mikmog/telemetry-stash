@@ -11,7 +11,8 @@
       "Azure.Core": "Warning",
       "Azure.Messaging": "Warning",
       "Function": "Warning",
-      "Function.TelemetryTrigger": "Information"
+      "Function.TelemetryTrigger": "Information",
+      "Function.TelemetryTrigger.User": "Information"
     },
     "applicationInsights": {
       "samplingSettings": {
