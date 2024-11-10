@@ -12,7 +12,7 @@
       "Azure.Core": "Warning",
       "Azure.Messaging": "Warning",
       "Function": "Warning",
-      "Function.TelemetryTrigger": "Warning",
+      "Function.TelemetryTrigger": "Information",
       "Function.TelemetryTrigger.User": "Information"
     },
     "applicationInsights": {
