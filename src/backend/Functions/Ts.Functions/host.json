@@ -1,26 +1,12 @@
 ﻿{
   "version": "2.0",
   "logging": {
-    "logLevel": {
-      "default": "Warning",
-      "Microsoft": "Warning",
-      "Worker": "Warning",
-      "System": "Warning",
-      "Host.Aggregator": "Warning",
-      "Host.Results": "Warning",
-      "Azure.Core": "Warning",
-      "Azure.Messaging": "Warning",
-      "Function": "Warning",
-      "Function.TelemetryTrigger": "Warning",
-      "Function.TelemetryTrigger.User": "Information"
-    },
     "applicationInsights": {
       "samplingSettings": {
-        "isEnabled": true,
-        "excludedTypes": "Exception"
+        "isEnabled": false
       },
       "enableLiveMetricsFilters": true,
-      "enableDependencyTracking": false
+      "enablePerformanceCountersCollection": false
     }
   }
 }
