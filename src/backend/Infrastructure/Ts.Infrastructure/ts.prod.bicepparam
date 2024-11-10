@@ -55,10 +55,10 @@ param keyVaultParameters = {
 // Database
 param sqlParameters = {
   sku: {
-    name: 'Basic'
-    tier: 'Basic'
-    capacity: 5
-    maxSizeBytes: 2147483648
+    name: 'Standard'
+    tier: 'Standard'
+    capacity: 10
+    maxSizeBytes: 268435456000
   }
   server: {
     adminLoginName: userDefinitions.Administrator_Prod.name

@@ -43,23 +43,6 @@ type appServiceParams = {
   resourceName: string
 }
 
-// @export()
-// type skuParams = {
-//   sku: { 
-//     name: 'F1'
-//     tier: 'Free'
-//     size: 'F1'
-//     family: 'F'
-//     capacity: 1
-//   } | {
-//     name: 'B1'
-//     tier: 'Basic'
-//     size: 'B1'
-//     family: 'B'
-//     capacity: 1
-//   }
-// }
-
 @export()
 type functionParams = {
   sku: { 
