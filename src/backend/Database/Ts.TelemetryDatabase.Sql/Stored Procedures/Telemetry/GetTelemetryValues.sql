@@ -15,13 +15,13 @@ BEGIN
     SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
 
     SELECT
-        te.RegisterId
-        ,te.TimestampId
+        T.RegisterId
+        ,T.TimestampId
         ,TS.ClientTimestamp
-        ,te.Value
+        ,T.Value
     FROM
         dbo.Timestamps TS
-        JOIN dbo.Telemetries te ON TS.Id = te.TimestampId
+        JOIN dbo.Telemetries T ON TS.Id = T.TimestampId
     WHERE
         TS.DeviceId = @DeviceId
         AND TS.ClientTimestamp >= @FromClientTimestamp

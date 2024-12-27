@@ -1,40 +1,44 @@
-﻿using TelemetryStash.Database.Repositories;
+﻿using System.Globalization;
+using TelemetryStash.Database.Repositories;
 using TelemetryStash.Functions.TelemetryTrigger;
 
 namespace TelemetryStash.Functions.Services;
 
 public interface ITelemetryService
 {
-    Task Process(string deviceId, TelemetryRequest telemetry);
+    Task Process(string deviceIdentifier, TelemetryRequest telemetry);
 }
 
 public class TelemetryService(
     ITelemetryRepository telemetryRepository,
     IDeviceService deviceService,
-    IRegisterSetService registerSetService,
-    IRegisterTemplateService registerTemplateService,
     IRegisterService registerService) : ITelemetryService
 {
-    public async Task Process(string deviceId, TelemetryRequest telemetry)
+    public async Task Process(string deviceIdentifier, TelemetryRequest telemetry)
     {
-        var telemetryMap = new List<(int RegisterKey, decimal Value)>(telemetry.Registers.Sum(r => r.Value.Count));
+        var device = await deviceService.GetOrCreate(deviceIdentifier);
 
-        var device = await deviceService.GetOrCreate(deviceId);
-        foreach (var registerRequests in telemetry.Registers)
+        foreach (var registerSetKvp in telemetry.RegisterSets)
         {
-            var registerSetRequest = telemetry.RegisterSet ?? registerRequests.Key;
-            var registerSubset = registerRequests.Key;
+            var registerSetIdentifier = registerSetKvp.Key;
+            var registerSet = registerSetKvp.Value;
 
-            var registerSet = await registerSetService.GetOrCreate(device.Id, registerSetRequest);
+            var requestRegisterValues = registerSet.RegisterValues.Select(r => (r.Key, r.Value));
 
-            foreach (var registerRequest in registerRequests.Value)
-            {
-                var registerTemplate = await registerTemplateService.GetOrCreate(registerSet.Id, registerRequest.Key);
-                var register = await registerService.GetOrCreate(registerTemplate.Id, registerSubset);
-                telemetryMap.Add((register.Id, registerRequest.Value));
-            }
+            // TODO: registerSet.Tags
+
+            var registerRows = await registerService.GetOrCreate(device.Id, registerSetIdentifier, requestRegisterValues.Select(r => r.Key));
+
+            var telemetryMap = requestRegisterValues.Select(r => (registerRows[r.Key].Id, r.Value));
+            await telemetryRepository.Upsert(device.Id, telemetry.Timestamp, telemetryMap);
         }
+    }
+}
 
-        await telemetryRepository.Upsert(device.Id, telemetry.Timestamp, telemetryMap);
+public static class NumberHelper
+{
+    public static string ToStringWithoutTrailingZeroes(this decimal value)
+    {
+        return (value / 1.000000000000000000000000000000000m).ToString(CultureInfo.InvariantCulture);
     }
 }

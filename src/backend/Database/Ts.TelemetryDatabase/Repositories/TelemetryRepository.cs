@@ -6,13 +6,13 @@ namespace TelemetryStash.Database.Repositories;
 
 public interface ITelemetryRepository
 {
-    IAsyncEnumerable<List<TelemetryValue>> GetTelemetry(int deviceId, DateTimeOffset fromClientTimestamp, DateTimeOffset toClientTimestamp, int preferredBatchSize = 1000, CancellationToken token = default);
-    Task Upsert(int deviceId, DateTimeOffset timestamp, List<(int RegisterId, decimal Value)> telemetry, CancellationToken token = default);
+    IAsyncEnumerable<List<TelemetryRow>> GetTelemetry(int deviceId, DateTimeOffset fromClientTimestamp, DateTimeOffset toClientTimestamp, int preferredBatchSize = 1000, CancellationToken token = default);
+    Task Upsert(int deviceId, DateTimeOffset timestamp, IEnumerable<(int RegisterId, string Value)> registerValues, CancellationToken token = default);
 }
 
 public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
 {
-    public async IAsyncEnumerable<List<TelemetryValue>> GetTelemetry(int deviceId, DateTimeOffset fromClientTimestamp, DateTimeOffset toClientTimestamp, int preferredBatchSize = 1000, [EnumeratorCancellation] CancellationToken token = default)
+    public async IAsyncEnumerable<List<TelemetryRow>> GetTelemetry(int deviceId, DateTimeOffset fromClientTimestamp, DateTimeOffset toClientTimestamp, int preferredBatchSize = 1000, [EnumeratorCancellation] CancellationToken token = default)
     {
         using var connection = dbProvider.CreateConnection();
 
@@ -21,7 +21,7 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
 
         while(true)
         {
-            var telemetries = (await connection.ExecuteQueryAsync<TelemetryValue>
+            var telemetries = (await connection.ExecuteQueryAsync<TelemetryRow>
             (
                 commandText: "dbo.GetTelemetryValues",
                 param: new
@@ -49,7 +49,7 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
         yield return [];
     }
 
-    public async Task Upsert(int deviceId, DateTimeOffset timestamp, List<(int RegisterId, decimal Value)> telemetry, CancellationToken token = default)
+    public async Task Upsert(int deviceId, DateTimeOffset timestamp, IEnumerable<(int RegisterId, string Value)> registerValues, CancellationToken token = default)
     {
         var telemetries = new DataTable()
         {
@@ -57,11 +57,11 @@ public class TelemetryRepository(IDbProvider dbProvider) : ITelemetryRepository
         };
 
         telemetries.Columns.Add("RegisterId", typeof(int));
-        telemetries.Columns.Add("Value", typeof(decimal));
+        telemetries.Columns.Add("Value", typeof(string));
 
-        foreach (var (registerId, value) in telemetry)
+        foreach (var (RegisterId, Value) in registerValues)
         {
-            telemetries.Rows.Add(registerId, value);
+            telemetries.Rows.Add(RegisterId, Value);
         }
 
         await dbProvider

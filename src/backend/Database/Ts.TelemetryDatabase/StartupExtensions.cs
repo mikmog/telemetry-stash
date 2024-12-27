@@ -16,8 +16,6 @@ public static class StartupExtensions
 
         services.AddSingleton<IDeviceRepository, DeviceRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();
-        services.AddSingleton<IRegisterSetRepository, RegisterSetRepository>();
-        services.AddSingleton<IRegisterTemplateRepository, RegisterTemplateRepository>();
         services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
 
         return services;

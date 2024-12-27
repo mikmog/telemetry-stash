@@ -6,16 +6,20 @@ namespace TelemetryStash.Functions.Services;
 
 public interface IRegisterService
 {
-    Task<Register> GetOrCreate(int registerId, string registerSubset, CancellationToken token = default);
+    Task<Dictionary<string, RegisterRow>> GetOrCreate(int deviceId, string registerSet, IEnumerable<string> registers, CancellationToken token = default);
 }
 
 public class RegisterService(IRegisterRepository registerRepository, HybridCache cache) : IRegisterService
 {
-    public async Task<Register> GetOrCreate(int registerId, string registerSubset, CancellationToken token = default)
+    public async Task<Dictionary<string, RegisterRow>> GetOrCreate(int deviceId, string registerSet, IEnumerable<string> registers, CancellationToken token = default)
     {
-        return await cache.GetOrCreateAsync(
-            $"{nameof(Register)}{registerId}{registerSubset}",
-            async innerToken => await registerRepository.Upsert(registerId, registerSubset, innerToken),
-            token: token);
+        var key = $"{nameof(RegisterRow)}{deviceId}{registerSet}{string.Concat(registers.Order())}";
+
+        var response = await cache.GetOrCreateAsync(
+            key,
+            async innerToken => await registerRepository.GetOrCreate(deviceId, registerSet, registers, innerToken),
+            cancellationToken: token);
+
+        return response.ToDictionary(r => r.Register, r => r);
     }
 }

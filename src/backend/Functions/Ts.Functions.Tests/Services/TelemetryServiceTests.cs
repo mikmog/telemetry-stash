@@ -13,47 +13,67 @@ public class TelemetryServiceTests
     public async Task TelemetryService_adds_Telemetry_to_database()
     {
         // Arrange
+        var telemetry = Telemetry();
         using var cacheProvider = new CacheProvider();
         var telemetryRepository = Substitute.For<ITelemetryRepository>();
 
         var deviceService = Substitute.For<IDeviceService>();
-        deviceService.GetOrCreate(Arg.Any<string>()).Returns(new Device(1, "TestDevice"));
-
-        var registerSetService = Substitute.For<IRegisterSetService>();
-        registerSetService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterSet(1, 1, "PowerMeter"));
-
-        var registerTemplateService = Substitute.For<IRegisterTemplateService>();
-        registerTemplateService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new RegisterTemplate(1, 1, "L1Current"));
+        deviceService.GetOrCreate(Arg.Any<string>()).Returns(new DeviceRow(1, "Device1"));
 
         var registerService = Substitute.For<IRegisterService>();
-        registerService.GetOrCreate(Arg.Any<int>(), Arg.Any<string>()).Returns(new Register(1, 1, "L1Current"));
+        registerService.GetOrCreate(Arg.Any<int>(), Arg.Is("RegisterSet1"), Arg.Any<IEnumerable<string>>())
+            .Returns(
+                new Dictionary<string, RegisterRow>
+                {
+                    { "Reg1", new RegisterRow(1, 1, "RegisterSet1", "Reg1") },
+                    { "Reg2", new RegisterRow(2, 1, "RegisterSet1", "Reg2") },
+                    { "Reg3", new RegisterRow(3, 1, "RegisterSet1", "Reg3") }
+                }
+            );
 
-        var sut = new TelemetryService(telemetryRepository, deviceService, registerSetService, registerTemplateService, registerService);
+        registerService.GetOrCreate(Arg.Any<int>(), Arg.Is("RegisterSet2"), Arg.Any<IEnumerable<string>>())
+            .Returns(
+                new Dictionary<string, RegisterRow>
+                {
+                    { "NumReg1", new RegisterRow(4, 1, "RegisterSet2", "NumReg1") },
+                    { "NumReg2", new RegisterRow(5, 1, "RegisterSet2", "NumReg2") },
+                    { "TxtReg1", new RegisterRow(6, 1, "RegisterSet2", "TxtReg1") },
+                    { "TxtReg2", new RegisterRow(7, 1, "RegisterSet2", "TxtReg2") }
+                }
+            );
+
+        var sut = new TelemetryService(telemetryRepository, deviceService, registerService);
 
         // Act
-        await sut.Process("TestDevice", CreateTelemetry());
+        await sut.Process("Device1", telemetry);
 
         // Assert
-        await telemetryRepository.Received(1).Upsert(
+        await telemetryRepository.Received(2).Upsert(
             Arg.Is(1),
             Arg.Any<DateTimeOffset>(),
-            Arg.Is<List<(int RegisterKey, decimal Value)>>(a => a.Count == 5));
+            Arg.Is<IEnumerable<(int RegisterKey, string Value)>>(a => a.Count() == 3 || a.Count() == 4));
     }
 
-    private static TelemetryRequest CreateTelemetry()
+    private static TelemetryRequest Telemetry()
     {
         var json = """
         {
-            "ts": "2309012013361234567",
-            "reg": {
-                "PowerMeter": {
-                    "C1": 5,
-                    "C2": 6,
-                    "C3": 7.01
+            "ts": "250101120000",
+            "set": {
+                "RegisterSet1": {
+                    "reg": {
+                        "Reg1": -10,
+                        "Reg2": 1,
+                        "Reg3": 2.4
+                    }
                 },
-                "Am2320": {
-                    "Hum": 80,
-                    "Temp": 21.44
+                "RegisterSet2": {
+                    "reg": {
+                        "NumReg1": 100,
+                        "NumReg2": 0,
+                        "TxtReg1": "Text1",
+                        "TxtReg2": "Text2"
+                    }
                 }
             }
         }

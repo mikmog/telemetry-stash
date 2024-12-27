@@ -6,16 +6,16 @@ namespace TelemetryStash.Functions.Services;
 
 public interface IDeviceService
 {
-    Task<Device> GetOrCreate(string deviceId, CancellationToken token = default);
+    Task<DeviceRow> GetOrCreate(string deviceIdentifier, CancellationToken token = default);
 }
 
 public class DeviceService(IDeviceRepository deviceRepository, HybridCache cache) : IDeviceService
 {
-    public async Task<Device> GetOrCreate(string deviceId, CancellationToken token = default)
+    public async Task<DeviceRow> GetOrCreate(string deviceIdentifier, CancellationToken token = default)
     {
         return await cache.GetOrCreateAsync(
-            $"{nameof(Device)}{deviceId}",
-            async innerToken => await deviceRepository.Upsert(deviceId, innerToken),
-            token: token);
+            $"{nameof(DeviceRow)}{deviceIdentifier}",
+            async innerToken => await deviceRepository.GetOrCreate(deviceIdentifier, innerToken),
+            cancellationToken: token);
     }
 }

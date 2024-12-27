@@ -8,27 +8,15 @@ public class TelemetryDbSeeder(SharedTestDbFixture dbFixture)
         return dbFixture.GetTestDbProvider(name);
     }
 
-    protected async Task<Device> SeedDevice(string deviceId, IDbProvider? dbProvider = null)
+    protected async Task<DeviceRow> SeedDevice(string deviceId, IDbProvider? dbProvider = null)
     {
         var repository = new DeviceRepository(dbProvider ?? GetDbProvider());
-        return await repository.Upsert(deviceId);
+        return await repository.GetOrCreate(deviceId);
     }
 
-    protected async Task<RegisterSet> SeedRegisterSet(Device device, string identifier, IDbProvider? dbProvider = null)
-    {
-        var repository = new RegisterSetRepository(dbProvider ?? GetDbProvider());
-        return await repository.Upsert(device.Id, identifier);
-    }
-
-    protected async Task<RegisterTemplate> SeedRegisterTemplate(RegisterSet registerSet, string identifier, IDbProvider? dbProvider = null)
-    {
-        var repository = new RegisterTemplateRepository(dbProvider ?? GetDbProvider());
-        return await repository.Upsert(registerSet.Id, identifier);
-    }
-
-    protected async Task<Register> SeedRegister(RegisterTemplate registerTemplate, string subset, IDbProvider? dbProvider = null)
+    protected async Task<List<RegisterRow>> SeedRegister(int deviceId, string registerSet, IEnumerable<string> registers, IDbProvider? dbProvider = null)
     {
         var repository = new RegisterRepository(dbProvider ?? GetDbProvider());
-        return await repository.Upsert(registerTemplate.Id, subset);
+        return await repository.GetOrCreate(deviceId, registerSet, registers, default);
     }
 }
