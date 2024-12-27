@@ -1,18 +1,18 @@
-﻿-- Previous name: RegisterKeys.sql
-
-CREATE TABLE [dbo].[Registers] (
+﻿CREATE TABLE [dbo].[Registers] (
     [Id]                    INT IDENTITY (1, 1)         NOT NULL,
-    [RegisterTemplateId]    INT                         NOT NULL,
-    [Subset]                NVARCHAR (450)              NOT NULL,
+    [DeviceId]              SMALLINT                    NOT NULL,
+    [RegisterSet]           NVARCHAR (400)              NOT NULL,
+    [Register]              NVARCHAR (400)              NOT NULL,
     [Created]               DATETIME2                   NOT NULL,
 
     CONSTRAINT [PK_Registers] PRIMARY KEY CLUSTERED ( [Id] ASC ),
-    CONSTRAINT [FK_Registers_RegisterTemplates] FOREIGN KEY ( [RegisterTemplateId] ) REFERENCES [dbo].[RegisterTemplates] ( [Id] )
+    CONSTRAINT [FK_Registers_Devices] FOREIGN KEY ( [DeviceId] ) REFERENCES [dbo].[Devices] ( [Id] )
 );
 
 GO
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Registers_RegisterTemplateId_Subset] ON [dbo].[Registers]
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Registers_RegisterSet_Register] ON [dbo].[Registers]
 (
-	[RegisterTemplateId] ASC,
-	[Subset] ASC
+    [DeviceId] ASC,
+	[RegisterSet] ASC,
+	[Register] ASC
 )

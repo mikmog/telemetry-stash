@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build">
-  <Sdk Name="Microsoft.Build.Sql" Version="0.2.0-preview" />
+<Project Sdk="Microsoft.Build.Sql/0.2.0-preview" DefaultTargets="Build">
   <PropertyGroup>
-    <Name>Ts.TelemetryDatabase.Sql</Name>
+    <SqlTargetName>Ts.TelemetryDatabase.Sql</SqlTargetName>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <ProjectVersion>4.1</ProjectVersion>
-    <LangVersion>latest</LangVersion>
-	<TargetFramework>net472</TargetFramework>
     <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
-    <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
+	<RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
+	<LangVersion>9.0</LangVersion>
   </PropertyGroup>
+  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin</OutputPath>
   </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="User Defined Types" />
     <Folder Include="Stored Procedures" />
@@ -25,29 +24,26 @@
     <Folder Include="Compares" />
     <Folder Include="Stored Procedures\Device" />
     <Folder Include="Stored Procedures\Register" />
-    <Folder Include="Stored Procedures\RegisterSet" />
-    <Folder Include="Stored Procedures\RegisterTemplate" />
     <Folder Include="Stored Procedures\Telemetry" />
     <Folder Include="Security" />
   </ItemGroup>
   <ItemGroup>
+    <Build Remove="bin/**/*.sql" />
+    <Build Remove="obj/**/*.sql" />
     <Build Include="User Defined Types\TelemetriesType.sql" />
     <Build Include="Tables\Devices.sql" />
-    <Build Include="Tables\RegisterSets.sql" />
-    <Build Include="Tables\RegisterTemplates.sql" />
     <Build Include="Tables\Registers.sql" />
     <Build Include="Tables\Telemetries.sql" />
     <Build Include="Tables\Timestamps.sql" />
     <Build Include="Stored Procedures\Device\UpsertDevice.sql" />
-    <Build Include="Stored Procedures\Register\UpsertRegister.sql" />
-    <Build Include="Stored Procedures\RegisterSet\UpsertRegisterSet.sql" />
-    <Build Include="Stored Procedures\RegisterTemplate\UpsertRegisterTemplate.sql" />
+    <Build Include="Stored Procedures\Register\GetOrCreateRegisters.sql" />
     <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
     <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
     <Build Include="Security\db_execute_procedure_role.sql" />
     <Build Include="Security\create_user.sql" />
+    <Build Include="User Defined Types\RegistersType.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Compares\SqlSchemaCompare.Prod.scmp" />
+    <None Include="Compares\SqlSchemaCompare.Dev.scmp" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,6 @@ CREATE PROCEDURE dbo.UpsertTelemetry
 AS
 BEGIN
     SET NOCOUNT ON;
-    SET TRANSACTION ISOLATION LEVEL READ COMMITTED;
 
     DECLARE @TimestampId INT;
 
@@ -45,11 +44,11 @@ BEGIN
     ON (Target.TimestampId = @TimestampId AND Target.RegisterId = Source.RegisterId)
 
     WHEN NOT MATCHED BY Target THEN
-    INSERT (RegisterId, TimestampId ,Value)
+    INSERT (TimestampId, RegisterId, Value)
     VALUES
     (
-        Source.RegisterId
-        ,@TimestampId
+        @TimestampId
+        ,Source.RegisterId
         ,Source.Value
     )
 

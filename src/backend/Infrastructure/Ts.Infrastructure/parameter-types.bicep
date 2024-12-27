@@ -39,7 +39,7 @@ type appServiceParams = {
     family: 'B'
     capacity: 1
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|8.0')
+  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
   resourceName: string
 }
 
@@ -58,7 +58,7 @@ type functionParams = {
     family: 'B'
     capacity: 1
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|8.0')
+  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
   resourceName: string
 }
 
@@ -104,13 +104,21 @@ type sqlParams = {
   sku: { 
     name: 'Basic'
     tier: 'Basic'
+    family: ''
     capacity: 5
     maxSizeBytes: 2147483648
   } | {
     name: 'Standard'
     tier: 'Standard'
+    family: ''
     capacity: 10
     maxSizeBytes: 268435456000
+  } | {
+    name: 'GP_S_Gen5'
+    tier: 'GeneralPurpose'
+    family: 'Gen5'
+    capacity: 1
+    maxSizeBytes: 34359738368
   }
   server: {
     adminLoginName: string

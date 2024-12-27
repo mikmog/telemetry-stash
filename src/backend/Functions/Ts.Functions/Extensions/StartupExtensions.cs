@@ -3,25 +3,24 @@ using Microsoft.Extensions.DependencyInjection;
 using TelemetryStash.Functions.Services;
 
 namespace TelemetryStash.Functions.Extensions;
+
 public static class StartupExtensions
 {
     public static void AddFunctionServices(this IServiceCollection services)
     {
+#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         services.AddHybridCache(options =>
         {
-            options.MaximumPayloadBytes = 1024 * 1024;
-            options.MaximumKeyLength = 1024;
             options.DefaultEntryOptions = new HybridCacheEntryOptions
             {
-                Expiration = TimeSpan.FromMinutes(55),
-                LocalCacheExpiration = TimeSpan.FromMinutes(55)
+                Expiration = TimeSpan.FromDays(1),
+                LocalCacheExpiration = TimeSpan.FromDays(1)
             };
         });
+#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         services.AddTransient<ITelemetryService, TelemetryService>();
         services.AddTransient<IDeviceService, DeviceService>();
-        services.AddTransient<IRegisterSetService, RegisterSetService>();
-        services.AddTransient<IRegisterTemplateService, RegisterTemplateService>();
         services.AddTransient<IRegisterService, RegisterService>();
     }
 }

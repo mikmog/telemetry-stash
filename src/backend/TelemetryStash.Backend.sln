@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.34818.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Functions", "Functions", "{19F05283-86C3-4D40-A5D7-C70017DF9EFC}"
-	ProjectSection(SolutionItems) = preProject
-		Functions\Notes.md = Functions\Notes.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pipelines", "Pipelines", "{19E8FEF9-8A0E-4ADA-9F06-20B7887573A3}"
 	ProjectSection(SolutionItems) = preProject

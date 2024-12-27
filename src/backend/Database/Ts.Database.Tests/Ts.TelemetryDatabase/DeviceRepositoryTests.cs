@@ -10,7 +10,7 @@ public class DeviceRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbS
         var sut = new DeviceRepository(GetDbProvider());
 
         // Act
-        var device = await sut.Upsert("TestDeviceId");
+        var device = await sut.GetOrCreate("TestDeviceId");
 
         // Assert
         Assert.NotEqual(0, device.Id);
@@ -24,7 +24,7 @@ public class DeviceRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbS
         var sut = new DeviceRepository(GetDbProvider());
 
         // Act
-        await sut.Upsert("TestDeviceId");
+        await sut.GetOrCreate("TestDeviceId");
         var device = await sut.GetByDeviceId("TestDeviceId");
 
         // Assert

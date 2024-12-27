@@ -20,7 +20,7 @@ public class DeviceServiceTests
         await sut.GetOrCreate("ESP32");
 
         // Assert
-        await repository.Received(1).Upsert(Arg.Is("ESP32"), Arg.Any<CancellationToken>());
+        await repository.Received(1).GetOrCreate(Arg.Is("ESP32"), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class DeviceServiceTests
         await sut.GetOrCreate("ESP32");
 
         // Assert
-        await repository.Received(1).Upsert("ESP32", Arg.Any<CancellationToken>());
+        await repository.Received(1).GetOrCreate("ESP32", Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -49,8 +49,8 @@ public class DeviceServiceTests
 
         /// Simulate slow first database call
         repository
-            .Upsert(Arg.Is("ESP32"), Arg.Any<CancellationToken>())!
-            .Returns(Task.Delay(100).ContinueWith(_ => new Device(1, "ESP32")));
+            .GetOrCreate(Arg.Is("ESP32"), Arg.Any<CancellationToken>())!
+            .Returns(Task.Delay(100).ContinueWith(_ => new DeviceRow(1, "ESP32")));
 
         var sut = new DeviceService(repository, cacheProvider.HybridCache);
         var tasks = new List<Task>();
@@ -64,6 +64,6 @@ public class DeviceServiceTests
 
         // Assert
         Assert.DoesNotContain(tasks, t => t.IsFaulted);
-        await repository.Received(1).Upsert(Arg.Any<string>(), Arg.Any<CancellationToken>());
+        await repository.Received(1).GetOrCreate(Arg.Any<string>(), Arg.Any<CancellationToken>());
     }
 }

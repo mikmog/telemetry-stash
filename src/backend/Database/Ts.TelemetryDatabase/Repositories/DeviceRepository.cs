@@ -2,30 +2,31 @@
 
 public interface IDeviceRepository
 {
-    Task<Device?> GetByDeviceId(string identifier, CancellationToken token = default);
+    Task<DeviceRow?> GetByDeviceId(string deviceIdentifier, CancellationToken token = default);
 
-    Task<Device> Upsert(string identifier, CancellationToken token = default);
+    Task<DeviceRow> GetOrCreate(string deviceIdentifier, CancellationToken token = default);
 }
 
 public class DeviceRepository(IDbProvider dbProvider) : IDeviceRepository
 {
-    public async Task<Device?> GetByDeviceId(string identifier, CancellationToken token = default)
+    public async Task<DeviceRow?> GetByDeviceId(string deviceIdentifier, CancellationToken token = default)
     {
         return await dbProvider
-            .QuerySingle<Device>
+            .QuerySingle<DeviceRow>
             (
-                where: device => device.Identifier == identifier,
+                tableName: "[dbo].[Devices]",
+                where: device => device.Identifier == deviceIdentifier,
                 cancellationToken: token
             );
     }
 
-    public async Task<Device> Upsert(string identifier, CancellationToken token = default)
+    public async Task<DeviceRow> GetOrCreate(string deviceIdentifier, CancellationToken token = default)
     {
         return await dbProvider
-            .ExecuteSingle<Device>
+            .ExecuteSingle<DeviceRow>
             (
                 storedProcedure: "dbo.GetOrCreateDevice",
-                parameters: new { Identifier = identifier },
+                parameters: new { Identifier = deviceIdentifier },
                 cancellationToken: token
             );
     }
