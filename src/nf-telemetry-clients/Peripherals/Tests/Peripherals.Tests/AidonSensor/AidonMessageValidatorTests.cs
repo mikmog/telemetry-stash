@@ -1,6 +1,6 @@
 using nanoFramework.TestFramework;
 using TelemetryStash.Aidon.Sensor;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Peripherals.Tests.AidonSensor
 {

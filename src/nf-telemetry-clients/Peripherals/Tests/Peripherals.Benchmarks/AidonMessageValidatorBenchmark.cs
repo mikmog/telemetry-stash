@@ -1,7 +1,7 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
 using TelemetryStash.Aidon.Sensor;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.Shared;
 
 /*
     Platform: ESP32

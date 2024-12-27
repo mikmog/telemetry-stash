@@ -2,29 +2,23 @@
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Aidon.Sensor
 {
-    
-    // https://aidon.com/wp-content/uploads/2023/06/AIDONFD_RJ12_HAN_Interface_SV.pdf
-    // Aidon 6442 S
-
     public class AidonSensor
     {
         private SerialPort _serialPort;
 
-        public readonly string _registerSetIdentifier;
         public readonly string _comPort;
 
         public AidonSensor(AidonSensorSettings settings)
         {
-            _registerSetIdentifier = settings.RegisterSetIdentifier;
             Configuration.SetPinFunction(settings.RxPin, settings.RxComPort);
             _comPort = settings.ComPort;
         }
 
-        public void Open()
+        public void Start()
         {
             _serialPort = CreateSerialPort();
             _serialPort.DataReceived += Serial_DataReceived;
@@ -44,7 +38,7 @@ namespace TelemetryStash.Aidon.Sensor
 
         private void Serial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            // Serial port is spamming 0-bytes events. Filter out.
+            // Serial port spamming 0-bytes events. Filter out.
             if (_serialPort.BytesToRead <= 0)
             {
                 return;
@@ -60,7 +54,7 @@ namespace TelemetryStash.Aidon.Sensor
                 return;
             }
 
-            var telemetry = AidonMessageParser.Parse(message, _registerSetIdentifier);
+            var telemetry = AidonMessageParser.Parse(message);
             DataReceived?.Invoke(telemetry);
         }
 

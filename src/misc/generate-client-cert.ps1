@@ -30,7 +30,7 @@ function Get-Password([int] $length) {
 
 $root = "C:/IoTCerts/$env"
 $deviceRoot = "$root/devices/$deviceId"
-$keyVaultName = "kv-ts-$env"
+$keyVaultName = "kv-ts-" + ($env -eq 'dev' ? 'develop' : $env)
 
 Write-Output "
  ______      __                 __                ____ __              __ 
