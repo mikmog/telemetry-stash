@@ -33,8 +33,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
             _running = true;
 
             TrimEventHistory();
-            var utcNow = DateTime.UtcNow;
-            _notificationTimer = new Timer((_) => NotifyDataReceived(utcNow, forceNotification: true), null, _timerInerval, _timerInerval);
+            _notificationTimer = new Timer((_) => NotifyDataReceived(forceNotification: true), null, _timerInerval, _timerInerval);
 
             if (_scannerThread == null)
             {
@@ -54,7 +53,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
             _notificationTimer.Dispose();
             _notificationTimer = null;
 
-            NotifyDataReceived(DateTime.UtcNow, forceNotification: true);
+            NotifyDataReceived(forceNotification: true);
 
             _running = false;
         }
@@ -88,10 +87,10 @@ namespace TelemetryStash.Peripherals.WifiSensor
                 _telemetry.Add(telemetry);
             }
 
-            NotifyDataReceived(utcNow);
+            NotifyDataReceived();
         }
 
-        private void NotifyDataReceived(DateTime _, bool forceNotification = false)
+        private void NotifyDataReceived(bool forceNotification = false)
         {
             if (!_running)
             {
@@ -152,7 +151,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
         {
             return new RegisterSet
             {
-                Identifier = string.Concat(network.Bsid.Split('-')) + 'W', // Append 'W' to avoid collision with other identifiers
+                Identifier = string.Concat(network.Bsid.Split('-')) + "_Wifi", // Append Wifi to avoid collision with other identifiers
                 Registers = new Register[]
                 {
                     new ("RSSI", network.NetworkRssiInDecibelMilliwatts, DecimalPrecision.None),

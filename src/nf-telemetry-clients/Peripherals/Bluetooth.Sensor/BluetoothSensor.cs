@@ -40,11 +40,9 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
         public void Start()
         {
             _running = true;
-
             TrimEventHistory();
-            var utcNow = DateTime.UtcNow;
             
-            _notificationTimer = new Timer((_) => NotifyDataReceived(utcNow, forceNotification: true), null, _timerInerval, _timerInerval);
+            _notificationTimer = new Timer((_) => NotifyDataReceived(forceNotification: true), null, _timerInerval, _timerInerval);
             _bluetoothWatcher.Start();
         }
 
@@ -54,7 +52,7 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
             _notificationTimer.Dispose();
             _notificationTimer = null;
 
-            NotifyDataReceived(DateTime.UtcNow, forceNotification: true);
+            NotifyDataReceived(forceNotification: true);
             _running = false;
 
             TrimEventHistory();
@@ -82,11 +80,11 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
             lock (_telemetry)
             {
                 _telemetry.Add(telemetry);
-                NotifyDataReceived(utcNow);
+                NotifyDataReceived();
             }
         }
 
-        private void NotifyDataReceived(DateTime utcNow, bool forceNotification = false)
+        private void NotifyDataReceived(bool forceNotification = false)
         {
             if (!_running)
             {
