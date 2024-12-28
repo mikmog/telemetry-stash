@@ -1,9 +1,7 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
 using System.Diagnostics;
-using System.Threading;
 using TelemetryStash.Am23XX.Sensor;
-using TelemetryStash.ServiceModels;
 
 namespace TelemetryStash.Peripherals.Benchmarks
 {
@@ -16,7 +14,7 @@ namespace TelemetryStash.Peripherals.Benchmarks
         [Setup]
         public void Setup()
         {
-            _am23XX = new(new Am23XXSensorSettings { DataPin = 6, ClockPin = 7, RegisterSetIdentifier = "Am23XX" } );
+            _am23XX = new(new Am23XXSensorSettings { DataPin = 6, ClockPin = 7 }, "Am23XX");
         }
 
         [Benchmark, Baseline]
@@ -26,14 +24,7 @@ namespace TelemetryStash.Peripherals.Benchmarks
 
             var r1 = response.Registers[0];
             var r2 = response.Registers[1];
-            Debug.WriteLine($"{response.Identifier} => {r1.Identifier}: {r1.ToNumberString()}, {r2.Identifier}: {r2.ToNumberString()}");
-            Thread.Sleep(3000);
-        }
-
-        [Benchmark]
-        public void Dispose()
-        {
-            _am23XX.Dispose();
+            Debug.WriteLine($"{response.Identifier} => {r1.Identifier}: {r1.Value}, {r2.Identifier}: {r2.Value}");
         }
     }
 }

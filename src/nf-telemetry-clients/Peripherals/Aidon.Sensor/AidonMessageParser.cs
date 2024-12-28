@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.NfClient.Services;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Aidon.Sensor
 {
     public static class AidonMessageParser
     {
-        public static Telemetry Parse(string message, string registerSetIdentifier)
+        public static Telemetry Parse(string message)
         {
             var telemetry = new Telemetry
             {
@@ -15,79 +16,52 @@ namespace TelemetryStash.Aidon.Sensor
                 {
                     new RegisterSet
                     {
-                        Identifier = registerSetIdentifier,
+                        Identifier = "P1",
                         Registers =  new[]
                         {
-                            ParseFloat(Obis.TotActiveEnergy),
-                            ParseFloat(Obis.TotActiveEnergyInput),
-                            ParseFloat(Obis.TotReactiveEnergyDraw),
-                            ParseFloat(Obis.TotReactiveEnergyInput),
-                            ParseFloat(Obis.ActiveEnergyDraw),
-                            ParseFloat(Obis.ActiveEnergyInput),
+                            Parse(Obis.TotActiveEnergy),
+                            Parse(Obis.TotActiveEnergyInput),
+                            Parse(Obis.TotReactiveEnergyDraw),
+                            Parse(Obis.TotReactiveEnergyInput),
+                            Parse(Obis.ActiveEnergyDraw),
+                            Parse(Obis.ActiveEnergyInput),
 
-                            ParseFloat(Obis.ReactiveEnergyDraw),
-                            ParseFloat(Obis.ReactiveEnergyInput),
-                            ParseFloat(Obis.L1EnergyDraw),
-                            ParseFloat(Obis.L1EnergyInput),
-                            ParseFloat(Obis.L2EnergyDraw),
-                            ParseFloat(Obis.L2EnergyInput),
-                            ParseFloat(Obis.L3EnergyDraw),
-                            ParseFloat(Obis.L3EnergyInput),
+                            Parse(Obis.ReactiveEnergyDraw),
+                            Parse(Obis.ReactiveEnergyInput),
+                            Parse(Obis.L1EnergyDraw),
+                            Parse(Obis.L1EnergyInput),
+                            Parse(Obis.L2EnergyDraw),
+                            Parse(Obis.L2EnergyInput),
+                            Parse(Obis.L3EnergyDraw),
+                            Parse(Obis.L3EnergyInput),
 
-                            ParseFloat(Obis.L1ReactiveEnergyDraw),
-                            ParseFloat(Obis.L1ReactiveEnergyInput),
-                            ParseFloat(Obis.L2ReactiveEnergyDraw),
-                            ParseFloat(Obis.L2ReactiveEnergyInput),
-                            ParseFloat(Obis.L3ReactiveEnergyDraw),
-                            ParseFloat(Obis.L3ReactiveEnergyInput),
+                            Parse(Obis.L1ReactiveEnergyDraw),
+                            Parse(Obis.L1ReactiveEnergyInput),
+                            Parse(Obis.L2ReactiveEnergyDraw),
+                            Parse(Obis.L2ReactiveEnergyInput),
+                            Parse(Obis.L3ReactiveEnergyDraw),
+                            Parse(Obis.L3ReactiveEnergyInput),
 
-                            ParseFloat(Obis.L1Voltage),
-                            ParseFloat(Obis.L2Voltage),
-                            ParseFloat(Obis.L3Voltage),
+                            Parse(Obis.L1Voltage),
+                            Parse(Obis.L2Voltage),
+                            Parse(Obis.L3Voltage),
 
-                            ParseFloat(Obis.L1Current),
-                            ParseFloat(Obis.L2Current),
-                            ParseFloat(Obis.L3Current)
+                            Parse(Obis.L1Current),
+                            Parse(Obis.L2Current),
+                            Parse(Obis.L3Current)
                         }
                     }
                 }
             };
 
             return telemetry;
-
-            Register ParseFloat(ObisCode obis)
+            
+            Register Parse(ObisCode obis)
             {
                 message = message.Substring(message.IndexOf(obis.Code));
+                var number = Round.TrimZeroes(message.Substring(obis.CodeLength, obis.FieldLength));
 
-                var numberParts = message.Substring(obis.CodeLength, obis.FieldLength);
-                var leftIntPart = numberParts.Substring(0, numberParts.IndexOf('.'));
-                var rightFractionPart = numberParts.Substring(numberParts.IndexOf('.') + 1);
-
-                if (!int.TryParse(leftIntPart, out var intPart))
-                {
-                    var msg =
-                        "Error parsing integer part " + leftIntPart + " for" + obis.Code +
-                        " from " + message.Substring(obis.CodeLength, obis.FieldLength);
-
-                    throw new Exception(msg);
-                }
-
-                string fractionsReversed = null;
-                for (var i = rightFractionPart.Length - 1; i >= 0; i--)
-                {
-                    fractionsReversed += rightFractionPart[i];
-                }
-
-                if (!short.TryParse(fractionsReversed, out var fractionPart))
-                {
-                    var msg =
-                        "Error parsing fraction part " + fractionsReversed + " for " + obis.Code +
-                        " from " + message.Substring(obis.CodeLength, obis.FieldLength);
-
-                    throw new Exception(msg);
-                }
-
-                return new Register(obis.Name, intPart, fractionPart);
+                return new Register(obis.Name, number, RegisterValueType.Number);
             }
 
             DateTime ParseTimestamp(ObisCode obis)

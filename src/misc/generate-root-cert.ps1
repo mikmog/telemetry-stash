@@ -21,7 +21,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $root = "C:/IoTCerts/$env/rootca"
-$keyVaultName = "kv1-telemetrystash-$env"
+$keyVaultName = "kv-ts-$env"
 $rootCaName = "rootca-$env"
 
 Write-Output "

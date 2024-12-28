@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <ItemGroup>
+    <ProjectCapability Include="TestContainer" />
+  </ItemGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>ec574567-5b40-418d-8a3b-20d173072eee</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>TelemetryStash.NfClient.Services.Tests</RootNamespace>
+    <AssemblyName>NFUnitTest</AssemblyName>
+    <IsCodedUITest>False</IsCodedUITest>
+    <IsTestProject>true</IsTestProject>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <PropertyGroup>
+    <RunSettingsFilePath>$(MSBuildProjectDirectory)\nano.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DeviceServices\JsonSerializerTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Json">
+      <HintPath>..\..\..\packages\nanoFramework.Json.2.2.154\lib\nanoFramework.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\..\packages\nanoFramework.System.Collections.1.5.45\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\..\..\packages\nanoFramework.System.Text.1.2.54\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.TestFramework">
+      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.49\lib\nanoFramework.TestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitTestLauncher">
+      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.49\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>..\..\..\packages\nanoFramework.System.IO.Streams.1.1.59\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nano.runsettings" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Client.Services\Client.Services.nfproj" />
+    <ProjectReference Include="..\..\Shared\Shared.nfproj" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+</Project>

@@ -17,7 +17,6 @@ namespace TelemetryStash.Peripherals.Benchmarks
             var settings = new AidonSensorSettings
             {
                 ComPort = "COM2",
-                RegisterSetIdentifier = "Test",
                 RxPin = 20,
                 RxComPort = DeviceFunction.COM2_RX
             };
@@ -27,7 +26,7 @@ namespace TelemetryStash.Peripherals.Benchmarks
         [Benchmark, Baseline]
         public void CreateSerialPort()
         {
-            _aidonSensor.Open();
+            _aidonSensor.Start();
         }
     }
 }

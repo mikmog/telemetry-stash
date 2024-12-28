@@ -1,7 +1,7 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
 using TelemetryStash.Aidon.Sensor;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.Shared;
 
 /*
     Platform: ESP32
@@ -42,7 +42,7 @@ namespace TelemetryStash.Peripherals.Benchmarks
         [Benchmark]
         public void AidonMessageParser_Parse()
         {
-            AidonMessageParser.Parse(_message, "Aidon");
+            AidonMessageParser.Parse(_message);
         }
     }
 }

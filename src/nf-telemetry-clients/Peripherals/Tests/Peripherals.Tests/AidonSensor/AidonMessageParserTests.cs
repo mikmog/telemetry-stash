@@ -2,7 +2,7 @@ using nanoFramework.TestFramework;
 using System;
 using System.Collections;
 using TelemetryStash.Aidon.Sensor;
-using TelemetryStash.ServiceModels;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Peripherals.Tests.AidonSensor
 {
@@ -10,21 +10,21 @@ namespace TelemetryStash.Peripherals.Tests.AidonSensor
     public class AidonMessageParserTests
     {
         [TestMethod]
-        public void Parses_message()
+        public void Parse_Parses_raw_aidon_message()
         {
-            var response = AidonMessageParser.Parse(TestData.AidonMessage, "AidonTest");
+            var response = AidonMessageParser.Parse(TestData.AidonMessage);
 
             Assert.IsNotNull(response);
             Assert.AreEqual(new DateTime(2024, 02, 17, 16, 40, 50), response.Timestamp);
 
             var registers = ((RegisterSet)response.RegisterSets[0]).Registers;
-            foreach (Register register in registers)
+            foreach (var register in registers)
             {
-                Assert.AreEqual(ObisTable[register.Identifier].ToString(), register.ToNumberString(), register.Identifier);
+                Assert.AreEqual(ObisTable[register.Identifier], register.Value, register.Identifier);
             }
         }
 
-        private static Hashtable ObisTable => new()
+        private Hashtable ObisTable => new()
         {
             { Obis.TotActiveEnergy.Name,         "7805.332" },
             { Obis.TotActiveEnergyInput.Name,    "11111111.111" },

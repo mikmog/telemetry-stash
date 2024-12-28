@@ -3,17 +3,18 @@ using nanoFramework.Hardware.Esp32;
 using System;
 using System.Device.I2c;
 using System.Diagnostics;
-using TelemetryStash.ServiceModels;
+using System.Threading;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Am23XX.Sensor
 {
-    public class Am23XXSensor : IDisposable
+    public class Am23XXSensor
     {
         private Am2320 _am2320;
         private DateTime _lastRead = DateTime.MinValue;
         private readonly string _registerSetIdentifier;
 
-        public Am23XXSensor(Am23XXSensorSettings settings)
+        public Am23XXSensor(Am23XXSensorSettings settings, string registerSetIdentifier)
         {
             if(settings == null)
             {
@@ -22,21 +23,20 @@ namespace TelemetryStash.Am23XX.Sensor
 
             Configuration.SetPinFunction(settings.DataPin, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(settings.ClockPin, DeviceFunction.I2C1_CLOCK);
-            _registerSetIdentifier = settings.RegisterSetIdentifier;
-            _am2320 = new(new I2cDevice(new I2cConnectionSettings(1, 0x5C, I2cBusSpeed.StandardMode)));
+            _registerSetIdentifier = registerSetIdentifier;
+
+            // The I2C bus ID on the MCU
+            const int busId = 1;
+
+            var i2cSettings = new I2cConnectionSettings(busId, Am2320.DefaultI2cAddress, I2cBusSpeed.StandardMode);
+            _am2320 = new(I2cDevice.Create(i2cSettings));
         }
 
         public RegisterSet ReadTempAndHumidity()
         {
-            if (_am2320 == null)
-            {
-                Debug.WriteLine(nameof(Am23XXSensor) + " not initialized");
-                return null;
-            }
-
             if (_lastRead.Add(Am2320.MinimumReadPeriod) > DateTime.UtcNow)
             {
-                return null;
+                Thread.Sleep(_lastRead.Add(Am2320.MinimumReadPeriod) - DateTime.UtcNow);
             }
 
             var temp = _am2320.Temperature;
@@ -45,27 +45,19 @@ namespace TelemetryStash.Am23XX.Sensor
             _lastRead = DateTime.UtcNow;
             if (_am2320.IsLastReadSuccessful)
             {
-                Debug.WriteLine($"Temp = {temp.DegreesCelsius.ToString("N1")} C, Hum = {hum.Percent.ToString("N1")} %");
-
                 return new RegisterSet
                 {
                     Identifier = _registerSetIdentifier,
                     Registers = new Register[]
                     {
-                       RegisterExtension.ToRegister("Temp", temp.DegreesCelsius, 1),
-                       RegisterExtension.ToRegister("Hum", hum.Percent, 1)
+                       new ("Temp", temp.DegreesCelsius, DecimalPrecision.One),
+                       new ("Hum", hum.Percent, DecimalPrecision.One)
                     }
                 };
             }
 
             Debug.WriteLine("AM23XX Read failed");
             return null;
-        }
-
-        public void Dispose()
-        {
-            _am2320?.Dispose();
-            _am2320 = null;
         }
     }
 }
