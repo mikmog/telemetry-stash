@@ -36,18 +36,28 @@ namespace TelemetryStash.Peripherals.WifiSensor
                     catch (Exception ex)
                     {
                         Debug.WriteLine($"Error scanning Wifi networks: {ex.Message}");
+                        _scanComplete = true;
                     }
 
                     while (!_scanComplete)
                     {
                         Thread.Sleep(500);
                     }
+
+                    // Give the adapter some breathing room
+                    Thread.Sleep(500);
                 }
             }
         }
 
         private void Wifi_AvailableNetworksChanged(WifiAdapter sender, object e)
         {
+            if (Thread.CurrentThread.ThreadState == ThreadState.Suspended)
+            {
+                _scanComplete = true;
+                return;
+            }
+
             // Get report of all scanned Wifi networks
             var report = sender.NetworkReport;
             foreach (var network in report.AvailableNetworks)

@@ -24,9 +24,6 @@
     <Compile Include="WifiSensor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Iot.Device.MulticastDns">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.MulticastDns.1.0.1\lib\Iot.Device.MulticastDns.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
     </Reference>
