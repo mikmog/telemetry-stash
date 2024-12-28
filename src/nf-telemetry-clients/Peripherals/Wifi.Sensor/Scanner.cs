@@ -1,4 +1,6 @@
-﻿using System.Device.Wifi;
+﻿using System;
+using System.Device.Wifi;
+using System.Diagnostics;
 using System.Threading;
 
 namespace TelemetryStash.Peripherals.WifiSensor
@@ -26,7 +28,15 @@ namespace TelemetryStash.Peripherals.WifiSensor
                 foreach (var adapter in _adapters)
                 {
                     _scanComplete = false;
-                    adapter.ScanAsync();
+
+                    try
+                    {
+                        adapter.ScanAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error scanning Wifi networks: {ex.Message}");
+                    }
 
                     while (!_scanComplete)
                     {

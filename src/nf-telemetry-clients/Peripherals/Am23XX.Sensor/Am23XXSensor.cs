@@ -7,7 +7,7 @@ using TelemetryStash.Shared;
 
 namespace TelemetryStash.Am23XX.Sensor
 {
-    public class Am23XXSensor : IDisposable
+    public class Am23XXSensor
     {
         private Am2320 _am2320;
         private DateTime _lastRead = DateTime.MinValue;
@@ -62,12 +62,6 @@ namespace TelemetryStash.Am23XX.Sensor
 
             Debug.WriteLine("AM23XX Read failed");
             return null;
-        }
-
-        public void Dispose()
-        {
-            _am2320?.Dispose();
-            _am2320 = null;
         }
     }
 }

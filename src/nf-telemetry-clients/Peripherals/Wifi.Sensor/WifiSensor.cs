@@ -17,7 +17,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
 
         private bool _running = false;
 
-        private readonly Thread _scannerThread;
+        private Thread _scannerThread;
 
         private readonly TimeSpan _retentionInterval;
         private readonly short _preferredBatchSize;
@@ -26,9 +26,6 @@ namespace TelemetryStash.Peripherals.WifiSensor
         {
             _retentionInterval = networkRetentionInterval;
             _preferredBatchSize = preferredBatchSize;
-
-            var scanner = new Scanner(Wifi_NetworkFound);
-            _scannerThread = new Thread(new ThreadStart(scanner.ScannerRunner));
         }
 
         public void Start()
@@ -39,10 +36,15 @@ namespace TelemetryStash.Peripherals.WifiSensor
             var utcNow = DateTime.UtcNow;
             _notificationTimer = new Timer((_) => NotifyDataReceived(utcNow, forceNotification: true), null, _timerInerval, _timerInerval);
 
-            switch (_scannerThread.IsAlive)
+            if (_scannerThread == null)
             {
-                case true: _scannerThread.Resume(); break;
-                case false: _scannerThread.Start(); break;
+                var scanner = new Scanner(Wifi_NetworkFound);
+                _scannerThread = new Thread(scanner.ScannerRunner);
+                _scannerThread.Start();
+            }
+            else
+            {
+                _scannerThread.Resume();
             }
         }
 
@@ -50,7 +52,8 @@ namespace TelemetryStash.Peripherals.WifiSensor
         {
             _scannerThread.Suspend();
             _notificationTimer.Dispose();
-            
+            _notificationTimer = null;
+
             NotifyDataReceived(DateTime.UtcNow, forceNotification: true);
 
             _running = false;
@@ -65,15 +68,18 @@ namespace TelemetryStash.Peripherals.WifiSensor
 
             var utcNow = DateTime.UtcNow;
 
-            var expiry = _eventHistory[network.Bsid];
-            if (expiry == null || (DateTime)expiry < utcNow)
+            lock (_eventHistory)
             {
-                _eventHistory[network.Bsid] = utcNow.Add(_retentionInterval);
-            }
-            else
-            {
-                // Still in retention period
-                return;
+                var expiry = _eventHistory[network.Bsid];
+                if (expiry == null || (DateTime)expiry < utcNow)
+                {
+                    _eventHistory[network.Bsid] = utcNow.Add(_retentionInterval);
+                }
+                else
+                {
+                    // Still in retention period
+                    return;
+                }
             }
 
             var telemetry = MapNetworkToTelemetry(network);
@@ -85,7 +91,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
             NotifyDataReceived(utcNow);
         }
 
-        private void NotifyDataReceived(DateTime utcNow, bool forceNotification = false)
+        private void NotifyDataReceived(DateTime _, bool forceNotification = false)
         {
             if (!_running)
             {
@@ -102,7 +108,10 @@ namespace TelemetryStash.Peripherals.WifiSensor
                 if (forceNotification || _telemetry.Count >= _preferredBatchSize)
                 {
                     // Postpone next notification
-                    _notificationTimer.Change(_timerInerval, _timerInerval);
+                    if (_notificationTimer != null)
+                    {
+                        _notificationTimer.Change(_timerInerval, _timerInerval);
+                    }
 
                     var telemetry = (ArrayList)_telemetry.Clone();
                     _telemetry.Clear();
@@ -118,19 +127,27 @@ namespace TelemetryStash.Peripherals.WifiSensor
                 return;
             }
 
-            var now = DateTime.UtcNow;
+            var utcNow = DateTime.UtcNow;
             var keys = new ArrayList();
             foreach (DictionaryEntry entry in _eventHistory)
             {
-                if ((DateTime)entry.Value < now)
+                if ((DateTime)entry.Value < utcNow)
                 {
                     keys.Add(entry.Key);
                 }
             }
 
-            foreach (var key in keys)
+            if(keys.Count == 0)
             {
-                _eventHistory.Remove(key);
+                return;
+            }
+
+            lock (_eventHistory)
+            {
+                foreach (var key in keys)
+                {
+                    _eventHistory.Remove(key);
+                }
             }
 
             Debug.WriteLine($"Trimmed {keys.Count} Wifi event histories. Current count {_eventHistory.Count}");

@@ -11,7 +11,7 @@ namespace TelemetryStash.Bmxx80.Sensor
 {
     // https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme680-ds001.pdf
 
-    public class Bme680Sensor : IDisposable
+    public class Bme680Sensor
     {
         private Bme680 _bme680;
         private Bme680ReadResult _bme680ReadResult = null;
@@ -45,23 +45,13 @@ namespace TelemetryStash.Bmxx80.Sensor
 
             // Never stop read timer. Keep a constant read interval
             _readTimer ??= new Timer(OnSensorReadvent, null, TimeSpan.FromMilliseconds(1), _readTimerInterval);
-            _notifyTimer = new Timer(OnNotificationEvent, null, _readTimerInterval, _notificationInterval);
+            _notifyTimer ??= new Timer(OnNotificationEvent, null, _readTimerInterval, _notificationInterval);
         }
 
         public void Stop()
         {
             _notifyTimer.Dispose();
-        }
-
-        public void Dispose()
-        {
-            Stop();
-
-            _bme680?.Dispose();
-            _readTimer?.Dispose();
-
-            _bme680 = null;
-            _readTimer = null;
+            _notifyTimer = null;
         }
 
         private void InitSensor()

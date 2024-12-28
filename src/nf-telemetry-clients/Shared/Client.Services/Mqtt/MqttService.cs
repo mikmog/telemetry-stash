@@ -73,10 +73,10 @@ namespace TelemetryStash.NfClient.Services
 
             } catch (MqttCommunicationException ex)
             {
-                if (_connectionAttempts < 3)
+                if (_connectionAttempts < 5)
                 {
                     Debug.WriteLine("MQTT connection failed. Retrying...");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(1000 * _connectionAttempts);
                     Connect();
                 }
                 else

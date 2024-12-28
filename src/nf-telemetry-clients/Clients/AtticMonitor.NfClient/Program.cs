@@ -58,7 +58,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
 
                 Debug.WriteLine("Starting Wifi sensor");
                 wifiSensor.Start();
-                Thread.Sleep(TimeSpan.FromSeconds(60));
+                Thread.Sleep(TimeSpan.FromSeconds(30));
                 Debug.WriteLine("30 sec pass. Stopping Wifi");
                 wifiSensor.Stop();
                 Debug.WriteLine();

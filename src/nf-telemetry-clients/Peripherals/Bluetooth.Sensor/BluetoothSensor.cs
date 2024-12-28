@@ -52,6 +52,8 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
         {
             _bluetoothWatcher.Stop();
             _notificationTimer.Dispose();
+            _notificationTimer = null;
+
             NotifyDataReceived(DateTime.UtcNow, forceNotification: true);
             _running = false;
 
@@ -62,14 +64,18 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
         {
             var utcNow = DateTime.UtcNow;
 
-            var expiry = _eventHistory[args.BluetoothAddress];
-            if (expiry == null || (DateTime)expiry < utcNow)
+            lock(_eventHistory)
             {
-                _eventHistory[args.BluetoothAddress] = args.Timestamp.Add(_retentionInterval);
-            } else
-            {
-                // Still in retention period
-                return;
+                var expiry = _eventHistory[args.BluetoothAddress];
+                if (expiry == null || (DateTime)expiry < utcNow)
+                {
+                    _eventHistory[args.BluetoothAddress] = args.Timestamp.Add(_retentionInterval);
+                }
+                else
+                {
+                    // Still in retention period
+                    return;
+                }
             }
 
             var telemetry = MapToTelemetry(args);
@@ -97,7 +103,10 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 if (forceNotification || _telemetry.Count >= _preferredBatchSize)
                 {
                     // Postpone next notification
-                    _notificationTimer.Change(_timerInerval, _timerInerval);
+                    if(_notificationTimer != null)
+                    {
+                        _notificationTimer.Change(_timerInerval, _timerInerval);
+                    }
 
                     var telemetry = (ArrayList)_telemetry.Clone();
                     _telemetry.Clear();
@@ -123,9 +132,17 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 }
             }
 
-            foreach (var key in keys)
+            if (keys.Count == 0)
             {
-                _eventHistory.Remove(key);
+                return;
+            }
+
+            lock(_eventHistory)
+            {
+                foreach (var key in keys)
+                {
+                    _eventHistory.Remove(key);
+                }
             }
 
             Debug.WriteLine($"Trimmed {keys.Count} Bluetooth event histories. Current count {_eventHistory.Count}");
