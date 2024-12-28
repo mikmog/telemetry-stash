@@ -3,6 +3,7 @@ using nanoFramework.Hardware.Esp32;
 using System;
 using System.Device.I2c;
 using System.Diagnostics;
+using System.Threading;
 using TelemetryStash.Shared;
 
 namespace TelemetryStash.Am23XX.Sensor
@@ -33,14 +34,9 @@ namespace TelemetryStash.Am23XX.Sensor
 
         public RegisterSet ReadTempAndHumidity()
         {
-            if (_am2320 == null)
-            {
-                return null;
-            }
-
             if (_lastRead.Add(Am2320.MinimumReadPeriod) > DateTime.UtcNow)
             {
-                return null;
+                Thread.Sleep(_lastRead.Add(Am2320.MinimumReadPeriod) - DateTime.UtcNow);
             }
 
             var temp = _am2320.Temperature;

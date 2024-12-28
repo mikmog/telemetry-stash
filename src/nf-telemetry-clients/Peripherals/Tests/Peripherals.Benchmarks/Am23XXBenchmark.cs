@@ -1,7 +1,6 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
 using System.Diagnostics;
-using System.Threading;
 using TelemetryStash.Am23XX.Sensor;
 
 namespace TelemetryStash.Peripherals.Benchmarks
@@ -26,7 +25,6 @@ namespace TelemetryStash.Peripherals.Benchmarks
             var r1 = response.Registers[0];
             var r2 = response.Registers[1];
             Debug.WriteLine($"{response.Identifier} => {r1.Identifier}: {r1.Value}, {r2.Identifier}: {r2.Value}");
-            Thread.Sleep(3000);
         }
     }
 }

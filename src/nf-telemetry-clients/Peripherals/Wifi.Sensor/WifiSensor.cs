@@ -122,35 +122,30 @@ namespace TelemetryStash.Peripherals.WifiSensor
 
         private void TrimEventHistory()
         {
-            if (_eventHistory.Count == 0)
-            {
-                return;
-            }
-
-            var utcNow = DateTime.UtcNow;
-            var keys = new ArrayList();
-            foreach (DictionaryEntry entry in _eventHistory)
-            {
-                if ((DateTime)entry.Value < utcNow)
-                {
-                    keys.Add(entry.Key);
-                }
-            }
-
-            if(keys.Count == 0)
-            {
-                return;
-            }
-
             lock (_eventHistory)
             {
+                if (_eventHistory.Count == 0)
+                {
+                    return;
+                }
+
+                var utcNow = DateTime.UtcNow;
+                var keys = new ArrayList();
+                foreach (DictionaryEntry entry in _eventHistory)
+                {
+                    if ((DateTime)entry.Value < utcNow)
+                    {
+                        keys.Add(entry.Key);
+                    }
+                }
+
                 foreach (var key in keys)
                 {
                     _eventHistory.Remove(key);
                 }
-            }
 
-            Debug.WriteLine($"Trimmed {keys.Count} Wifi event histories. Current count {_eventHistory.Count}");
+                Debug.WriteLine($"Trimmed {keys.Count} Wifi event histories. Current count {_eventHistory.Count}");
+            }
         }
 
         private RegisterSet MapNetworkToTelemetry(WifiAvailableNetwork network)

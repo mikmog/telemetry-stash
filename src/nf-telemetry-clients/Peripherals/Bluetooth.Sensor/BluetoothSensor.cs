@@ -117,35 +117,30 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
 
         private void TrimEventHistory()
         {
-            if (_eventHistory.Count == 0)
+            lock (_eventHistory)
             {
-                return;
-            }
-
-            var now = DateTime.UtcNow;
-            var keys = new ArrayList();
-            foreach (DictionaryEntry entry in _eventHistory)
-            {
-                if ((DateTime)entry.Value < now)
+                if (_eventHistory.Count == 0)
                 {
-                    keys.Add(entry.Key);
+                    return;
                 }
-            }
 
-            if (keys.Count == 0)
-            {
-                return;
-            }
+                var now = DateTime.UtcNow;
+                var keys = new ArrayList();
+                foreach (DictionaryEntry entry in _eventHistory)
+                {
+                    if ((DateTime)entry.Value < now)
+                    {
+                        keys.Add(entry.Key);
+                    }
+                }
 
-            lock(_eventHistory)
-            {
                 foreach (var key in keys)
                 {
                     _eventHistory.Remove(key);
                 }
-            }
 
-            Debug.WriteLine($"Trimmed {keys.Count} Bluetooth event histories. Current count {_eventHistory.Count}");
+                Debug.WriteLine($"Trimmed {keys.Count} Bluetooth event histories. Current count {_eventHistory.Count}");
+            }
         }
 
         private RegisterSet MapToTelemetry(BluetoothLEAdvertisementReceivedEventArgs args)
