@@ -57,6 +57,7 @@ param sqlParameters = {
   sku: {
     name: 'Standard'
     tier: 'Standard'
+    family: ''
     capacity: 10
     maxSizeBytes: 268435456000
   }

@@ -9,3 +9,7 @@
 );
 
 GO
+CREATE INDEX [IX_Telemetries_RegisterId] ON [dbo].[Telemetries]
+(
+	[RegisterId]
+)

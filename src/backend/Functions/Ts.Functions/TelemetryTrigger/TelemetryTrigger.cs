@@ -43,6 +43,7 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryServic
         catch (Exception ex)
         {
             logger.LogError(ex, "Failed to process telemetry. {EventData}", cloudEvent.Data);
+            throw;
         }
     }
 }
