@@ -50,6 +50,7 @@ namespace TelemetryStash.Peripherals.WifiSensor
         public void Stop()
         {
             _scannerThread.Suspend();
+
             _notificationTimer.Dispose();
             _notificationTimer = null;
 
@@ -113,8 +114,8 @@ namespace TelemetryStash.Peripherals.WifiSensor
                     }
 
                     var telemetry = (ArrayList)_telemetry.Clone();
-                    _telemetry.Clear();
                     DataReceived?.Invoke(telemetry);
+                    _telemetry.Clear();
                 }
             }
         }

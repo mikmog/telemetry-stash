@@ -49,6 +49,7 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
         public void Stop()
         {
             _bluetoothWatcher.Stop();
+
             _notificationTimer.Dispose();
             _notificationTimer = null;
 
@@ -107,8 +108,8 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                     }
 
                     var telemetry = (ArrayList)_telemetry.Clone();
-                    _telemetry.Clear();
                     DataReceived?.Invoke(telemetry);
+                    _telemetry.Clear();
                 }
             }
         }
@@ -180,7 +181,7 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 }
             }
 
-            // Append index if > 0
+            // Append 'index' if > 0
             static string AppendIndex(string identifier, int index)
             {
                 var serial = index > 0 ? "_" + index : null;
