@@ -53,7 +53,7 @@ namespace SmartPowerMeter.Client
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                Power.RebootDevice(1000);
+                Power.RebootDevice(10000);
             }
         }
 
@@ -66,27 +66,40 @@ namespace SmartPowerMeter.Client
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                Power.RebootDevice(1000);
             }
         }
 
         private static void Bmxx80Sensor_DataReceived(RegisterSet registerSet)
         {
-            _telemetryService.AddTelemetry(new Telemetry
+            try
             {
-                Timestamp = DateTime.UtcNow,
-                RegisterSets = new ArrayList { registerSet }
-            });
+                _telemetryService.AddTelemetry(new Telemetry
+                {
+                    Timestamp = DateTime.UtcNow,
+                    RegisterSets = new ArrayList { registerSet }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
 
         private static void DeviceMetrics_TimerElapsed(DateTime timestamp)
         {
-            var deviceMetrics = DeviceMetrics.GetDeviceMetrics();
-            _telemetryService.AddTelemetry(new Telemetry
+            try
             {
-                Timestamp = timestamp,
-                RegisterSets = deviceMetrics
-            });
+                var deviceMetrics = DeviceMetrics.GetDeviceMetrics();
+                _telemetryService.AddTelemetry(new Telemetry
+                {
+                    Timestamp = timestamp,
+                    RegisterSets = deviceMetrics
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
         }
 
         [Conditional("DEBUG")]

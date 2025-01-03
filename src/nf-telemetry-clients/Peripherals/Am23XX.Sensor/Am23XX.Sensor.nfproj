@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Am2320">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.704\lib\Iot.Device.Am2320.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.718\lib\Iot.Device.Am2320.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
@@ -49,10 +49,10 @@
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.693\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.RelativeHumidity">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.61.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.RelativeHumidity.5.65.0\lib\UnitsNet.RelativeHumidity.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.61.0\lib\UnitsNet.Temperature.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.65.0\lib\UnitsNet.Temperature.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

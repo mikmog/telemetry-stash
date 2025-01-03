@@ -22,7 +22,7 @@ namespace TelemetryStash.NfClient.Services
             // I:\insight.db
             var telemetryDb = @"I:\insight.db";
             _localStorage = new(telemetryDb);
-            _localStorage.DeleteIfExist();
+            _localStorage.DeleteLocalStorage();
         }
 
         public void AddTelemetry(Telemetry telemetry)
@@ -37,7 +37,8 @@ namespace TelemetryStash.NfClient.Services
 
             if (_telemetryQueue.Count >= MaxBeforeBufferToDisk)
             {
-                _localStorage.AddToLocalStorage(_telemetryQueue);
+                _localStorage.AppendLocalStorage(_telemetryQueue.ToArray());
+                _telemetryQueue.Clear();
             }
 
             UploadAllTelemetry();
@@ -56,8 +57,8 @@ namespace TelemetryStash.NfClient.Services
             if (_localStorage.FileExists)
             {
                 Debug.WriteLine("ReadFromLocalStorage: '" + "', File size (KB): " + _localStorage.FileSize);
-                _localStorage.ReadFromLocalStorage(UploadSingleTelemetry);
-                _localStorage.DeleteIfExist();
+                _localStorage.ReadLocalStorage(UploadSingleTelemetry);
+                _localStorage.DeleteLocalStorage();
             }
 
             for (var i = 0; i < _telemetryQueue.Count; i++)

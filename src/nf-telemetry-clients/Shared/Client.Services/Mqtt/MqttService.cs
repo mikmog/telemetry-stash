@@ -18,13 +18,15 @@ namespace TelemetryStash.NfClient.Services
         private readonly string _clientCertName;
         private readonly string _telemetryTopic;
         private readonly string _username;
+        private readonly bool _discardMessages;
 
-        public MqttService(MqttSettings settings)
+        public MqttService(MqttSettings settings, bool discardMessages = false)
         {
             _clientCertName = settings.ClientICertificateName;
 
-            _username = settings.BrokerHostName + "/" + _clientCertName + "/?api-version=2021-04-12&DeviceClientType=nano";
             _telemetryTopic = "devices/" + _clientCertName + "/messages/events/";
+            _username = settings.BrokerHostName + "/" + _clientCertName + "/?api-version=2021-04-12&DeviceClientType=nano";
+            _discardMessages = discardMessages;
 
             _mqttClient = new(
                 brokerHostName: settings.BrokerHostName,
@@ -44,46 +46,56 @@ namespace TelemetryStash.NfClient.Services
 
         public void Connect()
         {
-            const string willTopic = "$iothub/twin/GET/?$rid=999";
-            const string willMessage = "Disconnected";
-            _connectionAttempts++;
-
-            try
+            lock (_mqttClient)
             {
-                var response = _mqttClient.Connect(
-                    clientId: _clientCertName,
-                    username: _username,
-                    password: null,
-                    willRetain: false,
-                    willQosLevel: MqttQoSLevel.AtMostOnce,
-                    willFlag: false,
-                    willTopic: willTopic,
-                    willMessage: willMessage,
-                    cleanSession: true,
-                    keepAlivePeriod: 60);
-
-                _connectionAttempts = 0;
-
-                if (response != MqttReasonCode.Success)
+                if (_mqttClient.IsConnected)
                 {
-                    throw new Exception("MQTT connection failed. ReasonCode: " + response + ", IsConnected: " + _mqttClient.IsConnected);
+                    return;
                 }
 
-                Debug.WriteLine("MQTT connected: " + _mqttClient.IsConnected + ", ReasonCode: " + response);
+                const string willTopic = "$iothub/twin/GET/?$rid=999";
+                const string willMessage = "Disconnected";
+                _connectionAttempts++;
 
-            } catch (MqttCommunicationException ex)
-            {
-                if (_connectionAttempts < 5)
+                try
                 {
-                    Debug.WriteLine("MQTT connection failed. Retrying...");
-                    Thread.Sleep(1000 * _connectionAttempts);
-                    Connect();
+                    var response = _mqttClient.Connect(
+                        clientId: _clientCertName,
+                        username: _username,
+                        password: null,
+                        willRetain: false,
+                        willQosLevel: MqttQoSLevel.AtMostOnce,
+                        willFlag: false,
+                        willTopic: willTopic,
+                        willMessage: willMessage,
+                        cleanSession: true,
+                        keepAlivePeriod: 60);
+
+                    _connectionAttempts = 0;
+
+                    if (response != MqttReasonCode.Success)
+                    {
+                        throw new Exception("MQTT connection failed. ReasonCode: " + response + ", IsConnected: " + _mqttClient.IsConnected);
+                    }
+
+                    Debug.WriteLine("MQTT connected: " + _mqttClient.IsConnected + ", ReasonCode: " + response);
+
                 }
-                else
+                catch (MqttCommunicationException ex)
                 {
-                    Debug.WriteLine("MQTT connection failed. Max attempts reached.");
-                    throw ex;
+                    if (_connectionAttempts < 5)
+                    {
+                        Debug.WriteLine("MQTT connection failed. Retrying...");
+                        Thread.Sleep(1000 * _connectionAttempts);
+                        Connect();
+                    }
+                    else
+                    {
+                        Debug.WriteLine("MQTT connection failed. Max attempts reached.");
+                        throw ex;
+                    }
                 }
+
             }
         }
 
@@ -91,13 +103,17 @@ namespace TelemetryStash.NfClient.Services
         {
             var json = JsonSerialize.SerializeTelemetry(telemetry);
 
-            var messageId = _mqttClient.Publish(
-                topic: _telemetryTopic,
-                message: Encoding.UTF8.GetBytes(json),
-                contentType: null,
-                userProperties: null,
-                qosLevel: MqttQoSLevel.AtMostOnce,
-                retain: false);
+            var messageId = -1;
+            if (!_discardMessages)
+            {
+                messageId = _mqttClient.Publish(
+                    topic: _telemetryTopic,
+                    message: Encoding.UTF8.GetBytes(json),
+                    contentType: null,
+                    userProperties: null,
+                    qosLevel: MqttQoSLevel.AtMostOnce,
+                    retain: false);
+            }
 
             Debug.WriteLine(
                 DateTime.UtcNow.ToString("T") + 
