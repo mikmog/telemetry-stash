@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -50,7 +49,7 @@ namespace TelemetryStash.NfClient.Services
             }
 
             using var file = File.OpenRead(_storageFile);
-            Debug.WriteLine("ReadFromLocalStorage: '" + _storageFile + "', File size KB: " + file.Length / 1024f);
+            Debug.WriteLine("ReadLocalStorage: '" + _storageFile + "', File size KB: " + file.Length / 1024f);
             if (file.Length == 0)
             {
                 file.Close();
@@ -66,7 +65,7 @@ namespace TelemetryStash.NfClient.Services
                     break;
                 }
 
-                var telemetryLength = BitConverter.ToInt16(headerBuff, 0);
+                var telemetryLength = BitConverter.ToInt32(headerBuff, 0);
                 var telemetryBuff = new byte[telemetryLength];
                 file.Read(telemetryBuff, 0, telemetryLength);
 

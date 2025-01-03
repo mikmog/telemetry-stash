@@ -12,7 +12,7 @@ using TelemetryStash.Shared;
     Floating point precision: 1
     | MethodName        | IterationCount | Mean  | Min   | Max    |
     | ----------------------------------------------------------- |
-    | AddToLocalStorage | 10             | 75 ms | 40 ms | 170 ms |
+    | AppendLocalStorage| 10             | 75 ms | 40 ms | 170 ms |
     | DeleteIfExist     | 10             | 10 ms | 0 ms  | 50 ms  |
 
 
@@ -23,7 +23,7 @@ using TelemetryStash.Shared;
     Floating point precision: 1
     | MethodName        | IterationCount | Mean                  | Min   | Max    |
     | --------------------------------------------------------------------------- |
-    | AddToLocalStorage | 10             | 86.999999999999993 ms | 40 ms | 160 ms |
+    | AppendLocalStorage| 10             | 86.999999999999993 ms | 40 ms | 160 ms |
     | DeleteIfExist     | 10             | 8 ms                  | 0 ms  | 40 ms  |
  */
 
@@ -50,7 +50,7 @@ namespace TelemetryStash.Services.Benchmarks
         }
 
         [Benchmark]
-        public void AddToLocalStorage()
+        public void AppendLocalStorage()
         {
             _localStorage.AppendLocalStorage(_telemetries.ToArray());
             _localStorage.ReadLocalStorage((telemetry) => { });
