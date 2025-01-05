@@ -71,12 +71,6 @@ namespace TelemetryStash.NfClient.Services
         private short _connectCounter = 0;
         private void UploadSingleTelemetry(object telemetry)
         {
-            if (_mqttService == null)
-            {
-                Debug.WriteLine(nameof(MqttService) + " service not initialized");
-                return;
-            }
-
             if (!_mqttService.IsConnected)
             {
                 _connectCounter++;

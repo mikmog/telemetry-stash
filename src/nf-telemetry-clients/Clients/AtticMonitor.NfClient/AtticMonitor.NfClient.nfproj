@@ -71,6 +71,7 @@
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppSettings.WROVER.Prod.json" />
     <Content Include="AppSettings.WROVER.Dev.json" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />

@@ -20,8 +20,8 @@ namespace SmartPowerMeter.Client
             try
             {
                 Thread.Sleep(1000);
-                DeviceMetrics.RegisterDeviceStart();
                 Wifi.EnsureConnected();
+                DeviceMetrics.RegisterDeviceStart();
 
                 PrintStartupMessage();
 
@@ -31,7 +31,7 @@ namespace SmartPowerMeter.Client
                 var aidonSensor = new AidonSensor(settings.AidonSensor);
                 aidonSensor.DataReceived += AidonSensor_DataReceived;
 
-                var bmxx80Sensor = new Bme680Sensor(settings.Bme680Sensor, TimeSpan.FromSeconds(60), new string[] { "Outdoor" });
+                var bmxx80Sensor = new Bme680Sensor(settings.Bme680Sensor, TimeSpan.FromSeconds(60), new string[] { "Out" });
                 bmxx80Sensor.DataReceived += Bmxx80Sensor_DataReceived;
 
                 var metricsSensor = new TimerRunner(TimeSpan.FromMinutes(60));
