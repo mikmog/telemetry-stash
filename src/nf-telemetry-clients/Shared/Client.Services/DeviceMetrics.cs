@@ -14,16 +14,11 @@ namespace TelemetryStash.NfClient.Services
 
         public static void RegisterDeviceStart()
         {
-            if (_deviceStartUtc == DateTime.MinValue)
-            {
-                _deviceStartUtc = DateTime.UtcNow;
-            }
+            _deviceStartUtc = DateTime.UtcNow;
         }
 
         public static ArrayList GetDeviceMetrics()
         {
-            RegisterDeviceStart();
-
             var freeRam = GC.Run(false);
 
             NativeMemory.GetMemoryInfo(NativeMemory.MemoryType.SpiRam, out uint totalSpiMem, out uint totalFreeSpiMem, out uint largestFreeSpiMemBlock);

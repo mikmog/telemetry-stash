@@ -8,7 +8,7 @@ using TelemetryStash.Shared;
 
 namespace TelemetryStash.Am23XX.Sensor
 {
-    public class Am23XXSensor
+    public class Am2320Sensor
     {
         private short _burnInCycles = 120; // Sensor (a fake one?) is driftning initially. Give it 10 minutes to stabalize
         private readonly TimeSpan _readTimerInterval = TimeSpan.FromSeconds(5);
@@ -28,7 +28,7 @@ namespace TelemetryStash.Am23XX.Sensor
 
         private Am2320 _am2320;
 
-        public Am23XXSensor(Am23XXSensorSettings settings, TimeSpan notificationInterval, string[] tags)
+        public Am2320Sensor(Am23XXSensorSettings settings, TimeSpan notificationInterval, string[] tags)
         {
             Configuration.SetPinFunction(settings.DataPin, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(settings.ClockPin, DeviceFunction.I2C1_CLOCK);

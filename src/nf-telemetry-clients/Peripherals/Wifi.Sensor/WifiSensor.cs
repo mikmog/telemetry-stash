@@ -150,15 +150,19 @@ namespace TelemetryStash.Peripherals.WifiSensor
 
         private RegisterSet MapNetworkToTelemetry(WifiAvailableNetwork network)
         {
+            var macAddress = string.Concat(network.Bsid.Split('-'));
+            var identifier = string.IsNullOrEmpty(network.Ssid) ? macAddress : network.Ssid;
+
             return new RegisterSet
             {
-                Identifier = string.Concat(network.Bsid.Split('-')) + "_Wifi", // Append Wifi to avoid collision with other identifiers
+                Identifier = "Wifi:" + identifier,
                 Registers = new Register[]
                 {
                     new ("RSSI", network.NetworkRssiInDecibelMilliwatts, DecimalPrecision.None),
                     new ("Bars", network.SignalBars),
                     new ("Freq", "2.4", RegisterValueType.Number),
-                    new ("SSID", network.Ssid),
+                    new ("Ssid", network.Ssid),
+                    new ("Mac", macAddress),
                     new ("Kind", (int)network.NetworkKind),
                 }
             };

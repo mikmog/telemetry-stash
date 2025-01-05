@@ -59,8 +59,7 @@ namespace TelemetryStash.Bmxx80.Sensor
             // The I2C bus ID on the MCU
             const int busId = 1;
 
-            //I2cConnectionSettings i2cSettings = new(busId, Bme680.DefaultI2cAddress);
-            var i2cSettings = new I2cConnectionSettings(busId, 0X77, I2cBusSpeed.StandardMode);
+            var i2cSettings = new I2cConnectionSettings(busId, Bme680.SecondaryI2cAddress, I2cBusSpeed.StandardMode);
             var i2cDevice = I2cDevice.Create(i2cSettings);
 
             _bme680 = new(i2cDevice, Temperature.FromDegreesCelsius(24.0))

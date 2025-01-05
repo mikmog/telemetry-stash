@@ -48,19 +48,30 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
 
         public void Stop()
         {
-            _bluetoothWatcher.Stop();
-
             _notificationTimer.Dispose();
             _notificationTimer = null;
 
             NotifyDataReceived(forceNotification: true);
             _running = false;
 
+            // Note. Stopping the watcher sometimes causing the device to reboot
+            _bluetoothWatcher.Stop();
+
             TrimEventHistory();
         }
 
         private void Advertisement_Received(BluetoothLEAdvertisementWatcher sender, BluetoothLEAdvertisementReceivedEventArgs args)
         {
+            if(args.BluetoothAddress == 0)
+            {
+                return;
+            }
+
+            if (!_running)
+            {
+                return;
+            }
+
             var utcNow = DateTime.UtcNow;
 
             lock(_eventHistory)
@@ -144,19 +155,21 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
 
         private RegisterSet MapToTelemetry(BluetoothLEAdvertisementReceivedEventArgs args)
         {
-            var registers = new ArrayList
-            {
-                new Register("AddrType", (short)args.BluetoothAddressType),
-                new Register("AdvType", (short)args.AdvertisementType),
-                new Register("DBm", args.RawSignalStrengthInDBm),
-            };
-
             var advert = args.Advertisement;
 
-            // Add local name
-            if (!string.IsNullOrEmpty(advert.LocalName))
+            var registers = new ArrayList
             {
-                registers.Add(new Register("Name", args.Advertisement.LocalName));
+                new Register("AddrType", (int)args.BluetoothAddressType),
+                new Register("AdvType", (int)args.AdvertisementType),
+                new Register("DBm", args.RawSignalStrengthInDBm),
+                new Register("Flags", (short)advert.Flags)
+            };
+            
+            // Add local name
+            var localName  = advert.LocalName;
+            if (!string.IsNullOrEmpty(localName))
+            {
+                registers.Add(new Register("Name", localName));
             }
 
             // Add service UUIDs
@@ -171,6 +184,8 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
             for (var i = 0; i < advert.ManufacturerData.Count; i++)
             {
                 var manufacturer = (BluetoothLEManufacturerData)advert.ManufacturerData[i];
+                registers.Add(new Register(AppendIndex("Company", i), manufacturer.CompanyId));
+
                 if (manufacturer.Data.Length > 0)
                 {
                     var dr = DataReader.FromBuffer(manufacturer.Data);
@@ -188,9 +203,13 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 return identifier + serial;
             }
 
+            var macAddress = args.BluetoothAddress.ToString("x");
+            registers.Add(new Register("Mac", macAddress));
+
+            var identifier = "bluetooth:" + macAddress;
             var registerSet = new RegisterSet
             {
-                Identifier = args.BluetoothAddress.ToString("x"),
+                Identifier = identifier,
                 Registers = (Register[])registers.ToArray(typeof(Register))
             };
 

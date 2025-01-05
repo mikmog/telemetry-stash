@@ -15,15 +15,15 @@ namespace TelemetryStash.AtticMonitor.NfClient
     public class Program
     {
         private static BufferedTelemetryService _telemetryService;
-        private static Am23XXSensor _am23XXSensor;
+        private static Am2320Sensor _am2320Sensor;
 
         public static void Main()
         {
             try
             {
                 Thread.Sleep(1000);
-                DeviceMetrics.RegisterDeviceStart();
                 Wifi.EnsureConnected();
+                DeviceMetrics.RegisterDeviceStart();
 
                 PrintStartupMessage();
 
@@ -33,7 +33,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
                 var metricsSensor = new TimerRunner(TimeSpan.FromMinutes(60));
                 metricsSensor.TimerElapsed += DeviceMetrics_TimerElapsed;
 
-                _am23XXSensor = new Am23XXSensor(settings.Am23XXSensor, TimeSpan.MaxValue, new string[] { "Attic" });
+                _am2320Sensor = new Am2320Sensor(settings.Am23XXSensor, TimeSpan.MaxValue, new string[] { "Firewall" });
 
                 var bmxx80Sensor = new Bme680Sensor(settings.Bme680Sensor, TimeSpan.FromMinutes(10), new string[] { "Attic" });
                 bmxx80Sensor.DataReceived += Bmxx80Sensor_DataReceived;
@@ -50,8 +50,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
                 Debug.WriteLine("Starting Bme680 sensor");
                 bmxx80Sensor.Start();
 
-                Debug.WriteLine("Starting Am23XX sensor");
-                _am23XXSensor.Start();
+                Debug.WriteLine("Starting Am2320 sensor");
+                _am2320Sensor.Start();
 
                 while (true)
                 {
@@ -105,7 +105,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     RegisterSets = new ArrayList { registerSet }
                 };
 
-                var am23Reading = _am23XXSensor.GetLastReading();
+                var am23Reading = _am2320Sensor.GetLastReading();
                 if (am23Reading != null)
                 {
                     telemetry.RegisterSets.Add(am23Reading.RegisterSet);
