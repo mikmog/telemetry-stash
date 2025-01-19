@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Am2320">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.718\lib\Iot.Device.Am2320.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Am2320.1.2.737\lib\Iot.Device.Am2320.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.15.5\lib\mscorlib.dll</HintPath>
