@@ -27,7 +27,7 @@ public class SharedTestDbFixture : IAsyncLifetime
 
         // https://hub.docker.com/r/microsoft/mssql-server
         _sqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-CU14-ubuntu-22.04")
+            .WithImage("mcr.microsoft.com/mssql/server:2022-CU17-ubuntu-22.04")
             .Build();
 
         _dacPackage = DacPackage.Load("../../../../Ts.TelemetryDatabase.Sql/bin/Ts.TelemetryDatabase.Sql.dacpac");
