@@ -1,37 +1,8 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
-using System;
 using System.Collections;
-using System.Diagnostics;
 using System.Text;
 using TelemetryStash.Shared;
-
-/*
-    System Information
-    HAL build info: nanoCLR running @ ESP32 built with ESP-IDF c9763f6
-      Target:   ESP32_PSRAM_BLE_GenericGraphic_
-      Platform: ESP32
-
-    Firmware build Info:
-      Date:        Dec  7 2024
-      Type:        MinSizeRel build, chip rev. >= 3, support for PSRAM, support for BLE
-      CLR Version: 1.12.1.54
-      Compiler:    GNU ARM GCC v13.2.0
-
-    | MethodName                          | IterationCount | Mean   | Ratio   | Min    | Max    |
-    | ----------------------------------------------------------------------------------------- |
-    | ConcatString_Plus                   | 10             | 12 ms  | 1.0     | 10 ms  | 20 ms  |
-    | ConcatString_StringBuilder          | 10             | 56 ms  | 4.6667  | 50 ms  | 60 ms  |
-    | ConcatString_Interpolation          | 10             | 18 ms  | 1.5000  | 10 ms  | 20 ms  |
-    | ConcatString_StringConcatArray      | 10             | 2 ms   | 0.1667  | 0 ms   | 10 ms  |
-    | ConcatString_StringConcatParams     | 10             | 2 ms   | 0.1667  | 0 ms   | 10 ms  |
-    | ConcatString_StringConcatForEach    | 10             | 13 ms  | 1.0833  | 10 ms  | 20 ms  |
-    | HashTable_Add_min_loadFactor        | 10             | 108 ms | 9.0000  | 100 ms | 120 ms |
-    | HashTable_Add_max_loadFactor        | 10             | 116 ms | 9.6667  | 100 ms | 160 ms |
-    | HashTable_Add_remove_max_loadFactor | 10             | 354 ms | 29.5000 | 340 ms | 360 ms |
-    | ArrayList_Add_remove                | 10             | 312 ms | 26.0000 | 300 ms | 320 ms |
-
- */
 
 namespace TelemetryStash.Services.Benchmarks
 {
@@ -39,14 +10,23 @@ namespace TelemetryStash.Services.Benchmarks
     [IterationCount(10)]
     public class FrameworkBenchmark
     {
-        Telemetry _telemetry;
+        const int Thousand = 1000;
+
         string[] _hundredWords;
+
+        readonly int[] _array = new int[Thousand];
+        readonly Hashtable _hashTable = new(Thousand);
 
         [Setup]
         public void Setup()
         {
-            _telemetry = TestData.NumbersOnlyTelemetry;
             _hundredWords = TestData.OneHundredWords;
+
+            for (var i = 0; i < Thousand; i++)
+            {
+                _array[i] = i;
+                _hashTable.Add(i, i);
+            }
         }
 
         [Benchmark, Baseline]
@@ -84,13 +64,13 @@ namespace TelemetryStash.Services.Benchmarks
         [Benchmark]
         public void ConcatString_StringConcatArray()
         {
-            var text = string.Concat(_hundredWords);
+            var _ = string.Concat(_hundredWords);
         }
 
         [Benchmark]
         public void ConcatString_StringConcatParams()
         {
-            var text = string.Concat("apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon",
+            var _ = string.Concat("apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon",
             "mango", "nectarine", "orange", "papaya", "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla",
             "watermelon", "xigua", "yellowfruit", "zucchini", "apricot", "blackberry", "blueberry", "cantaloupe", "dragonfruit", "grapefruit",
             "jackfruit", "kumquat", "lime", "lychee", "mandarin", "mulberry", "olive", "peach", "pear", "pineapple",
@@ -113,108 +93,72 @@ namespace TelemetryStash.Services.Benchmarks
         }
 
         [Benchmark]
-        public void HashTable_Add_min_loadFactor()
+        public void HashTable_Add_thousand()
         {
-            var ht = new Hashtable(1, 0.1f);
-            for(var i = 0; i < 100; i++)
+            var ht = new Hashtable();
+            for(var i = 0; i < Thousand; i++)
             {
-                ht.Add(Guid.NewGuid(), i);
+                ht.Add(i, i);
             }
         }
 
         [Benchmark]
-        public void HashTable_Add_max_loadFactor()
+        public void HashTable_Add_thousand_max_loadFactor()
         {
-            var ht = new Hashtable(1, 0.1f);
-            for(var i = 0; i < 100; i++)
+            var ht = new Hashtable(1, 1);
+            for(var i = 0; i < Thousand; i++)
             {
-                ht.Add(Guid.NewGuid(), i);
+                ht.Add(i, i);
             }
         }
 
-        private static readonly object _lock = new();
-        private enum Work { Add, Remove, Print }
-
         [Benchmark]
-        public void HashTable_Add_remove_max_loadFactor()
+        public void HashTable_Add_thousand_initial_capacity_max_loadFactor()
         {
-            var ht = new Hashtable(1, 1f);
-            const int count = 100;
-
-            void WorkHt(string key, Work work)
+            var ht = new Hashtable(Thousand, 1);
+            for (var i = 0; i < Thousand; i++)
             {
-                lock (_lock)
-                {
-                    if (work == Work.Add)
-                    {
-                        ht.Add(key.ToString(), key);
-                    }
-
-                    if (work == Work.Remove)
-                    {
-                        ht.Remove(key.ToString());
-                    }
-
-                    if (work == Work.Print)
-                    {
-                        Debug.WriteLine("Hashtable count: " + ht.Count);
-                    }
-                }
+                ht.Add(i, i);
             }
-
-            for (var i = 0; i < count; i++)
-            {
-                WorkHt(i.ToString(), Work.Add);
-            }
-
-            for (var i = 0; i < count; i++)
-            {
-                WorkHt(i.ToString(), Work.Remove);
-            }
-
-            //Debug.WriteLine("Hashtable count: " + ht.Count);
-            //WorkHt("", Work.Print);
         }
 
         [Benchmark]
-        public void ArrayList_Add_remove()
+        public void Array_Add_thousand()
         {
-            var list = new ArrayList();
-            const int count = 100;
-
-            void WorkList(string key, Work work)
+            var al = new int[Thousand];
+            for (var i = 0; i < Thousand; i++)
             {
-                lock (_lock)
-                {
-                    if (work == Work.Add)
-                    {
-                        list.Add(key.ToString());
-                    }
-
-                    if (work == Work.Remove)
-                    {
-                        list.Remove(key.ToString());
-                    }
-
-                    if (work == Work.Print)
-                    {
-                        Debug.WriteLine("List count: " + list.Count);
-                    }
-                }
+                al[i] = i;
             }
+        }
 
-            for (var i = 0; i < count; i++)
+        [Benchmark]
+        public void ArrayList_Add_thousand()
+        {
+            var al = new ArrayList();
+            for (var i = 0; i < Thousand; i++)
             {
-                WorkList(i.ToString(), Work.Add);
+                al.Add(i);
             }
+        }
 
-            for (var i = 0; i < count; i++)
+
+        [Benchmark]
+        public void Array_Get_by_index()
+        {
+            for (var i = 0; i < Thousand; i++)
             {
-                WorkList(i.ToString(), Work.Remove);
+                var _ = _array[i];
             }
+        }
 
-            //Debug.WriteLine("List count: " + list.Count);
-            //WorkList("", Work.Print);
+        [Benchmark]
+        public void HashTable_Get_by_index()
+        {
+            for (var i = 0; i < Thousand; i++)
+            {
+                var _ = (int)_hashTable[i];
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 # RipTide.Nfirmware
 
+https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf
+
 ## Schematic
 
 //TBD
