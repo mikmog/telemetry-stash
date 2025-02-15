@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+using TelemetryStash.AdcSensor;
 using TelemetryStash.Ds18b20Sensor;
 
 namespace RipTide.Nfirmware
@@ -27,11 +28,14 @@ namespace RipTide.Nfirmware
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
 
-            var ds18b20 = new Ds18b20Sensor();
-            ds18b20.RunDemo();
+            //var ds18b20 = new Ds18b20Sensor();
+            //ds18b20.RunDemo();
 
-            var neo = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
-            neo.DemoRun();
+            //var neo = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
+            //neo.DemoRun();
+
+            var ss49e = new Ss49eSensor();
+            ss49e.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }
