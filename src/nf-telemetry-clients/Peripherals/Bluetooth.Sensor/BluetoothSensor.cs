@@ -72,14 +72,13 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 return;
             }
 
-            var utcNow = DateTime.UtcNow;
-
             lock(_eventHistory)
             {
+                var utcNow = DateTime.UtcNow.Ticks;
                 var expiry = _eventHistory[args.BluetoothAddress];
-                if (expiry == null || (DateTime)expiry < utcNow)
+                if (expiry == null || (long)expiry < utcNow)
                 {
-                    _eventHistory[args.BluetoothAddress] = args.Timestamp.Add(_retentionInterval);
+                    _eventHistory[args.BluetoothAddress] = args.Timestamp.Add(_retentionInterval).Ticks;
                 }
                 else
                 {
@@ -113,7 +112,7 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                 if (forceNotification || _telemetry.Count >= _preferredBatchSize)
                 {
                     // Postpone next notification
-                    if(_notificationTimer != null)
+                    if (_notificationTimer != null)
                     {
                         _notificationTimer.Change(_timerInerval, _timerInerval);
                     }
@@ -134,11 +133,11 @@ namespace TelemetryStash.Peripherals.BluetoothSensor
                     return;
                 }
 
-                var now = DateTime.UtcNow;
+                var now = DateTime.UtcNow.Ticks;
                 var keys = new ArrayList();
                 foreach (DictionaryEntry entry in _eventHistory)
                 {
-                    if ((DateTime)entry.Value < now)
+                    if ((long)entry.Value < now)
                     {
                         keys.Add(entry.Key);
                     }
