@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
+using TelemetryStash.Ds18b20Sensor;
 
 namespace RipTide.Nfirmware
 {
@@ -25,6 +26,9 @@ namespace RipTide.Nfirmware
                 Debug.WriteLine("Button pressed. Sleeping one minute");
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
+
+            var ds18b20 = new Ds18b20Sensor();
+            ds18b20.RunDemo();
 
             var neo = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
             neo.DemoRun();
