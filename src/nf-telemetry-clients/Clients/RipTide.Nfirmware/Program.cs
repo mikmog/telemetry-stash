@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using TelemetryStash.AdcSensor;
+using TelemetryStash.BuzzerPeripheral;
 using TelemetryStash.Ds18b20Sensor;
 
 namespace RipTide.Nfirmware
@@ -34,8 +35,11 @@ namespace RipTide.Nfirmware
             //var neo = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
             //neo.DemoRun();
 
-            var ss49e = new Ss49eSensor();
-            ss49e.RunDemo();
+            //var ss49e = new Ss49eSensor();
+            //ss49e.RunDemo();
+
+            var buzzer = new PiezoBuzzer();
+            buzzer.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }
