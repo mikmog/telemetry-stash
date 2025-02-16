@@ -35,11 +35,14 @@ namespace RipTide.Nfirmware
             //var neo = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
             //neo.DemoRun();
 
-            //var ss49e = new Ss49eSensor();
+            //var ss49e = new Ss49eHallSensor();
             //ss49e.RunDemo();
 
-            var buzzer = new PiezoBuzzer();
-            buzzer.RunDemo();
+            //var xdb401 = new Xdb401PressureSensor();
+            //xdb401.RunDemo();
+
+            //var buzzer = new PiezoBuzzer();
+            //buzzer.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }

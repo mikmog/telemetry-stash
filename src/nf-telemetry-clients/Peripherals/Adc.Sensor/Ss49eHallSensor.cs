@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace TelemetryStash.AdcSensor
 {
-    public class Ss49eSensor
+    public class Ss49eHallSensor
     {
         public void RunDemo()
         {
