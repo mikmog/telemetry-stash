@@ -1,12 +1,12 @@
-using Iot.Device.Button;
 using NeoPixel.Peripheral;
 using System;
 using System.Diagnostics;
-using System.Drawing;
 using System.Threading;
 using TelemetryStash.AdcSensor;
 using TelemetryStash.BuzzerPeripheral;
 using TelemetryStash.Ds18b20Sensor;
+using TelemetryStash.IO.Peripherals;
+
 
 namespace RipTide.Nfirmware
 {
@@ -14,20 +14,18 @@ namespace RipTide.Nfirmware
     {
         public static void Main()
         {
-            var buttonPressed = false;
-            var button = new GpioButton(buttonPin: 8, debounceTime: TimeSpan.FromMilliseconds(50))
-            {
-                IsDoublePressEnabled = false,
-                IsHoldingEnabled = false
-            };
-            button.ButtonDown += (sender, e) => { buttonPressed = true; };
+            Thread.Sleep(2000);
 
-            Thread.Sleep(1000);
-            if (buttonPressed)
-            {
-                Debug.WriteLine("Button pressed. Sleeping one minute");
-                Thread.Sleep(TimeSpan.FromMinutes(1));
-            }
+            //var buttonPressed = false;
+
+            //var button = new Button(8);
+            //button.OnButtonDown(() =>  buttonPressed = true); 
+
+            //if (buttonPressed)
+            //{
+            //    Debug.WriteLine("Button pressed. Sleeping one minute");
+            //    Thread.Sleep(TimeSpan.FromMinutes(1));
+            //}
 
             //var ds18b20 = new Ds18b20Sensor();
             //ds18b20.RunDemo();
@@ -43,6 +41,9 @@ namespace RipTide.Nfirmware
 
             //var buzzer = new PiezoBuzzer();
             //buzzer.RunDemo();
+
+            //var pwm = new Pwm();
+            //pwm.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }

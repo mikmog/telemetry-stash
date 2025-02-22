@@ -35,7 +35,6 @@
     <ProjectReference Include="..\..\..\Shared\Shared\Shared.nfproj" />
     <ProjectReference Include="..\..\Aidon.Sensor\Aidon.Sensor.nfproj" />
     <ProjectReference Include="..\..\Am23XX.Sensor\Am23XX.Sensor.nfproj" />
-    <ProjectReference Include="..\..\IO.Peripherals\IO.Peripherals.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
