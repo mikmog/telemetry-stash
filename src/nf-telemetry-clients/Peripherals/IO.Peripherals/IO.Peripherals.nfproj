@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>95e695a6-d19b-4d11-8de1-867176afe6b0</ProjectGuid>
+    <ProjectGuid>ec3e46fe-5aaf-4713-abbe-1fc769fe5a87</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
@@ -16,14 +16,22 @@
     <AssemblyName>Ts.IO.Peripherals</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>direct</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="Button.cs" />
     <Compile Include="Led\Led.cs" />
     <Compile Include="Led\LedSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Pwm.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Iot.Device.Button">
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Button.1.2.775\lib\Iot.Device.Button.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -36,24 +44,15 @@
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.59\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
-    <Reference Include="nanoFramework.System.Runtime">
-      <HintPath>..\..\packages\nanoFramework.System.Runtime.1.0.27\lib\nanoFramework.System.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="System.Device.Gpio">
       <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.53\lib\System.Device.Gpio.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO.FileSystem">
-      <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.1.1.69\lib\System.IO.FileSystem.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO.Streams">
-      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.77\lib\System.IO.Streams.dll</HintPath>
+    <Reference Include="System.Device.Pwm">
+      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.20\lib\System.Device.Pwm.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
