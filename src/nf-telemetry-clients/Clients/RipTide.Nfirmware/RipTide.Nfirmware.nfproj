@@ -42,6 +42,7 @@
     <ProjectReference Include="..\..\Peripherals\Buzzer.Peripheral\Buzzer.Peripheral.nfproj" />
     <ProjectReference Include="..\..\Peripherals\Ds18b20.Sensor\Ds18b20.Sensor.nfproj" />
     <ProjectReference Include="..\..\Peripherals\IO.Peripherals\IO.Peripherals.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\MpuxxxxGyro.Sensor\MpuxxxxGyro.Sensor.nfproj" />
     <ProjectReference Include="..\..\Peripherals\NeoPixel.Peripheral\NeoPixel.Peripheral.nfproj" />
     <ProjectReference Include="..\..\Shared\Client.Services\Client.Services.nfproj" />
   </ItemGroup>
