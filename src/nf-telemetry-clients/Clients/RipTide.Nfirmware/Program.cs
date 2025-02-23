@@ -6,6 +6,7 @@ using TelemetryStash.AdcSensor;
 using TelemetryStash.BuzzerPeripheral;
 using TelemetryStash.Ds18b20Sensor;
 using TelemetryStash.IO.Peripherals;
+using TelemetryStash.MpuxxxxGyro.Sensor;
 
 
 namespace RipTide.Nfirmware
@@ -44,6 +45,9 @@ namespace RipTide.Nfirmware
 
             //var pwm = new Pwm();
             //pwm.RunDemo();
+
+            //var gyro = new Mpu6050Gyro();
+            //gyro.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }
