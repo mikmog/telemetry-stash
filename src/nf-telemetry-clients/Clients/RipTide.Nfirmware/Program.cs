@@ -5,6 +5,7 @@ using System.Threading;
 using TelemetryStash.AdcSensor;
 using TelemetryStash.BuzzerPeripheral;
 using TelemetryStash.Ds18b20Sensor;
+using TelemetryStash.IliDisplay;
 using TelemetryStash.IO.Peripherals;
 using TelemetryStash.MpuxxxxGyro.Sensor;
 
@@ -48,6 +49,9 @@ namespace RipTide.Nfirmware
 
             //var gyro = new Mpu6050Gyro();
             //gyro.RunDemo();
+
+            //var display = new Ili9341Display();
+            //display.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }
