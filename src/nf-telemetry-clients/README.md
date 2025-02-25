@@ -37,7 +37,7 @@ nanoff -v d --target XIAO_ESP32C3 --serialport COM7 --update --masserase
 nanoff -v d --target ESP32_C6_THREAD --serialport COM5 --update --masserase
 
 nanoff -v d --platform esp32 --serialport COM3 --update --masserase
-nanoff -v d --target ESP32_PSRAM_REV0 --serialport COM13 --update --fwversion 1.9.1.7 --masserase
+nanoff -v d --target ESP32_PSRAM_REV0 --serialport COM13 --update --fwversion 1.12.3.104 --masserase
 nanoff -v d --target ESP32_S3_BLE --serialport COM8 --update --masserase
 nanoff -v d --target ESP32_S3_ALL --serialport COM3 --update --masserase
 nanoff -v d --target ESP32_REV3 --serialport COM3 --update --masserase
