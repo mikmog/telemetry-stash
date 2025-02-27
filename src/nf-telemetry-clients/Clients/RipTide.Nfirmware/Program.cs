@@ -8,6 +8,7 @@ using TelemetryStash.Ds18b20Sensor;
 using TelemetryStash.IliDisplay;
 using TelemetryStash.IO.Peripherals;
 using TelemetryStash.MpuxxxxGyro.Sensor;
+using TelemetryStash.Peripherals.SdCard;
 
 
 namespace RipTide.Nfirmware
@@ -52,6 +53,9 @@ namespace RipTide.Nfirmware
 
             //var display = new Ili9341Display();
             //display.RunDemo();
+
+            var microSd = new MicroSdCard();
+            microSd.RunDemo();
 
             Thread.Sleep(Timeout.Infinite);
         }

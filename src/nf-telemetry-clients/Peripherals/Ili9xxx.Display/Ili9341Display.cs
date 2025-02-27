@@ -16,10 +16,6 @@ namespace TelemetryStash.IliDisplay
             int dataCommand = 7;
             int reset = 15;
 
-            //Configuration.SetPinFunction(16, DeviceFunction.SPI1_MISO);
-            //Configuration.SetPinFunction(17, DeviceFunction.SPI1_MOSI);
-            //Configuration.SetPinFunction(18, DeviceFunction.SPI1_CLOCK);
-
             // MOSI => FSPID
             // MISO => FSPIQ
             // SCK => FSPICLK
