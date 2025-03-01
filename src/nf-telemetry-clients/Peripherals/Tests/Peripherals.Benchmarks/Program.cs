@@ -13,8 +13,8 @@ namespace TelemetryStash.Peripherals.Benchmarks
             Debug.WriteLine("Running nanoFramework benchmarks...");
 
             //BenchmarkRunner.RunClass(typeof(Am23XXBenchmark));
-            //BenchmarkRunner.RunClass(typeof(AidonMessageParserBenchmark));
-            //BenchmarkRunner.RunClass(typeof(AidonMessageValidatorBenchmark));
+            BenchmarkRunner.RunClass(typeof(AidonMessageParserBenchmark));
+            BenchmarkRunner.RunClass(typeof(AidonMessageValidatorBenchmark));
             //BenchmarkRunner.RunClass(typeof(AidonSensorBenchmark));
 
             Debug.WriteLine("Benchmarks completed");

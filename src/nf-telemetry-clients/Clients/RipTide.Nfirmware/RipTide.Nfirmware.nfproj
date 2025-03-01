@@ -30,15 +30,16 @@
     <Content Include="Resources\unexpected-maker-esp32-pros3-pinout.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.29\lib\nanoFramework.Runtime.Events.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\Peripherals\Adc.Sensor\Adc.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\NeoPixel.Peripheral\NeoPixel.Peripheral.nfproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Peripherals\Adc.Sensor\Adc.Sensor.nfproj" />
+    <Reference Include="mscorlib">
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Runtime.Events">
+      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.30\lib\nanoFramework.Runtime.Events.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
