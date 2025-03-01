@@ -27,22 +27,22 @@
     <Compile Include="Xdb401PressureSensor.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Device.Adc">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Adc.1.1.21\lib\System.Device.Adc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Math">
-      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.90\lib\System.Math.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\XDB401-pressure-transducer.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Adc">
+      <HintPath>..\..\packages\nanoFramework.System.Device.Adc.1.1.22\lib\System.Device.Adc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Math">
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.102\lib\System.Math.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

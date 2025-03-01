@@ -27,28 +27,28 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Buzzer">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Buzzer.1.2.775\lib\Iot.Device.Buzzer.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Buzzer.1.2.822\lib\Iot.Device.Buzzer.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.16.11\lib\mscorlib.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
-      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.29\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.31\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.29\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.30\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.771\lib\System.Device.Model.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.807\lib\System.Device.Model.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.20\lib\System.Device.Pwm.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.21\lib\System.Device.Pwm.dll</HintPath>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.90\lib\System.Math.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.102\lib\System.Math.dll</HintPath>
     </Reference>
     <Reference Include="UnitsNet.Frequency">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Frequency.5.69.0\lib\UnitsNet.Frequency.dll</HintPath>
+      <HintPath>..\..\packages\UnitsNet.nanoFramework.Frequency.5.70.0\lib\UnitsNet.Frequency.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
