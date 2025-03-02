@@ -14,8 +14,8 @@ namespace NeoPixel.Peripheral
         private readonly NeoPixelStrip _pixels;
         private readonly Thread _gaugeThread;
         
-        private int _currentPosition;
-        private int _requestedPosition;
+        private volatile int _currentPosition;
+        private volatile int _requestedPosition;
 
         public NeoPixelGauge(ushort pixelsCount, Color[] gaugeColors, byte pin)
         {
