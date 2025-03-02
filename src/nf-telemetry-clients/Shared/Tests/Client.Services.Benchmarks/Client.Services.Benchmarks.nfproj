@@ -20,6 +20,8 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="BufferedTelemetryServiceBenchmark.cs" />
+    <Compile Include="FrameworkBenchmark3.cs" />
+    <Compile Include="FrameworkBenchmark2.cs" />
     <Compile Include="FrameworkBenchmark.cs" />
     <Compile Include="JsonBenchmark.cs" />
     <Compile Include="LocalStorageBenchmark.cs" />
