@@ -42,7 +42,7 @@
       <HintPath>..\..\packages\nanoFramework.System.IO.FileSystem.1.1.80\lib\System.IO.FileSystem.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams">
-      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.88\lib\System.IO.Streams.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.89\lib\System.IO.Streams.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
