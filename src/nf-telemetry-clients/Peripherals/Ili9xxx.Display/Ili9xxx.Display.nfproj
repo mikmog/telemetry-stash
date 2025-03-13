@@ -27,37 +27,37 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.1\lib\mscorlib.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.7\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics">
-      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.39\lib\nanoFramework.Graphics.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.42\lib\nanoFramework.Graphics.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Core">
-      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.39\lib\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.42\lib\nanoFramework.Graphics.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Graphics.Ili9341">
-      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.39\lib\nanoFramework.Graphics.Ili9341.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Graphics.Ili9341.1.2.42\lib\nanoFramework.Graphics.Ili9341.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
-      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.31\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.33\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.ResourceManager">
-      <HintPath>..\..\packages\nanoFramework.ResourceManager.1.2.30\lib\nanoFramework.ResourceManager.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.ResourceManager.1.2.31\lib\nanoFramework.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
-      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.30\lib\nanoFramework.Runtime.Events.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.31\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native">
-      <HintPath>..\..\packages\nanoFramework.Runtime.Native.1.7.9\lib\nanoFramework.Runtime.Native.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Runtime.Native.1.7.10\lib\nanoFramework.Runtime.Native.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
-      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.62\lib\nanoFramework.System.Collections.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.63\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Gpio">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.55\lib\System.Device.Gpio.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.56\lib\System.Device.Gpio.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Pwm">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.21\lib\System.Device.Pwm.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.22\lib\System.Device.Pwm.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

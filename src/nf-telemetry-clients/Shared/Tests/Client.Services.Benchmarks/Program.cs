@@ -16,10 +16,10 @@ namespace TelemetryStash.Services.Benchmarks
 
             Debug.WriteLine("Running nanoFramework benchmarks...");
 
-            //BenchmarkRunner.RunClass(typeof(FrameworkBenchmark));
-            //BenchmarkRunner.RunClass(typeof(FrameworkBenchmark2));
+            BenchmarkRunner.RunClass(typeof(FrameworkBenchmark));
+            BenchmarkRunner.RunClass(typeof(FrameworkBenchmark2));
             BenchmarkRunner.RunClass(typeof(FrameworkBenchmark3));
-            //BenchmarkRunner.RunClass(typeof(JsonBenchmark));
+            BenchmarkRunner.RunClass(typeof(JsonBenchmark));
             //BenchmarkRunner.RunClass(typeof(LocalStorageBenchmark));
             //BenchmarkRunner.RunClass(typeof(BufferedTelemetryServiceBenchmark));
             //BenchmarkRunner.RunClass(typeof(MqttClientBenchmark));
