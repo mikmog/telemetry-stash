@@ -35,13 +35,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
-      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.7\lib\mscorlib.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Adc">
-      <HintPath>..\..\packages\nanoFramework.System.Device.Adc.1.1.23\lib\System.Device.Adc.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Device.Adc.1.1.24\lib\System.Device.Adc.dll</HintPath>
     </Reference>
     <Reference Include="System.Math">
-      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.112\lib\System.Math.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.System.Math.1.5.116\lib\System.Math.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
