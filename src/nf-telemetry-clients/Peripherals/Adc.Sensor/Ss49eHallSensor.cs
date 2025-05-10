@@ -7,23 +7,23 @@ namespace TelemetryStash.AdcSensor
 {
     public class Ss49eHallSensor
     {
-        private readonly AdcChannel[] _channels;
-        private readonly int[] _adcChannelOffset;
-        private readonly int[] _adcReadBuffer;
-        private readonly int[] _adcChannelReads;
+        private AdcChannel[] _channels;
+        private int[] _adcChannelOffset;
+        private int[] _adcReadBuffer;
+        private int[] _adcChannelReads;
 
-        private readonly int _adcReadScale;
-        private readonly double _adcReadScaleRange;
-        private readonly int _requiredSuccessfulReads;
-        private readonly bool _reverseScale;
+        private int _adcReadScale;
+        private double _adcReadScaleRange;
+        private int _requiredSuccessfulReads;
+        private bool _reverseScale;
 
-        // Ensure magnets are facing the sensor with the correct polarity
-        // Current sensor range when driven by 5V
+        // Important.Magnet north pole facing label side of sensor when running 5v
+        // Below sensor range when driven by 5V
         const int adcReadMinValue = 1000;
         const int adcReadMaxValue = 3000;
 
         // One sensor per channel. Add more sensors to get a more stable reading
-        public Ss49eHallSensor(int[] channels, int adcReadScale, bool reverseScale, int requiredSuccessfulReads = 12)
+        public void Initialize(int[] channels, int adcReadScale, bool reverseScale, int requiredSuccessfulReads = 12)
         {
             _channels = new AdcChannel[channels.Length];
             _adcChannelOffset = new int[channels.Length];
@@ -57,7 +57,7 @@ namespace TelemetryStash.AdcSensor
                 // Read all channels
                 for (var i = 0; i < _channels.Length; i++)
                 {
-                    _adcReadBuffer[i] = _channels[i].ReadValue() + _adcChannelOffset[i];               
+                    _adcReadBuffer[i] = _channels[i].ReadValue() + _adcChannelOffset[i];
                 }
 
                 var dirtyRead = false;
@@ -125,7 +125,7 @@ namespace TelemetryStash.AdcSensor
                     var value = samples[window + j];
                     extremeMax = Math.Max(extremeMax, value);
                     extremeMin = Math.Min(extremeMin, value);
-                    
+
                     samplingTotal += value;
                 }
 

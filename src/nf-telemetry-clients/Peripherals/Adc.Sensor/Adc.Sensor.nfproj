@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\XDB401-pressure-transducer.pdf" />
+    <None Include="Assets\XDB401-pressure-transducer.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
