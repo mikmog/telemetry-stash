@@ -1,4 +1,6 @@
-﻿namespace TelemetryStash.Shared
+﻿using System;
+
+namespace TelemetryStash.Shared
 {
     public static class MathExtensions
     {
@@ -15,6 +17,25 @@
         public static int Average(this int[] array)
         {
             return array.Sum() / array.Length;
+        }
+
+        public static ushort Clamp(ushort min, ushort value, ushort max)
+        {
+            if (min > max)
+            {
+                throw new ArgumentException("Min cannot be greater than max");
+            }
+
+            if (value < min)
+            {
+                return min;
+            }
+            else if (value > max)
+            {
+                return max;
+            }
+
+            return value;
         }
     }
 }
