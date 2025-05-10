@@ -16,6 +16,7 @@
 #	./deploy-appsettings.ps1 -settingsFile AppSettings.{IDENTIFIER}.Prod.json -keyVaultName kv-ts-prod -serialPort {COM_PORT}
 #
 #	E.g.
+#	./deploy-appsettings.ps1 -nfClient RipTide.Nfirmware -settingsFile AppSettings.WROOM.Dev.json -keyVaultName kv-ts-develop -serialPort COM5
 #	./deploy-appsettings.ps1 -nfClient AtticMonitor.NfClient -settingsFile AppSettings.WROVER.Dev.json -keyVaultName kv-ts-develop -serialPort COM8
 #	./deploy-appsettings.ps1 -nfClient SmartPowerMeter.NfClient -settingsFile AppSettings.XIAOC3.Dev.json -keyVaultName kv-ts-develop -serialPort COM8
 #
@@ -56,7 +57,9 @@ ForEach ($key in @($hashTable.keys)) {
 	if($hashTable[$key] -eq "<secret>") {
 		$secretKey = ($key -replace "\.", "--" )
 		Write-Output "Reading Key Vault secret '$secretKey'"
-		$secret = Get-AzKeyVaultSecret -VaultName "$keyVaultName" -Name "$secretKey"  -AsPlainText
+		$secret = az keyvault secret show --name "$secretKey" --vault-name "$keyVaultName" --query "value"
+		$secret = $secret.Trim('"')
+		Write-Output "-----------'$secret'-------------"
 		if(!$secret) {
 			throw "Secret '$secretKey' not found in Key Vault"
 			
@@ -84,8 +87,9 @@ if($hashTable.ContainsKey("Client.CertificateName") -and $hashTable.ContainsKey(
 
 	Write-Output "Reading client certificate '$certificateName' from Key Vault"
 
-	$pem = Get-AzKeyVaultSecret -VaultName "$keyVaultName" -Name "$certificateName" -AsPlainText
-	
+	$pem = az keyvault secret show --name "$certificateName" --vault-name "$keyVaultName" --query "value"
+	$pem = $pem.Trim('"')
+
 	$tempFiles += New-TemporaryFile
 	$pem -match "(?s)-----BEGIN CERTIFICATE-----.+-----END CERTIFICATE-----"
 	$matches[0] | Out-File -FilePath $tempFiles[-1].FullName

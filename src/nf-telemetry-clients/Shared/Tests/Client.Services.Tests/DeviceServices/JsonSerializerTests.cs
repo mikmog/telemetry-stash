@@ -72,7 +72,7 @@ namespace TelemetryStash.NfClient.Services.Tests
             // Assert
             Assert.IsNotNull(tagsActual);
             Assert.AreEqual(2, tagsActual.Length);
-            for(var i = 0; i < telemetry.Tags.Length; i++)
+            for (var i = 0; i < telemetry.Tags.Length; i++)
             {
                 Assert.AreEqual(telemetry.Tags[i], tagsActual[i]);
             }
@@ -169,7 +169,7 @@ namespace TelemetryStash.NfClient.Services.Tests
 
                 var registerSetActual = (Hashtable)telemetryTest.Set[registerSetExpected.Identifier];
                 var registersActual = (Hashtable)registerSetActual["reg"];
-                
+
                 /// Assert counts
                 Assert.AreEqual(registerSetExpected.Registers.Length, registersActual.Count);
 
@@ -270,6 +270,48 @@ namespace TelemetryStash.NfClient.Services.Tests
             Assert.AreEqual(2, dictionary["property2"]);
             Assert.AreEqual(3.33, dictionary["property3"]);
             Assert.AreEqual(2147483647, dictionary["property4"]);
+        }
+
+        [TestMethod]
+        public void JsonSerializer_DeserializeToDictionary_deserializes_single_number_array()
+        {
+            // Arrange
+            var json = @"
+                    {
+                        ""array1"": [10]
+                    }";
+
+            // Act
+            var dictionary = JsonSerialize.DeserializeToDictionary(json);
+
+            // Assert
+            Assert.IsNotNull(dictionary);
+            Assert.AreEqual(1, dictionary.Count);
+            Assert.AreEqual(1, ((ArrayList)dictionary["array1"]).Count);
+        }
+
+        [TestMethod]
+        public void JsonSerializer_DeserializeToDictionary_deserializes_multiple_number_array()
+        {
+            // Arrange
+            var json = @"
+                    {
+                        ""array1"": [10, 1.5],
+
+                        ""property1"": ""value1""
+                    }";
+
+            // Act
+            var dictionary = JsonSerialize.DeserializeToDictionary(json);
+
+            // Assert
+            Assert.IsNotNull(dictionary);
+            Assert.AreEqual(2, dictionary.Count);
+            Assert.AreEqual("value1", dictionary["property1"]);
+
+            Assert.AreEqual(2, ((ArrayList)dictionary["array1"]).Count);
+            Assert.AreEqual(10, ((ArrayList)dictionary["array1"])[0]);
+            Assert.AreEqual(1.5, ((ArrayList)dictionary["array1"])[1]);
         }
 
         private static Telemetry NewTelemetry => new()

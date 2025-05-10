@@ -135,7 +135,7 @@ namespace TelemetryStash.NfClient.Services
 
             var dictionary = new Hashtable();
             for (int i = 0; i < maxProperties; i++)
-            {               
+            {
                 var key = ExtractJsonSubstring(json);
                 if (key == null)
                 {
@@ -149,7 +149,7 @@ namespace TelemetryStash.NfClient.Services
                 if (json[0] == '"')
                 {
                     var value = ExtractJsonSubstring(json);
-                    
+
                     // Advance length + 2 for the quotes
                     json = json.Substring(value.Length + 2);
 
@@ -168,15 +168,31 @@ namespace TelemetryStash.NfClient.Services
                 {
                     var value = ExtractJsonNumber(json);
                     dictionary.Add(key, value);
-                } 
-                
-                // Char is { or [
+                }
+
+                // Number array
+                else if (json[0] == '[')
+                {
+                    var numbersAsText = json.Substring(1, json.IndexOf(']') - 1);
+                    var array = new ArrayList();
+                    foreach (var number in numbersAsText.Split(','))
+                    {
+                        var value = ExtractJsonNumber(number.Trim());
+                        array.Add(value);
+                    }
+                    dictionary.Add(key, array);
+
+                    // Advance total length of array
+                    json = json.Substring(numbersAsText.Length + 2);
+                }
+
+                // Char is {
                 else
                 {
                     throw new NotImplementedException("Only value types supported");
                 }
             }
-            
+
             return dictionary;
         }
 
@@ -194,7 +210,10 @@ namespace TelemetryStash.NfClient.Services
 
         private static object ExtractJsonNumber(string json)
         {
-            var number = json.Substring(0, json.IndexOfAny(new char[] { ',', '}', ' ' }));
+            var endPosition = json.IndexOfAny(new char[] { ',', '}', ' ' });
+            endPosition = endPosition == -1 ? json.Length : endPosition;
+
+            var number = json.Substring(0, endPosition);
             if (number.IndexOf('.') >= 0)
             {
                 return double.Parse(number);
@@ -225,7 +244,7 @@ namespace TelemetryStash.NfClient.Services
         private static readonly char[] unsafeChars = new[] { '\\', '"', '\b', '\t', '\n', '\f', '\r' };
         private static string GetSafeJson(string unsafeJson)
         {
-            if(unsafeJson.IndexOfAny(unsafeChars) == -1)
+            if (unsafeJson.IndexOfAny(unsafeChars) == -1)
             {
                 return unsafeJson;
             }

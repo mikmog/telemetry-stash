@@ -18,31 +18,94 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Components\BatteryMonitor.cs" />
+    <Compile Include="Components\Buttons.cs" />
+    <Compile Include="Components\Common\Component.cs" />
+    <Compile Include="Components\DepthMonitor.cs" />
+    <Compile Include="Components\ErrorHandler.cs" />
+    <Compile Include="Components\Gyro.cs" />
+    <Compile Include="Components\Display.cs" />
+    <Compile Include="Components\TempMonitor.cs" />
+    <Compile Include="Components\Throttle.cs" />
+    <Compile Include="Components\Throttleds.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\RipTide.fzz" />
     <None Include="packages.config" />
     <None Include="README.md" />
+    <None Include="Assets\ILI9488_480x320_SPI.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\esp32s3-dev-kit-c-1-pinout.jpg" />
-    <Content Include="Resources\unexpected-maker-esp32-pros3-pinout.jpg" />
+    <Content Include="AppSettings.WROOM.Dev.json" />
+    <Content Include="AppSettings.PROS3.Dev.json" />
+    <Content Include="Assets\esp32s3-dev-kit-c-1-pinout.jpg" />
+    <Content Include="Assets\unexpected-maker-esp32-pros3-pinout.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Peripherals\Adc.Sensor\Adc.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\Ili9xxx.Display\Ili9xxx.Display.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\IO.Peripherals\IO.Peripherals.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\MpuxxxxGyro.Sensor\MpuxxxxGyro.Sensor.nfproj" />
     <ProjectReference Include="..\..\Peripherals\NeoPixel.Peripheral\NeoPixel.Peripheral.nfproj" />
+    <ProjectReference Include="..\..\Shared\Client.Services\Client.Services.nfproj" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.Graphics">
+      <HintPath>..\..\packages\nanoFramework.Graphics.1.2.45\lib\nanoFramework.Graphics.dll</HintPath>
+    </Reference>
     <Reference Include="nanoFramework.Graphics.Core">
-      <HintPath>..\..\packages\nanoFramework.Graphics.Core.1.2.45\lib\nanoFramework.Graphics.Core.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Graphics.1.2.45\lib\nanoFramework.Graphics.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.Hardware.Esp32">
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.33\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.ResourceManager">
+      <HintPath>..\..\packages\nanoFramework.ResourceManager.1.2.32\lib\nanoFramework.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.Runtime.Native">
+      <HintPath>..\..\packages\nanoFramework.Runtime.Native.1.7.11\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.67\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Text">
+      <HintPath>..\..\packages\nanoFramework.System.Text.1.3.36\lib\nanoFramework.System.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Adc">
+      <HintPath>..\..\packages\nanoFramework.System.Device.Adc.1.1.24\lib\System.Device.Adc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Gpio">
+      <HintPath>..\..\packages\nanoFramework.System.Device.Gpio.1.1.57\lib\System.Device.Gpio.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device.Pwm">
+      <HintPath>..\..\packages\nanoFramework.System.Device.Pwm.1.1.23\lib\System.Device.Pwm.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Ports">
+      <HintPath>..\..\packages\nanoFramework.System.IO.Ports.1.1.127\lib\System.IO.Ports.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Streams">
+      <HintPath>..\..\packages\nanoFramework.System.IO.Streams.1.1.91\lib\System.IO.Streams.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>nFResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

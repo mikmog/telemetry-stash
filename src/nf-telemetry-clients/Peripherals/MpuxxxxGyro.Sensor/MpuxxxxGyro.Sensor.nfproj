@@ -22,6 +22,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="MpuGyroSettings.cs" />
     <Compile Include="Mpu6050Gyro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -46,6 +47,9 @@
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native">
       <HintPath>..\..\packages\nanoFramework.Runtime.Native.1.7.11\lib\nanoFramework.Runtime.Native.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.67\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
       <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>

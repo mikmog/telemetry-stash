@@ -9,11 +9,14 @@ namespace TelemetryStash.MpuxxxxGyro.Sensor
 {
 	public class Mpu6050Gyro
     {
+        public Mpu6050Gyro(MpuGyroSettings settings)
+        {
+            Configuration.SetPinFunction(settings.I2cDataPin, DeviceFunction.I2C1_DATA);
+            Configuration.SetPinFunction(settings.I2cClockPin, DeviceFunction.I2C1_CLOCK);
+        }
+
         public void RunDemo()
         {
-            Configuration.SetPinFunction(11, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(12, DeviceFunction.I2C1_CLOCK);
-
             var i2c = new I2cConnectionSettings(1, Mpu6050.DefaultI2cAddress);
             using var gyro = new Mpu6050(I2cDevice.Create(i2c));
 
