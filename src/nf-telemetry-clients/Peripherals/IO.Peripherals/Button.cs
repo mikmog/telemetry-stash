@@ -1,15 +1,16 @@
 ﻿using Iot.Device.Button;
 using System;
+using System.Device.Gpio;
 
 namespace TelemetryStash.IO.Peripherals
 {
     public class Button
     {
         private readonly GpioButton _button;
-        
-        public Button(int buttonPin)
+
+        public Button(int buttonPin, GpioController gpioController)
         {
-            _button = new GpioButton(buttonPin: buttonPin, debounceTime: TimeSpan.FromMilliseconds(50))
+            _button = new GpioButton(buttonPin: buttonPin, gpioController, debounceTime: TimeSpan.FromMilliseconds(50))
             {
                 IsDoublePressEnabled = false,
                 IsHoldingEnabled = false

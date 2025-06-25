@@ -1,4 +1,5 @@
 ﻿using nanoFramework.Hardware.Esp32;
+using System.Device.Gpio;
 using System.Device.Pwm;
 using System.Diagnostics;
 using System.Threading;
@@ -7,18 +8,25 @@ namespace TelemetryStash.IO.Peripherals
 {
     public class Pwm
     {
+        private readonly GpioController _gpioController;
+
+        public Pwm(GpioController gpioController)
+        {
+            _gpioController = gpioController;
+        }
+
         public void RunDemo()
         {
             var buttonPressed = false;
 
-            var button = new Button(8);
+            var button = new Button(8, _gpioController);
             button.OnButtonDown(() => buttonPressed = true);
 
             Configuration.SetPinFunction(17, DeviceFunction.PWM10);
             var pwm = PwmChannel.CreateFromPin(17, 500);
             pwm.DutyCycle = 0.75;
             pwm.Start();
-            
+
             Debug.WriteLine("PWM started");
             Debug.WriteLine($"Duty cycle: {pwm.DutyCycle}. Freq: {pwm.Frequency} Hz");
 

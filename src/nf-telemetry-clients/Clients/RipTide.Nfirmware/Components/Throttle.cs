@@ -1,5 +1,6 @@
 ﻿using RipTide.Nfirmware.Components.Common;
 using System;
+using System.Device.Adc;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
@@ -10,19 +11,17 @@ namespace RipTide.Nfirmware.Components
 {
     internal class Throttle : Component
     {
-        public Throttle(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
+        public Throttle(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
         private int _currentThrust = -1;
         private bool _thrustLockEngaged = true;
 
         private GpioPin _thrustLockPin;
-        private readonly Ss49eHallSensor _thrustSensor = new();
+        private Ss49eHallSensor _thrustSensor;
 
         public bool ThrustRangeCalibrationComplete { get; private set; }
 
-        public void CalibrateThrustRange(
-            ActionMessageDelegate onMessage,
-            ActionMessageDelegate onError)
+        public void CalibrateThrustRange(ActionMessageDelegate onMessage, ActionMessageDelegate onError)
         {
             if (!AwaitThrustSensorInitialization())
             {
@@ -108,9 +107,9 @@ namespace RipTide.Nfirmware.Components
             ThrustRangeCalibrationComplete = true;
         }
 
-
         public override void Initialize(AppSettings appSettings)
         {
+            _thrustSensor = new(_adcController);
             _thrustSensor.Initialize(appSettings.Throttle.ThrustSensorPins, appSettings.Throttle.AdcReadScale, reverseScale: true);
 
             _thrustLockPin = _gpioController.OpenPin(appSettings.Throttle.ThrustLockPin, PinMode.InputPullDown);
