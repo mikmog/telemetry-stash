@@ -1,5 +1,6 @@
 using RipTide.Nfirmware.Components;
 using System;
+using System.Device.Adc;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -10,18 +11,20 @@ namespace RipTide.Nfirmware
 {
     public class Program
     {
-        private static AppSettings _appSettings = new();
+        private static readonly AppSettings _appSettings = new();
         private static readonly ErrorHandler _errorHandler = new();
-        private static readonly GpioController _gpioController = new();
 
-        private static readonly BatteryMonitor _batteryMonitor = new(_gpioController, _errorHandler);
-        private static readonly Buttons _buttons = new(_gpioController, _errorHandler);
-        private static readonly DepthMonitor _depthMonitor = new(_gpioController, _errorHandler);
-        private static readonly Gyro _gyro = new(_gpioController, _errorHandler);
-        private static readonly Display _display = new(_gpioController, _errorHandler);
-        private static readonly TempMonitor _tempMonitor = new(_gpioController, _errorHandler);
-        private static readonly Throttle _throttle = new(_gpioController, _errorHandler);
-        private static readonly Throttleds _throttleds = new(_gpioController, _errorHandler);
+        private static readonly AdcController _adc = new();
+        private static readonly GpioController _gpio = new();
+
+        private static readonly BatteryMonitor _batteryMonitor = new(_adc, _gpio, _errorHandler);
+        private static readonly Buttons _buttons = new(_adc, _gpio, _errorHandler);
+        private static readonly DepthMonitor _depthMonitor = new(_adc, _gpio, _errorHandler);
+        private static readonly Gyro _gyro = new(_adc, _gpio, _errorHandler);
+        private static readonly Display _display = new(_adc, _gpio, _errorHandler);
+        private static readonly TempMonitor _tempMonitor = new(_adc, _gpio, _errorHandler);
+        private static readonly Throttle _throttle = new(_adc, _gpio, _errorHandler);
+        private static readonly Throttleds _throttleds = new(_adc, _gpio, _errorHandler);
 
         public static void Main()
         {
@@ -36,10 +39,11 @@ namespace RipTide.Nfirmware
                 // Initialize display
                 _display.Initialize(_appSettings);
                 _errorHandler.Initialize(_display);
+                Thread.Sleep(500);
 
                 // Show splash screen
                 _display.SetScreen(Screen.Splash);
-                _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(1000));
+                _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
                 // Initialize throttle leds
                 _throttleds.Initialize(_appSettings);
@@ -47,12 +51,8 @@ namespace RipTide.Nfirmware
                 // Initialize throttle
                 _throttle.Initialize(_appSettings);
 
-                Thread.Sleep(500);
                 _display.SetScreen(Screen.Empty);
-                Thread.Sleep(500);
-
-                _throttle.OnThrustChanged += _display.SetThrust;
-                _throttle.OnThrustChanged += _throttleds.ThrustChanged;
+                Thread.Sleep(50);
 
                 _throttle.CalibrateThrustRange(
                     onMessage: (message, sleep) =>
@@ -71,37 +71,22 @@ namespace RipTide.Nfirmware
                         throw new Exception(errorMessage);
                     });
 
-                _display.SetText("");
+                _display.SetText("GO!");
 
-                _appSettings = null;
+                _throttle.OnThrustChanged += _display.SetThrust;
+                _throttle.OnThrustChanged += _throttleds.ThrustChanged;
+
 
                 /////// I2C
                 ////Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
                 ////Configuration.SetPinFunction(9, DeviceFunction.I2C1_CLOCK);
                 //var gyro = new Mpu6050Gyro(new MpuGyroSettings { I2cDataPin = 8, I2cClockPin = 9 });
                 //gyro.RunDemo();
-
-                //var displaySettings = new IliDisplaySettings
-                //{
-                //    BackLightPin = 38,
-                //    ChipSelectPin = 6,
-                //    DataCommandPin = 7,
-                //    ResetPin = 34,
-                //    SpiMisoPin = 37,
-                //    SpiMosiPin = 35,
-                //    SpiClockPin = 36
-                //};
-                //var ili9488Display = new Ili9488Display(displaySettings);
-                //ili9488Display.RunDemo();
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
-
-            //var gpioController = new GpioController();
-            //var adcController = new AdcController();
 
             //// Display
             //int backLightPin = 38;

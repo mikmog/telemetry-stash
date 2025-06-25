@@ -1,11 +1,12 @@
 ﻿using RipTide.Nfirmware.Components.Common;
+using System.Device.Adc;
 using System.Device.Gpio;
 
 namespace RipTide.Nfirmware.Components
 {
     internal class TempMonitor : Component
     {
-        public TempMonitor(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
+        public TempMonitor(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
         public override void Initialize(AppSettings appSettings)
         {

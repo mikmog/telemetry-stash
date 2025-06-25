@@ -10,9 +10,9 @@ namespace TelemetryStash.IO.Peripherals.Led
         private readonly GpioPin _led;
         private bool _isOn;
 
-        public Led(int pin)
+        public Led(int pin, GpioController gpioController)
         {
-            _led = new GpioController().OpenPin(pin, PinMode.Output);
+            _led = gpioController.OpenPin(pin, PinMode.Output);
         }
 
         public void Signal(LedSignal signal)
