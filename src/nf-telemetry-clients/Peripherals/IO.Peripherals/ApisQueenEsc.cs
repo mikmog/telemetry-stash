@@ -29,7 +29,7 @@ namespace TelemetryStash.IO.Peripherals
 
         private readonly Thread _throttleThread;
         private int _currentThrottle = 0;
-        private ushort _requestedThrottle = 0;
+        private int _requestedThrottle = 0;
 
         private const double neutralDutyCycle = 0.75;
         private const double oneStepDutyCycle = 0.0025;
@@ -62,12 +62,12 @@ namespace TelemetryStash.IO.Peripherals
             _pwm2.Stop();
         }
 
-        public void SetThrottle(ushort percentage)
+        public void SetThrottle(int percentage)
         {
             Debug.WriteLine($"Setting throttle to {percentage} %");
 
-            const ushort minThrottle = 0;
-            const ushort maxThrottle = 100;
+            const int minThrottle = 0;
+            const int maxThrottle = 100;
 
             _requestedThrottle = MathExtensions.Clamp(minThrottle, percentage, maxThrottle);
         }

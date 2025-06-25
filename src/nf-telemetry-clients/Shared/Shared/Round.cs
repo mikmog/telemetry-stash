@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.Shared
 {
     public static class Round
     {
@@ -62,7 +62,7 @@ namespace TelemetryStash.NfClient.Services
         private static double RoundTo(double value, double snap)
         {
             if (snap <= 1f)
-                value = Math.Floor(value) + (Math.Round((value - Math.Floor(value)) * (1f / snap)) * snap);
+                value = Math.Floor(value) + Math.Round((value - Math.Floor(value)) * (1f / snap)) * snap;
             else
                 value = Math.Round(value / snap) * snap;
 

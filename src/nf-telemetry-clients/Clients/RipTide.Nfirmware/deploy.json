@@ -1,0 +1,21 @@
+{
+  "serialport": "%SerialPort%",
+  "files": [
+    {
+      "DestinationFilePath": "I:\\AppSettings.json",
+      "SourceFilePath": "%AppSettings.json%"
+    },
+    {
+      "DestinationFilePath": "I:\\Client.pem",
+      "SourceFilePath": "%Client.PemCert%"
+    },
+    {
+      "DestinationFilePath": "I:\\Client.key",
+      "SourceFilePath": "%Client.PrivateKey%"
+    },
+    {
+      "DestinationFilePath": "I:\\res\\rip-tide-cartoon.jpg",
+      "SourceFilePath": "%nfClient-dir%\\Assets\\rip-tide-cartoon.jpg"
+    }
+  ]
+}

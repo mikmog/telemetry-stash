@@ -118,16 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="kristen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\kristen.tinyfnt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="kristenlowres" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\kristenlowres.tinyfnt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ripTideCartoon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ripTideCartoon.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ripTidePunk" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\ripTidePunk.jpg;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Consolas16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Consolas16.tinyfnt;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

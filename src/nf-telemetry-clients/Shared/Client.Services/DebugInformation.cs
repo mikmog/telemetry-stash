@@ -5,7 +5,7 @@ using TelemetryStash.Shared;
 
 namespace TelemetryStash.NfClient.Services
 {
-    public class Debugformation
+    public class DebugInformation
     {
         [Conditional("DEBUG")]
         public void PrintStartupMessage()
@@ -39,7 +39,8 @@ namespace TelemetryStash.NfClient.Services
                     if (registerSet.Identifier == "Memory")
                     {
                         Debug.WriteLine("> " + register.Identifier + ": " + BytesToKb(register.Value) + " KB");
-                    } else
+                    }
+                    else
                     {
                         Debug.WriteLine("> " + register.Identifier + ": " + register.Value);
                     }

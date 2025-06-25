@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using TelemetryStash.NfClient.Services;
 using TelemetryStash.Shared;
 
 namespace TelemetryStash.Aidon.Sensor

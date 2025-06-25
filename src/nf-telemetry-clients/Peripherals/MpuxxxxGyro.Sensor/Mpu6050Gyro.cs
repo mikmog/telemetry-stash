@@ -3,7 +3,7 @@ using nanoFramework.Hardware.Esp32;
 using System.Device.I2c;
 using System.Diagnostics;
 using System.Threading;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.MpuxxxxGyro.Sensor
 {

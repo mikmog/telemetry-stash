@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
-using TelemetryStash.Shared;
 using RegisterValueType = TelemetryStash.Shared.RegisterValueType;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.Shared
 {
     public static class JsonSerialize
     {
@@ -55,7 +54,7 @@ namespace TelemetryStash.NfClient.Services
                 string registersJson = null;
                 foreach (var register in registerSet.Registers)
                 {
-                    registersJson += ("\"" + register.Identifier + "\":" + GetRegisterValueJson(register) + ",");
+                    registersJson += "\"" + register.Identifier + "\":" + GetRegisterValueJson(register) + ",";
                 }
 
                 // "tag": ["Tag1", "Tag2"],
@@ -88,7 +87,7 @@ namespace TelemetryStash.NfClient.Services
                 ///         "Register3": "Value3"
                 ///     }
                 //  },
-                telemetryJson += ("\"" + registerSet.Identifier + "\":{");
+                telemetryJson += "\"" + registerSet.Identifier + "\":{";
                 telemetryJson += registerSetsJson.TrimEnd(',');
                 telemetryJson += "},";
             }

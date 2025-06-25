@@ -2,6 +2,8 @@
 #	Script is used to deploy the configuration to the device. It reads the AppSettings.env.json file and
 #	replaces secrets and certificates with values from Key Vault.
 #
+#   Execute this script in the Client.Scripts directory.
+#
 #   Prerequisites:
 #   - A root CA certificate
 #   - OpenSSL https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL
@@ -28,7 +30,7 @@ param(
 	[string]$settingsFile = "",
 	[string]$nfClient = "",
 	[string]$serialPort = "",
-	[string]$deployJsonFile = "deploy.json"
+	[string]$deployJsonFile = "default"
 )
 
 $ErrorActionPreference = "Stop"
@@ -74,12 +76,25 @@ $tempFiles += $tempSettingsFile
 ($hashTable | ConvertTo-Json) | Out-File -FilePath $tempSettingsFile.FullName
 
 # Read deploy.json
+if($deployJsonFile -eq "default")
+{
+	# If not specified, use the default deploy.json file in Client.Scripts directory
+	$deployJsonFile = "deploy.json"
+} else {
+	# If specified, use the deploy.json file in the nfClient directory
+	$deployJsonFile = "../../$nfClient/$deployJsonFile"
+}
+
 Write-Output "Reading '$deployJsonFile'"
 $content = Get-Content $deployJsonFile
 
 # Replace '%AppSettings.json%' with temp settings file path
 $content = $content -replace "%AppSettings.json%", ($tempSettingsFile.FullName -replace "\\", "\\")
 $content = $content -replace "%SerialPort%", $serialPort
+
+# Replace '%nfClient-dir%' with folder of the nfClient
+$parentFolder = (Resolve-Path ..\..\).Path
+$content = $content -replace "%nfClient-dir%",  ("$parentFolder\$nfClient" -replace "\\", "\\")
 
 # Replace '%Mqtt.ClientPemCert%' and '%Mqtt.ClientPrivateKey with Key Vault certificate
 if($hashTable.ContainsKey("Client.CertificateName") -and $hashTable.ContainsKey("Client.PemCert") -and $hashTable.ContainsKey("Client.PrivateKey")) {

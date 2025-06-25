@@ -2,7 +2,7 @@
 using System.Collections;
 using TelemetryStash.IliDisplay;
 using TelemetryStash.MpuxxxxGyro.Sensor;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware
 {
@@ -29,8 +29,8 @@ namespace RipTide.Nfirmware
     {
         private const string AdcReadScaleKey = "Throttle.ThrustScale";
         private const string PrimaryButtonPinKey = "Throttle.PrimaryButtonPin";
+        private const string ThrustLockPinKey = "Throttle.ThrustLockPin";
         private const string ThrustSensorPinsKey = "Throttle.ThrustSensorPins";
-        private const string ThrustLockSensorPinsKey = "Throttle.ThrustLockSensorPins";
 
         public void Configure(IDictionary dictionary)
         {
@@ -38,22 +38,19 @@ namespace RipTide.Nfirmware
 
             AdcReadScale = (int)Setting(AdcReadScaleKey);
             PrimaryButtonPin = (int)Setting(PrimaryButtonPinKey);
+            ThrustLockPin = (int)Setting(ThrustLockPinKey);
 
             var setting = (ArrayList)Setting(ThrustSensorPinsKey);
             ThrustSensorPins = new int[setting.Count];
             setting.CopyTo(ThrustSensorPins, 0);
-
-            setting = (ArrayList)Setting(ThrustLockSensorPinsKey);
-            ThrustLockSensorPins = new int[setting.Count];
-            setting.CopyTo(ThrustLockSensorPins, 0);
         }
 
         public int AdcReadScale { get; set; }
 
         public int PrimaryButtonPin { get; set; }
 
-        public int[] ThrustSensorPins { get; set; }
+        public int ThrustLockPin { get; set; }
 
-        public int[] ThrustLockSensorPins { get; set; }
+        public int[] ThrustSensorPins { get; set; }
     }
 }

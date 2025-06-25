@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Threading;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.NfClient.Communication
 {
     // https://github.com/nanoframework/System.Device.Wifi
 
@@ -35,7 +35,7 @@ namespace TelemetryStash.NfClient.Services
             {
                 Debug.WriteLine("Connected. IP: " + IPAddress.GetDefaultLocalAddress());
             }
-            
+
             Debug.WriteLine("");
         }
     }
