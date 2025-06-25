@@ -3,7 +3,6 @@ using System;
 using System.Device.Adc;
 using System.Device.Gpio;
 using System.Diagnostics;
-using System.IO.Ports;
 using System.Threading;
 
 
@@ -76,38 +75,14 @@ namespace RipTide.Nfirmware
                 _throttle.OnThrustChanged += _display.SetThrust;
                 _throttle.OnThrustChanged += _throttleds.ThrustChanged;
 
-
-                /////// I2C
-                ////Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
-                ////Configuration.SetPinFunction(9, DeviceFunction.I2C1_CLOCK);
-                //var gyro = new Mpu6050Gyro(new MpuGyroSettings { I2cDataPin = 8, I2cClockPin = 9 });
-                //gyro.RunDemo();
+                //// Throttleds
+                //int throttledsPin = 2;
+                //gpioController.OpenPin(throttledsPin, PinMode.Output);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-
-            //// Display
-            //int backLightPin = 38;
-            //int chipSelect = 6;
-            //gpioController.OpenPin(chipSelect, PinMode.Output);
-
-            //int dataCommand = 7;
-            //gpioController.OpenPin(dataCommand, PinMode.Output);
-
-            //int reset = 34;
-            //gpioController.OpenPin(reset, PinMode.Output);
-
-            //Configuration.SetPinFunction(backLightPin, DeviceFunction.PWM2);
-            //var pwm = PwmChannel.CreateFromPin(backLightPin, 500);
-            //pwm.DutyCycle = 0.5;
-            //pwm.Start();
-
-            ///// SPI
-            //Configuration.SetPinFunction(37, DeviceFunction.SPI1_MISO);
-            //Configuration.SetPinFunction(36, DeviceFunction.SPI1_CLOCK);
-            //Configuration.SetPinFunction(35, DeviceFunction.SPI1_MOSI);
 
             //// ESC PWM
             //Configuration.SetPinFunction(40, DeviceFunction.PWM10);
@@ -119,7 +94,6 @@ namespace RipTide.Nfirmware
             //var pwmEsc2 = PwmChannel.CreateFromPin(39, 400);
             //pwmEsc2.DutyCycle = 0.5;
             //pwmEsc2.Start();
-
 
             //// OneWire
             //Configuration.SetPinFunction(42, DeviceFunction.COM3_RX);
@@ -133,10 +107,6 @@ namespace RipTide.Nfirmware
             //// Pixels
             //int pixelsPin = 1;
             //gpioController.OpenPin(pixelsPin, PinMode.Output);
-
-            //// Throttleds
-            //int throttledsPin = 2;
-            //gpioController.OpenPin(throttledsPin, PinMode.Output);
 
             //// Buzzer
             //Configuration.SetPinFunction(3, DeviceFunction.PWM2);
@@ -157,15 +127,6 @@ namespace RipTide.Nfirmware
             //// Extra
             //gpioController.OpenPin(21, PinMode.InputPullUp);
             //gpioController.OpenPin(0, PinMode.InputPullUp);
-
-            //// Throttle Ss49e
-            //adcController.OpenChannel(12);
-            //adcController.OpenChannel(11);
-
-            //// Throttle Buttons
-            //gpioController.OpenPin(15, PinMode.InputPullUp);
-            //gpioController.OpenPin(14, PinMode.InputPullUp);
-
 
             //// Mosfets
             //Configuration.SetPinFunction(16, DeviceFunction.PWM3);
@@ -207,12 +168,6 @@ namespace RipTide.Nfirmware
             ////var gauge = new NeoPixelGauge(pixelsCount: 45, new[] { Color.Green, Color.Yellow, Color.Red }, pin: 11);
             ////gauge.Initialize();
 
-            ////var ili9488Display = new Ili9488Display();
-            ////ili9488Display.RunDemo();
-
-            ////var ss49e = new Ss49eHallSensor(new int[] { 0, 1 }, adcReadScale: 45, true);
-            //var ss49e = new Ss49eHallSensor(new int[] { 14, 15 }, adcReadScale: 45, true);
-            //ss49e.CalibrateAdcChannelOffsets();
             //while (true)
             //{
             //    var value = ss49e.Read();
@@ -238,20 +193,6 @@ namespace RipTide.Nfirmware
             //var printer = new Debugformation();
             //printer.PrintStartupMessage();
             //printer.PrintSystemInfo();
-        }
-
-        private static SerialPort CreateSerialPort()
-        {
-            return new SerialPort("COM2")
-            {
-                StopBits = StopBits.One,
-                BaudRate = 115200,
-                DataBits = 8,
-                Parity = Parity.None,
-                ReadBufferSize = 900,
-                ReceivedBytesThreshold = 650,
-                Handshake = Handshake.None
-            };
         }
     }
 }
