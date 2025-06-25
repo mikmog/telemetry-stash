@@ -1,9 +1,9 @@
 using RipTide.Nfirmware.Components;
 using System;
+using System.Device.Gpio;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Threading;
-using TelemetryStash.NfClient.Services;
 
 
 namespace RipTide.Nfirmware
@@ -12,15 +12,16 @@ namespace RipTide.Nfirmware
     {
         private static AppSettings _appSettings = new();
         private static readonly ErrorHandler _errorHandler = new();
+        private static readonly GpioController _gpioController = new();
 
-        private static readonly BatteryMonitor _batteryMonitor = new(_errorHandler);
-        private static readonly Buttons _buttons = new(_errorHandler);
-        private static readonly DepthMonitor _depthMonitor = new(_errorHandler);
-        private static readonly Gyro _gyro = new(_errorHandler);
-        private static readonly Display _display = new(_errorHandler);
-        private static readonly TempMonitor _tempMonitor = new(_errorHandler);
-        private static readonly Throttle _throttle = new(_errorHandler);
-        private static readonly Throttleds _throttleds = new(_errorHandler);
+        private static readonly BatteryMonitor _batteryMonitor = new(_gpioController, _errorHandler);
+        private static readonly Buttons _buttons = new(_gpioController, _errorHandler);
+        private static readonly DepthMonitor _depthMonitor = new(_gpioController, _errorHandler);
+        private static readonly Gyro _gyro = new(_gpioController, _errorHandler);
+        private static readonly Display _display = new(_gpioController, _errorHandler);
+        private static readonly TempMonitor _tempMonitor = new(_gpioController, _errorHandler);
+        private static readonly Throttle _throttle = new(_gpioController, _errorHandler);
+        private static readonly Throttleds _throttleds = new(_gpioController, _errorHandler);
 
         public static void Main()
         {
@@ -38,19 +39,41 @@ namespace RipTide.Nfirmware
 
                 // Show splash screen
                 _display.SetScreen(Screen.Splash);
+                _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(1000));
 
                 // Initialize throttle leds
                 _throttleds.Initialize(_appSettings);
 
                 // Initialize throttle
                 _throttle.Initialize(_appSettings);
+
+                Thread.Sleep(500);
+                _display.SetScreen(Screen.Empty);
+                Thread.Sleep(500);
+
                 _throttle.OnThrustChanged += _display.SetThrust;
                 _throttle.OnThrustChanged += _throttleds.ThrustChanged;
 
-                _appSettings = null;
+                _throttle.CalibrateThrustRange(
+                    onMessage: (message, sleep) =>
+                    {
+                        Debug.WriteLine(message);
+                        _display.SetText(message);
 
-                _display.Fade(0, 0.8, TimeSpan.FromSeconds(1));
-                _display.SetScreen(Screen.Demo);
+                        Thread.Sleep(sleep);
+                    },
+                    onError: (errorMessage, sleep) =>
+                    {
+                        Debug.WriteLine($"Error: {errorMessage}");
+                        _display.SetText($"Error: {errorMessage}");
+
+                        Thread.Sleep(sleep);
+                        throw new Exception(errorMessage);
+                    });
+
+                _display.SetText("");
+
+                _appSettings = null;
 
                 /////// I2C
                 ////Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
@@ -227,9 +250,9 @@ namespace RipTide.Nfirmware
         [Conditional("DEBUG")]
         private static void PrintStartupMessage()
         {
-            var printer = new Debugformation();
-            printer.PrintStartupMessage();
-            printer.PrintSystemInfo();
+            //var printer = new Debugformation();
+            //printer.PrintStartupMessage();
+            //printer.PrintSystemInfo();
         }
 
         private static SerialPort CreateSerialPort()

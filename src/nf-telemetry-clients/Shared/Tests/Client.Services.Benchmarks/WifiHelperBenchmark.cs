@@ -1,6 +1,6 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.NfClient.Communication;
 
 namespace TelemetryStash.Services.Benchmarks
 {

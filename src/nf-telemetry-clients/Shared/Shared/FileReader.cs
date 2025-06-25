@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.Shared
 {
     public class FileReader
     {
@@ -11,9 +11,9 @@ namespace TelemetryStash.NfClient.Services
             {
                 throw new ArgumentException(errorMessage, filePath);
             }
-            
+
             var bytes = File.ReadAllBytes(filePath);
-            
+
             var fileBuffer = new byte[bytes.Length + 1];
             Array.Copy(bytes, fileBuffer, bytes.Length);
             fileBuffer[fileBuffer.Length - 1] = 0;

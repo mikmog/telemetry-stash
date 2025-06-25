@@ -20,16 +20,8 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="DeviceMetrics.cs" />
-    <Compile Include="Mqtt\BufferedTelemetryService.cs" />
-    <Compile Include="ConfigurationReader.cs" />
-    <Compile Include="LocalStorage.cs" />
-    <Compile Include="Mqtt\MqttService.cs" />
-    <Compile Include="Mqtt\MqttSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FileReader.cs" />
-    <Compile Include="JsonSerialize.cs" />
-    <Compile Include="Debugformation.cs" />
-    <Compile Include="Wifi.cs" />
+    <Compile Include="DebugInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
@@ -40,12 +32,6 @@
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
       <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.34\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.M2Mqtt">
-      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.196\lib\nanoFramework.M2Mqtt.dll</HintPath>
-    </Reference>
-    <Reference Include="nanoFramework.M2Mqtt.Core">
-      <HintPath>..\..\packages\nanoFramework.M2Mqtt.5.1.196\lib\nanoFramework.M2Mqtt.Core.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>
@@ -73,9 +59,6 @@
     </Reference>
     <Reference Include="System.Net">
       <HintPath>..\..\packages\nanoFramework.System.Net.1.11.42\lib\System.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization">
-      <HintPath>..\..\packages\nanoFramework.System.Runtime.Serialization.1.0.57\lib\System.Runtime.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading">
       <HintPath>..\..\packages\nanoFramework.System.Threading.1.1.52\lib\System.Threading.dll</HintPath>

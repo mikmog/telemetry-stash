@@ -1,6 +1,7 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.NfClient.Communication;
+using TelemetryStash.NfClient.Communication.Mqtt;
 using TelemetryStash.Shared;
 
 namespace TelemetryStash.Services.Benchmarks
@@ -19,7 +20,7 @@ namespace TelemetryStash.Services.Benchmarks
             Wifi.EnsureConnected();
             var configReader = new ConfigurationReader();
             var settings = configReader.ReadConfiguration();
-            
+
             _numbersOnlyTelemetry = TestData.NumbersOnlyTelemetry;
             _textAndNumbersTelemetry = TestData.TextOnlyTelemetry;
 

@@ -1,23 +1,30 @@
-﻿using RipTide.Nfirmware.Components.Common;
+﻿using nanoFramework.UI;
+using RipTide.Nfirmware.Assets;
+using RipTide.Nfirmware.Components.Common;
 using System;
+using System.Device.Gpio;
+using System.Drawing;
 using System.Threading;
 using TelemetryStash.IliDisplay;
+using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware.Components
 {
     public class Display : Component
     {
-        private int _thrust;
+        private int _thrust = -1;
         private Screen _screen;
+        private static Bitmap _logo = null;
         private readonly Ili9488Display _ili9488Display = new();
 
-        public Display(ErrorHandler errorHandler) : base(errorHandler) { }
+        public Display(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
 
         public override void Initialize(AppSettings appSettings)
         {
             _ili9488Display.Initialize(appSettings.IliDisplay);
 
-            // Add fonts
+            var splash = new FileReader().ReadFile(Asset.RipTideSplash, $"Error loading {Asset.RipTideSplash}");
+            _logo = new Bitmap(splash, Bitmap.BitmapImageType.Jpeg);
 
             Start(Runner);
         }
@@ -25,6 +32,12 @@ namespace RipTide.Nfirmware.Components
         public void SetScreen(Screen screen)
         {
             _screen = screen;
+        }
+
+        public void SetText(string text)
+        {
+            // TODO
+            _ili9488Display.Text(text, Color.White, new System.Drawing.Point(50, 100));
         }
 
         public void Fade(double from, double to, TimeSpan duration)
@@ -47,13 +60,13 @@ namespace RipTide.Nfirmware.Components
                         ili9488Display.Screen.Clear();
                         break;
                     case Screen.Demo:
-                        ili9488Display.RunDemo();
+                        ili9488Display.RunDemo(_logo);
                         break;
                     case Screen.Splash:
-                        //ili9488Display.DrawLogo();
+                        ili9488Display.Clear(_logo);
                         break;
                     case Screen.Dash:
-                        //ili9488Display.DrawInformationBar(0);
+                        ili9488Display.Clear(Color.Black);
                         break;
                 }
 
@@ -61,6 +74,7 @@ namespace RipTide.Nfirmware.Components
             }
 
             var currentScreen = _screen;
+            var currentThrust = _thrust;
 
             while (true)
             {
@@ -70,21 +84,13 @@ namespace RipTide.Nfirmware.Components
                     SetScreen(_ili9488Display, currentScreen);
                 }
 
-                Thread.Sleep(100);
-                if (_screen == Screen.Demo)
+                if (currentThrust != _thrust)
                 {
-                    _ili9488Display.RunDemo();
+                    currentThrust = _thrust;
+                    _ili9488Display.Text(currentThrust.ToString(), Color.White, new System.Drawing.Point(240, 160));
                 }
 
-                if (_screen == Screen.Splash)
-                {
-                    _ili9488Display.DrawLogo();
-                }
-
-                if (_screen == Screen.Dash)
-                {
-                    _ili9488Display.DrawInformationBar(_thrust);
-                }
+                Thread.Sleep(10);
             }
         }
     }

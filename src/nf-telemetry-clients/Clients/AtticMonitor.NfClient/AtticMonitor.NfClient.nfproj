@@ -29,6 +29,7 @@
     <ProjectReference Include="..\..\Peripherals\Bmxx80.Sensor\Bmxx80.Sensor.nfproj" />
     <ProjectReference Include="..\..\Peripherals\IO.Peripherals\IO.Peripherals.nfproj" />
     <ProjectReference Include="..\..\Peripherals\Wifi.Sensor\Wifi.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Shared\Client.Communication\Client.Communication.nfproj" />
     <ProjectReference Include="..\..\Shared\Client.Services\Client.Services.nfproj" />
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
   </ItemGroup>

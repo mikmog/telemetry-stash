@@ -3,7 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.IO;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.Shared
 {
     public class ConfigurationReader
     {
@@ -11,7 +11,7 @@ namespace TelemetryStash.NfClient.Services
 
         public IDictionary ReadConfiguration()
         {
-            if(!File.Exists(fileName))
+            if (!File.Exists(fileName))
             {
                 throw new Exception($"Configuration file not found '{fileName}'");
             }

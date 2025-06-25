@@ -31,6 +31,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Client.Communication\Client.Communication.nfproj" />
     <ProjectReference Include="..\..\Client.Services\Client.Services.nfproj" />
     <ProjectReference Include="..\..\Shared\Shared.nfproj" />
   </ItemGroup>

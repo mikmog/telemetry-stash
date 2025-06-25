@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.NfClient.Communication
 {
     public class LocalStorage
     {

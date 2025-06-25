@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <FileAlignment>512</FileAlignment>
     <RootNamespace>TelemetryStash.AdcSensor</RootNamespace>
-    <AssemblyName>Tc.Adc.Sensor</AssemblyName>
+    <AssemblyName>Ts.Adc.Sensor</AssemblyName>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <NuGetAudit>true</NuGetAudit>

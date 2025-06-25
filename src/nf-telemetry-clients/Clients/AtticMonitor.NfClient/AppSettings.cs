@@ -2,7 +2,8 @@
 using TelemetryStash.Am23XX.Sensor;
 using TelemetryStash.Bmxx80.Sensor;
 using TelemetryStash.IO.Peripherals.Led;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.NfClient.Communication.Mqtt;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.AtticMonitor.NfClient
 {

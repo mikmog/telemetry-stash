@@ -1,7 +1,7 @@
 ﻿using nanoFramework.Benchmark;
 using nanoFramework.Benchmark.Attributes;
 using System.Collections;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.NfClient.Communication;
 using TelemetryStash.Shared;
 
 /*
