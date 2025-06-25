@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using TelemetryStash.NfClient.Services;
 
 namespace TelemetryStash.Shared
 {

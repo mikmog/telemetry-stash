@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.Am23XX.Sensor;
 using TelemetryStash.Bmxx80.Sensor;
+using TelemetryStash.NfClient.Communication;
+using TelemetryStash.NfClient.Communication.Mqtt;
 using TelemetryStash.NfClient.Services;
 using TelemetryStash.Peripherals.BluetoothSensor;
 using TelemetryStash.Peripherals.WifiSensor;
@@ -71,7 +73,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     wifiSensor.Stop();
                     Debug.WriteLine();
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
                 Power.RebootDevice(10000);
@@ -145,7 +148,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     Timestamp = DateTime.UtcNow,
                     RegisterSets = registerSets
                 });
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
             }
@@ -154,7 +158,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
         [Conditional("DEBUG")]
         private static void PrintStartupMessage()
         {
-            var printer = new Debugformation();
+            var printer = new DebugInformation();
             printer.PrintStartupMessage();
             printer.PrintSystemInfo();
         }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using TelemetryStash.Shared;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.NfClient.Communication.Mqtt
 {
     public class MqttService
     {
@@ -170,7 +170,7 @@ namespace TelemetryStash.NfClient.Services
             Debug.WriteLine($"> Shared subs available: {e.Message.SharedSubscriptionAvailable}");
             Debug.WriteLine($"> Shared identifier available: {e.Message.SubscriptionIdentifiersAvailable}");
             Debug.WriteLine($"> Topic alias max: {e.Message.TopicAliasMaximum}");
-            foreach (UserProperty prop in (e.Message.UserProperties ?? new ArrayList()))
+            foreach (UserProperty prop in e.Message.UserProperties ?? new ArrayList())
             {
                 Debug.WriteLine($"> User property key: {prop.Name}");
                 Debug.WriteLine($"> User property value: {prop.Value}");

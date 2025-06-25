@@ -13,7 +13,7 @@ nanoff -v d --target ESP32_S3 --serialport COM3 --update --clrfile "c:\\Temp\\na
 
 Deploy app settings to board
 ```bash
-./deploy-appsettings.ps1 -nfClient RipTide.Nfirmware -settingsFile AppSettings.PROS3.Dev.json -keyVaultName kv-ts-develop -serialPort COM5
+./deploy-appsettings.ps1 -nfClient RipTide.Nfirmware -settingsFile AppSettings.PROS3.Dev.json -deployJsonFile deploy.json -keyVaultName kv-ts-develop -serialPort COM5
 ```
 
 Targets:
@@ -22,13 +22,13 @@ Targets:
 
 ## Schematic
 
-[RipTide.fzz](Assets/RipTide.fzz)
+[RipTide.fzz](_docs/RipTide.fzz)
 
 ## Pinout
 
-![ProS3 ESP32 S3](Assets/unexpected-maker-esp32-pros3-pinout.jpg)
+![ProS3 ESP32 S3](_docs/unexpected-maker-esp32-pros3-pinout.jpg)
 
-![ESP32 S3 DevKitC 1](Assets/esp32s3-dev-kit-c-1-pinout.jpg)
+![ESP32 S3 DevKitC 1](_docs/esp32s3-dev-kit-c-1-pinout.jpg)
 
 ## Data Sheets
 

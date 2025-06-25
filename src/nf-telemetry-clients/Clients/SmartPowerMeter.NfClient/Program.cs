@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.Aidon.Sensor;
 using TelemetryStash.Bmxx80.Sensor;
+using TelemetryStash.NfClient.Communication;
+using TelemetryStash.NfClient.Communication.Mqtt;
 using TelemetryStash.NfClient.Services;
 using TelemetryStash.Shared;
 using TelemetryStash.SmartPowerMeter.NfClient;
@@ -105,7 +107,7 @@ namespace SmartPowerMeter.Client
         [Conditional("DEBUG")]
         private static void PrintStartupMessage()
         {
-            var printer = new Debugformation();
+            var printer = new DebugInformation();
             printer.PrintStartupMessage();
             printer.PrintSystemInfo();
         }

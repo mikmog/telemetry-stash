@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
-using TelemetryStash.NfClient.Services;
+using TelemetryStash.Shared;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.NfClient.Communication.Mqtt
 {
     public class MqttSettings
     {

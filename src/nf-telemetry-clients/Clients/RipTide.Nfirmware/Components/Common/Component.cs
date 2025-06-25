@@ -1,14 +1,17 @@
-﻿using System.Threading;
+﻿using System.Device.Gpio;
+using System.Threading;
 
 namespace RipTide.Nfirmware.Components.Common
 {
     public abstract class Component
     {
+        protected readonly GpioController _gpioController;
         protected readonly ErrorHandler _errorHandler;
         private Thread _runnerThread;
 
-        protected Component(ErrorHandler errorHandler)
+        protected Component(GpioController gpioController, ErrorHandler errorHandler)
         {
+            _gpioController = gpioController;
             _errorHandler = errorHandler;
         }
 

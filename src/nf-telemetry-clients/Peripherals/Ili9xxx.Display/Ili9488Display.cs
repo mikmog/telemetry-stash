@@ -2,9 +2,11 @@
 using nanoFramework.UI;
 using nanoFramework.UI.GraphicDrivers;
 using System;
+using System.Collections;
 using System.Device.Pwm;
 using System.Drawing;
 using System.Threading;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.IliDisplay
 {
@@ -18,7 +20,7 @@ namespace TelemetryStash.IliDisplay
     public class Ili9488Display
     {
         private PwmChannel _backlightPwm;
-        private Font _font;
+        private nanoFramework.UI.Font _defaultFont;
 
         public Bitmap Screen { get; private set; }
 
@@ -33,14 +35,13 @@ namespace TelemetryStash.IliDisplay
             Configuration.SetPinFunction(settings.SpiClockPin, DeviceFunction.SPI1_CLOCK);
 
             var spi = new SpiConfiguration(spiBus: 1, settings.ChipSelectPin, settings.DataCommandPin, settings.ResetPin, settings.BackLightPin);
-            var driver = Ili9341.GraphicDriver;
-            driver.InitializationSequence = new byte[0];
+            var driver = Ili9488.GraphicDriver;
 
             // 480X320
-            DisplayControl.Initialize(spi, new ScreenConfiguration(0, 0, 480, 320, driver), 1024 * 1024);
+            DisplayControl.Initialize(spi, new ScreenConfiguration(0, 0, 480, 320, driver), 480 * 320 * 3);
             Thread.Sleep(1000); // Give som breathing room to initialize
 
-            _font = Resource.GetFont(Resource.FontResources.kristen);
+            _defaultFont = Resource.GetFont(Resource.FontResources.Consolas16);
 
             Configuration.SetPinFunction(settings.BackLightPin, DeviceFunction.PWM1);
             _backlightPwm = PwmChannel.CreateFromPin(settings.BackLightPin, dutyCyclePercentage: 1);
@@ -77,7 +78,7 @@ namespace TelemetryStash.IliDisplay
             }
         }
 
-        public void SetBackground(Color color)
+        public void Clear(Color color)
         {
             Screen.Clear();
             Screen.DrawRectangle(
@@ -100,13 +101,44 @@ namespace TelemetryStash.IliDisplay
             Screen.Flush();
         }
 
-        public void SetText(string text, Color color, System.Drawing.Point point)
+        public void Clear(Bitmap bitmap)
         {
-            Screen.DrawText(text, _font, color, point);
+            Screen.Clear();
+            Screen.DrawImage(
+               xDst: 0,
+               yDst: 0,
+               bitmap: bitmap,
+               xSrc: 0,
+               ySrc: 0,
+               width: 480,
+               height: 320,
+               opacity: Bitmap.OpacityOpaque);
             Screen.Flush();
         }
 
-        public void RunDemo()
+
+        private readonly Hashtable _textHistory = new();
+
+        public void Text(string text, Color color, System.Drawing.Point point)
+        {
+            // Consolas16
+            // Height: 19
+            // Max character width: 9
+
+            var prevLength = (int)(_textHistory[point] ?? 0);
+            var currentLength = 9 * text.Length;
+
+            _textHistory[point] = currentLength;
+
+            var width = MathExtensions.Max(currentLength, prevLength);
+            var height = 19;
+
+            Screen.FillRectangle(point.X, point.Y, width, height, Color.Brown);
+            Screen.DrawText(text, _defaultFont, color, point);
+            Screen.Flush(point.X, point.Y, width, height);
+        }
+
+        public void RunDemo(Bitmap logo)
         {
             Console.WriteLine("Ili9488Display.RunDemo()");
             var start = DateTime.UtcNow;
@@ -172,13 +204,19 @@ namespace TelemetryStash.IliDisplay
 
             Screen.Flush();
 
-            InformationBar.DrawLogo(Screen);
+            Screen.DrawImage(0, 0, logo, 0, 0, 480, 320);
             Screen.Flush();
 
             Thread.Sleep(500);
 
             var totalTime = DateTime.UtcNow - start;
-            InformationBar.DrawInformationBar(Screen, _font, "Took: " + totalTime.TotalSeconds);
+
+            Screen.DrawText("0x0", _defaultFont, Color.Black, 10, 0);
+            Screen.DrawText("480x0", _defaultFont, Color.Black, 420, 0);
+            Screen.DrawText("480x320", _defaultFont, Color.Black, 405, 300);
+            Screen.DrawText("0x320", _defaultFont, Color.Black, 10, 300);
+            Screen.DrawText("Took: " + totalTime.TotalSeconds, _defaultFont, Color.WhiteSmoke, 240, 160);
+
             Screen.Flush();
 
             Thread.Sleep(3000);

@@ -11,8 +11,8 @@ namespace TelemetryStash.Services.Benchmarks
         {
             Thread.Sleep(1000);
 
-            new Debugformation().PrintStartupMessage();
-            new Debugformation().PrintSystemInfo();
+            new DebugInformation().PrintStartupMessage();
+            new DebugInformation().PrintSystemInfo();
 
             Debug.WriteLine("Running nanoFramework benchmarks...");
 

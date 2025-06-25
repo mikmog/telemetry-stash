@@ -3,7 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using TelemetryStash.Shared;
 
-namespace TelemetryStash.NfClient.Services
+namespace TelemetryStash.NfClient.Communication.Mqtt
 {
     public class BufferedTelemetryService
     {

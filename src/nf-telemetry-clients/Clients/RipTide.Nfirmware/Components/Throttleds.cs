@@ -1,5 +1,5 @@
 ﻿using RipTide.Nfirmware.Components.Common;
-using System;
+using System.Device.Gpio;
 using System.Threading;
 
 namespace RipTide.Nfirmware.Components
@@ -8,7 +8,7 @@ namespace RipTide.Nfirmware.Components
     {
         private int _thrust;
 
-        public Throttleds(ErrorHandler errorHandler) : base(errorHandler) { }
+        public Throttleds(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
 
         public override void Initialize(AppSettings appSettings)
         {
@@ -26,7 +26,6 @@ namespace RipTide.Nfirmware.Components
                 }
 
                 requestedThrust = _thrust;
-                Console.WriteLine($"Throttleds: Requested thrust: {requestedThrust}");
             }
         }
 
