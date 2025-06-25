@@ -1,4 +1,5 @@
 ﻿using RipTide.Nfirmware.Components.Common;
+using System.Device.Adc;
 using System.Device.Gpio;
 using System.Threading;
 
@@ -8,7 +9,7 @@ namespace RipTide.Nfirmware.Components
     {
         private int _thrust;
 
-        public Throttleds(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
+        public Throttleds(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
         public override void Initialize(AppSettings appSettings)
         {

@@ -6,10 +6,16 @@ namespace TelemetryStash.AdcSensor
 {
     public class Xdb401PressureSensor
     {
+        private readonly AdcController _adcController;
+
+        public Xdb401PressureSensor(AdcController adcController)
+        {
+            _adcController = adcController;
+        }
+
         public void RunDemo()
         {
-            var adc = new AdcController();
-            var channel = adc.OpenChannel(1);
+            var channel = _adcController.OpenChannel(1);
 
             Debug.WriteLine($"ADC max: {channel.Controller.MaxValue}");
             Debug.WriteLine($"ADC min: {channel.Controller.MinValue}");

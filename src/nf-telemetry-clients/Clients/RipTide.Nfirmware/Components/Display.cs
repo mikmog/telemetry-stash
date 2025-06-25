@@ -2,6 +2,7 @@
 using RipTide.Nfirmware.Assets;
 using RipTide.Nfirmware.Components.Common;
 using System;
+using System.Device.Adc;
 using System.Device.Gpio;
 using System.Drawing;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace RipTide.Nfirmware.Components
         private static Bitmap _logo = null;
         private readonly Ili9488Display _ili9488Display = new();
 
-        public Display(GpioController gpioController, ErrorHandler errorHandler) : base(gpioController, errorHandler) { }
+        public Display(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
         public override void Initialize(AppSettings appSettings)
         {

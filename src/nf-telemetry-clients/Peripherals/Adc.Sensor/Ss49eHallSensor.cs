@@ -29,12 +29,17 @@ namespace TelemetryStash.AdcSensor
         private bool _calibrationRequested;
 
         private Thread _sensorReadRunner;
-        private AdcController _adcController;
+        private readonly AdcController _adcController;
 
         public const int DirtyReadValue = -1;
         public const int FaultyReadValue = -2;
 
         public bool IsInitialized { get; private set; }
+
+        public Ss49eHallSensor(AdcController adcController)
+        {
+            _adcController = adcController;
+        }
 
         // Will only affect dual channel mode
         public void AwaitAdcChannelOffsetCalibration()
@@ -72,7 +77,6 @@ namespace TelemetryStash.AdcSensor
             _adcReadScale = adcReadScale;
             _reverseScale = reverseScale;
 
-            _adcController = new AdcController();
             for (var i = 0; i < channels.Length; i++)
             {
                 _channels[i] = _adcController.OpenChannel(channels[i]);
