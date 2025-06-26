@@ -20,7 +20,6 @@ namespace NeoPixel.Peripheral
 
         public NeoPixelGauge(ushort pixelsCount, Color[] gaugeColors, byte pin)
         {
-            // TODO: Decrease pulse transfer times
             _pixels = new NeoPixelStrip(pin, pixelsCount, new Ws2812B());
             _colors = new Color[pixelsCount];
 
@@ -77,65 +76,49 @@ namespace NeoPixel.Peripheral
             {
                 if (_currentPosition == _requestedPosition)
                 {
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                     continue;
                 }
 
-                var currentPosition = _currentPosition;
                 var requestedPosition = _requestedPosition;
 
-                var goingUp = currentPosition < requestedPosition;
-                if (goingUp)
+                // Going up
+                while (_currentPosition < requestedPosition)
                 {
-                    while (currentPosition < requestedPosition)
-                    {
-                        // Increase the speed of the gauge if the requested position is far away
-                        var increments = (requestedPosition - currentPosition) switch
-                        {
-                            > 10 => 3,
-                            > 5 => 2,
-                            _ => 1,
-                        };
+                    _pixels.SetLed(++_currentPosition, _colors[_currentPosition]);
+                    _pixels.Update();
+                    Thread.Sleep(10);
 
-                        _pixels.SetLed(++currentPosition, _colors[currentPosition]);
-                        if (currentPosition % increments == 0 || currentPosition >= requestedPosition || requestedPosition != _requestedPosition)
-                        {
-                            _pixels.Update();
-                            Thread.Sleep(0);
-                        }
-                        if (requestedPosition != _requestedPosition)
-                        {
-                            break;
-                        }
+                    // Requested position has gone up. Continue
+                    if (requestedPosition > _requestedPosition)
+                    {
+                        requestedPosition = _requestedPosition;
+                    }
+                    else
+                    {
+                        // Requested position reached, or has gone down.
+                        break;
                     }
                 }
 
                 // going down
-                else
+                while (_currentPosition > requestedPosition)
                 {
-                    while (currentPosition > requestedPosition)
+                    _pixels.SetLed(_currentPosition--, Color.Black);
+                    _pixels.Update();
+                    Thread.Sleep(10);
+
+                    // Requested position has gone down. Continue
+                    if (requestedPosition < _requestedPosition)
                     {
-                        var increments = (currentPosition - requestedPosition) switch
-                        {
-                            > 5 => 2,
-                            _ => 1,
-                        };
-
-                        _pixels.SetLed(currentPosition--, Color.Black);
-                        if (currentPosition % increments == 0 || requestedPosition == currentPosition || requestedPosition != _requestedPosition)
-                        {
-                            _pixels.Update();
-                            Thread.Sleep(0);
-                        }
-
-                        if (requestedPosition != _requestedPosition)
-                        {
-                            break;
-                        }
+                        requestedPosition = _requestedPosition;
+                    }
+                    else
+                    {
+                        // Requested position reached, or has gone up.
+                        break;
                     }
                 }
-
-                _currentPosition = currentPosition;
             }
         }
     }
