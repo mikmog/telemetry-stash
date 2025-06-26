@@ -13,7 +13,7 @@ namespace TelemetryStash.AdcSensor
     public class Ss49eHallSensor
     {
         private const int maxChannelsOffset = 100;
-        private const int sensorReadInterval = 10;
+        public const int SensorReadInterval = 10;
 
         private int _adcRangeMinValue = 0;
         private int _adcRangeMaxValue = 4096;
@@ -166,7 +166,7 @@ namespace TelemetryStash.AdcSensor
                     _adcReadBuffer[1] = _channels[1].ReadValue();
                 }
 
-                Thread.Sleep(sensorReadInterval);
+                Thread.Sleep(SensorReadInterval);
             }
         }
 
@@ -183,7 +183,7 @@ namespace TelemetryStash.AdcSensor
                     _ = _channels[1].ReadValue();
                 }
 
-                Thread.Sleep(sensorReadInterval);
+                Thread.Sleep(SensorReadInterval);
             }
         }
 
@@ -204,7 +204,7 @@ namespace TelemetryStash.AdcSensor
             {
                 samples[0][sampleIndex] = _channels[0].ReadValue();
                 samples[1][sampleIndex] = _channels[1].ReadValue();
-                Thread.Sleep(sensorReadInterval);
+                Thread.Sleep(SensorReadInterval);
             }
 
             // Remove extremes and calculate the average value for each channel

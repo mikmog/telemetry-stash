@@ -31,6 +31,9 @@ namespace RipTide.Nfirmware
         private const string PrimaryButtonPinKey = "Throttle.PrimaryButtonPin";
         private const string ThrustLockPinKey = "Throttle.ThrustLockPin";
         private const string ThrustSensorPinsKey = "Throttle.ThrustSensorPins";
+        private const string LeftMotorPinKey = "Throttle.LeftMotorPin";
+        private const string RightMotorPinKey = "Throttle.RightMotorPin";
+        private const string LeftThrotledPinKey = "Throttle.LeftThrotledPin";
 
         public void Configure(IDictionary dictionary)
         {
@@ -39,6 +42,9 @@ namespace RipTide.Nfirmware
             AdcReadScale = (int)Setting(AdcReadScaleKey);
             PrimaryButtonPin = (int)Setting(PrimaryButtonPinKey);
             ThrustLockPin = (int)Setting(ThrustLockPinKey);
+            LeftMotorPin = (int)Setting(LeftMotorPinKey);
+            RightMotorPin = (int)Setting(RightMotorPinKey);
+            LeftThrotledPin = (int)Setting(LeftThrotledPinKey);
 
             var setting = (ArrayList)Setting(ThrustSensorPinsKey);
             ThrustSensorPins = new int[setting.Count];
@@ -52,5 +58,11 @@ namespace RipTide.Nfirmware
         public int ThrustLockPin { get; set; }
 
         public int[] ThrustSensorPins { get; set; }
+
+        public int LeftMotorPin { get; set; }
+
+        public int RightMotorPin { get; set; }
+
+        public int LeftThrotledPin { get; set; }
     }
 }

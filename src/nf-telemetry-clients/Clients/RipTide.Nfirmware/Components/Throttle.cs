@@ -5,6 +5,7 @@ using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.AdcSensor;
+using TelemetryStash.IO.Peripherals;
 using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware.Components
@@ -13,13 +14,41 @@ namespace RipTide.Nfirmware.Components
     {
         public Throttle(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
+        private int _adcReadScale;
+        private double _thrustScaleFactor;
         private int _currentThrust = -1;
         private bool _thrustLockEngaged = true;
 
         private GpioPin _thrustLockPin;
         private Ss49eHallSensor _thrustSensor;
+        private ApisQueenEsc _apisQueenEsc;
 
         public bool ThrustRangeCalibrationComplete { get; private set; }
+
+        public override void Initialize(AppSettings appSettings)
+        {
+            var settings = appSettings.Throttle;
+
+            _adcReadScale = settings.AdcReadScale;
+            _thrustScaleFactor = 100d / _adcReadScale;
+
+            _apisQueenEsc = new ApisQueenEsc(settings.LeftMotorPin, settings.RightMotorPin);
+            _apisQueenEsc.Initialize();
+
+            _thrustSensor = new(_adcController);
+            _thrustSensor.Initialize(settings.ThrustSensorPins, _adcReadScale, reverseScale: true);
+
+            _thrustLockPin = _gpioController.OpenPin(settings.ThrustLockPin, PinMode.InputPullDown);
+            _thrustLockPin.DebounceTimeout = TimeSpan.FromMilliseconds(50);
+            _thrustLockEngaged = _thrustLockPin.Read() == PinValue.High;
+            _thrustLockPin.ValueChanged += (sender, args) =>
+            {
+                _thrustLockEngaged = args.ChangeType == PinEventTypes.Rising;
+                Debug.WriteLine($"Thrust lock engaged: {_thrustLockEngaged}");
+            };
+
+            Start(Runner);
+        }
 
         public void CalibrateThrustRange(ActionMessageDelegate onMessage, ActionMessageDelegate onError)
         {
@@ -107,23 +136,6 @@ namespace RipTide.Nfirmware.Components
             ThrustRangeCalibrationComplete = true;
         }
 
-        public override void Initialize(AppSettings appSettings)
-        {
-            _thrustSensor = new(_adcController);
-            _thrustSensor.Initialize(appSettings.Throttle.ThrustSensorPins, appSettings.Throttle.AdcReadScale, reverseScale: true);
-
-            _thrustLockPin = _gpioController.OpenPin(appSettings.Throttle.ThrustLockPin, PinMode.InputPullDown);
-            _thrustLockPin.DebounceTimeout = TimeSpan.FromMilliseconds(50);
-            _thrustLockEngaged = _thrustLockPin.Read() == PinValue.High;
-            _thrustLockPin.ValueChanged += (sender, args) =>
-            {
-                _thrustLockEngaged = args.ChangeType == PinEventTypes.Rising;
-                Debug.WriteLine($"Thrust lock engaged: {_thrustLockEngaged}");
-            };
-
-            Start(Runner);
-        }
-
         private void Runner()
         {
             while (!ThrustRangeCalibrationComplete || !_thrustSensor.IsInitialized)
@@ -138,48 +150,60 @@ namespace RipTide.Nfirmware.Components
                     if (_currentThrust > 0)
                     {
                         _currentThrust = 0;
+                        _apisQueenEsc.SetThrottle(0);
                         OnThrustChanged.Invoke(0);
                     }
 
-                    Thread.Sleep(50);
+                    Thread.Sleep(10);
                     continue;
                 }
 
+                var requestedThrust = _thrustSensor.Read();
                 Thread.Sleep(10);
-                var thrust = _thrustSensor.Read();
-                if (thrust == -1)
+
+                if (requestedThrust == Ss49eHallSensor.DirtyReadValue)
                 {
                     _thrustSensor.AwaitAdcChannelOffsetCalibration();
                     continue;
                 }
 
                 // Sticky throttle
-                if (_currentThrust - thrust == 1)
+                if (requestedThrust != 0 && _currentThrust - requestedThrust == 1)
                 {
                     continue;
                 }
 
-                if (thrust != _currentThrust)
+                // Debounce the read
+                Thread.Sleep(Ss49eHallSensor.SensorReadInterval);
+                if (requestedThrust != _thrustSensor.Read())
                 {
-                    _currentThrust = _thrustLockEngaged ? 0 : thrust;
-                    OnThrustChanged.Invoke(_currentThrust);
+                    continue;
                 }
 
+                if (requestedThrust != _currentThrust)
+                {
+                    _currentThrust = _thrustLockEngaged ? 0 : requestedThrust;
+
+                    // Manual handling because of float precision. Round up to 100%
+                    var thrustPercentage = _currentThrust == _adcReadScale ? 100 : (int)(_currentThrust * _thrustScaleFactor);
+
+                    _apisQueenEsc.SetThrottle(thrustPercentage);
+                    OnThrustChanged.Invoke(_currentThrust);
+                }
             }
         }
 
         private bool AwaitThrustSensorInitialization()
         {
-            const int maxAttempts = 50;
+            const int maxAttempts = 500;
             for (var i = 0; i < maxAttempts; i++)
             {
                 if (_thrustSensor.IsInitialized)
                 {
-                    Thread.Sleep(100);
                     return true;
                 }
 
-                Thread.Sleep(100);
+                Thread.Sleep(10);
             }
 
             return false;
