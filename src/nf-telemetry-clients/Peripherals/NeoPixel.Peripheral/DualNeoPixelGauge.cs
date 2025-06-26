@@ -8,8 +8,9 @@ using System.Threading;
 
 namespace NeoPixel.Peripheral
 {
-    public class NeoPixelGauge
+    public class DualNeoPixelGauge
     {
+        private int _pixelsCount;
         private readonly Color[] _colors;
         private readonly NeoPixelStrip _pixels;
         private readonly Thread _gaugeThread;
@@ -17,9 +18,10 @@ namespace NeoPixel.Peripheral
         private int _currentPosition;
         private int _requestedPosition;
 
-        public NeoPixelGauge(ushort pixelsCount, Color[] gaugeColors, byte pin)
+        public DualNeoPixelGauge(ushort pixelsCount, Color[] gaugeColors, byte pin)
         {
-            _pixels = new NeoPixelStrip(pin, pixelsCount, new Ws2812B());
+            _pixelsCount = pixelsCount;
+            _pixels = new NeoPixelStrip(pin, (ushort)(pixelsCount + pixelsCount), new Ws2812B());
             _colors = new Color[pixelsCount];
 
             var partitionSize = pixelsCount / gaugeColors.Length;
@@ -49,16 +51,18 @@ namespace NeoPixel.Peripheral
         public void Initialize()
         {
             _gaugeThread.Start();
-            for (var i = 0; i < _pixels.Count; i++)
+            for (var i = 0; i < _pixelsCount; i++)
             {
                 _pixels.SetLed(i, _colors[i]);
+                _pixels.SetLed(i + _pixelsCount, _colors[i]);
                 _pixels.Update();
                 Thread.Sleep(1);
             }
 
-            for (var i = 0; i < _pixels.Count; i++)
+            for (var i = 0; i < _pixelsCount; i++)
             {
                 _pixels.SetLed(i, Color.Black);
+                _pixels.SetLed(i + _pixelsCount, Color.Black);
                 _pixels.Update();
                 Thread.Sleep(1);
             }
@@ -84,8 +88,11 @@ namespace NeoPixel.Peripheral
                 // Going up
                 while (_currentPosition < requestedPosition)
                 {
-                    _pixels.SetLed(++_currentPosition, _colors[_currentPosition]);
+                    var color = _colors[++_currentPosition];
+                    _pixels.SetLed(_currentPosition, color);
+                    _pixels.SetLed(_currentPosition + _pixelsCount, color);
                     _pixels.Update();
+
                     Thread.Sleep(10);
 
                     // Requested position has gone up. Continue
@@ -103,7 +110,9 @@ namespace NeoPixel.Peripheral
                 // going down
                 while (_currentPosition > requestedPosition)
                 {
-                    _pixels.SetLed(_currentPosition--, Color.Black);
+                    _pixels.SetLed(_currentPosition, Color.Black);
+                    _pixels.SetLed(_currentPosition + _pixelsCount, Color.Black);
+                    _currentPosition--;
                     _pixels.Update();
                     Thread.Sleep(10);
 

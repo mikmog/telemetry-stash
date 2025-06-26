@@ -51,7 +51,6 @@ namespace RipTide.Nfirmware
                 _throttle.Initialize(_appSettings);
 
                 _display.SetScreen(Screen.Empty);
-                Thread.Sleep(50);
 
                 _throttle.CalibrateThrustRange(
                     onMessage: (message, sleep) =>
