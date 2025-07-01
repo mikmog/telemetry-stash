@@ -44,6 +44,9 @@ namespace RipTide.Nfirmware
                 _display.SetScreen(Screen.Splash);
                 _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
+                // Initialize temp sensors
+                _tempMonitor.Initialize(_appSettings);
+
                 // Initialize throttle leds
                 _throttleds.Initialize(_appSettings);
 

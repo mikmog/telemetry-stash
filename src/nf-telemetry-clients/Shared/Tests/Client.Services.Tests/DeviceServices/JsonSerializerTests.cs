@@ -311,7 +311,28 @@ namespace TelemetryStash.NfClient.Services.Tests
 
             Assert.AreEqual(2, ((ArrayList)dictionary["array1"]).Count);
             Assert.AreEqual(10, ((ArrayList)dictionary["array1"])[0]);
-            Assert.AreEqual(1.5, ((ArrayList)dictionary["array1"])[1]);
+            Assert.AreEqual(1.5d, ((ArrayList)dictionary["array1"])[1]);
+        }
+
+        [TestMethod]
+        public void JsonSerializer_DeserializeToDictionary_deserializes_string_array()
+        {
+            // Arrange
+            var json = @"
+                    {
+                        ""array1"": [""value1"", ""value2""],
+                    }";
+
+            // Act
+            var dictionary = JsonSerialize.DeserializeToDictionary(json);
+
+            // Assert
+            Assert.IsNotNull(dictionary);
+            Assert.AreEqual(1, dictionary.Count);
+
+            Assert.AreEqual(2, ((ArrayList)dictionary["array1"]).Count);
+            Assert.AreEqual("value1", ((ArrayList)dictionary["array1"])[0]);
+            Assert.AreEqual("value2", ((ArrayList)dictionary["array1"])[1]);
         }
 
         private static Telemetry NewTelemetry => new()

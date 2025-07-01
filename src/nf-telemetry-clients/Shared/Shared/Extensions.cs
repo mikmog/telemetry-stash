@@ -1,4 +1,6 @@
-﻿namespace TelemetryStash.Shared
+﻿using System;
+
+namespace TelemetryStash.Shared
 {
     public static class Extensions
     {
@@ -18,6 +20,28 @@
             }
 
             return new string(c);
+        }
+
+        public static byte[] HexStringToBytes(this string hexString)
+        {
+            var bytes = new byte[hexString.Length / 2]; // Each byte is represented by two characters
+            for (var i = 0; i < bytes.Length; i++)
+            {
+                var startIndex = i * 2;
+                bytes[i] = Convert.ToByte(hexString.Substring(startIndex, 2), fromBase: 16);
+            }
+            return bytes;
+        }
+
+        public static string[] SplitAndTrim(this string str, char separator)
+        {
+            var parts = str.Split(separator);
+            for (var i = 0; i < parts.Length; i++)
+            {
+                parts[i] = parts[i].Trim();
+            }
+
+            return parts;
         }
     }
 }

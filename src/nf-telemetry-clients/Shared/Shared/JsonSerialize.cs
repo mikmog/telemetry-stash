@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using RegisterValueType = TelemetryStash.Shared.RegisterValueType;
 
 namespace TelemetryStash.Shared
 {
@@ -124,102 +123,124 @@ namespace TelemetryStash.Shared
             return json;
         }
 
+
+        private const char KeyValueSeparator = '\f';
+        private const char ArrayElementSeparator = '\a';
+
         /// <summary>
-        /// Deserialize basic JSON to Dictionary. Only primitive types supported.
-        /// Quotes not supported in strings.
+        /// Deserialize basic JSON to Dictionary. Only arrays and primitive types supported.
         /// </summary>
         public static IDictionary DeserializeToDictionary(string json)
         {
-            const int maxProperties = 1000;
+            json = SanitizeJson(json);
+            var settings = json.SplitAndTrim(',');
 
-            var dictionary = new Hashtable();
-            for (int i = 0; i < maxProperties; i++)
+            var dictionary = new Hashtable(settings.Length);
+            foreach (var setting in settings)
             {
-                var key = ExtractJsonSubstring(json);
-                if (key == null)
+                if (string.IsNullOrEmpty(setting))
                 {
-                    break;
+                    continue;
                 }
 
-                // Advance to name separator. 
-                json = json.Substring(json.IndexOf(':') + 1).TrimStart();
-
-                // Char starting with "
-                if (json[0] == '"')
-                {
-                    var value = ExtractJsonSubstring(json);
-
-                    // Advance length + 2 for the quotes
-                    json = json.Substring(value.Length + 2);
-
-                    // Replace \\ with \
-                    while (value.Contains(@"\\"))
-                    {
-                        var index = value.IndexOf('\\');
-                        value = value.Substring(0, index) + value.Substring(index + 1);
-                    }
-
-                    dictionary.Add(key, value);
-                }
-
-                // Char between 0-9 or -
-                else if ((byte)json[0] >= 48 && (byte)json[0] <= 57 || json[0] == '-')
-                {
-                    var value = ExtractJsonNumber(json);
-                    dictionary.Add(key, value);
-                }
-
-                // Number array
-                else if (json[0] == '[')
-                {
-                    var numbersAsText = json.Substring(1, json.IndexOf(']') - 1);
-                    var array = new ArrayList();
-                    foreach (var number in numbersAsText.Split(','))
-                    {
-                        var value = ExtractJsonNumber(number.Trim());
-                        array.Add(value);
-                    }
-                    dictionary.Add(key, array);
-
-                    // Advance total length of array
-                    json = json.Substring(numbersAsText.Length + 2);
-                }
-
-                // Char is {
-                else
-                {
-                    throw new NotImplementedException("Only value types supported");
-                }
+                var kvp = setting.SplitAndTrim(KeyValueSeparator);
+                var settingName = ParseJsonString(kvp[0]);
+                var settingValue = ParseJsonValue(kvp[1]);
+                dictionary.Add(settingName, settingValue);
             }
 
             return dictionary;
         }
 
-        private static string ExtractJsonSubstring(string json)
+        private static string SanitizeJson(string json)
         {
-            var keyStart = json.IndexOf('"');
-            if (keyStart == -1)
+            var jsonChars = json
+                .Trim()
+                .Trim('{', '}')
+                .Trim()
+                .ToCharArray();
+
+            // Replace key:value colon separators with KeyValueSeparator
+            // Replace [value1, value2] comma separators within arrays with ArrayElementSeparator
+            bool isArray = false;
+            for (var i = 0; i < jsonChars.Length; i++)
             {
-                return null;
+                if (jsonChars[i] == '[')
+                {
+                    isArray = true;
+                    continue;
+                }
+
+                if (isArray && jsonChars[i] == ']')
+                {
+                    isArray = false;
+                    continue;
+                }
+
+                var commaSeparator = isArray && jsonChars[i] == ',';
+                var colonSeparator = jsonChars[i] == ':' && jsonChars[i - 1] == '\"';
+
+                if (commaSeparator)
+                {
+                    jsonChars[i] = ArrayElementSeparator;
+                }
+
+                if (colonSeparator)
+                {
+                    jsonChars[i] = KeyValueSeparator;
+                }
             }
 
-            var val = json.Substring(keyStart + 1, json.IndexOf('"', keyStart + 1) - keyStart - 1);
-            return val;
+            return new string(jsonChars);
         }
 
-        private static object ExtractJsonNumber(string json)
+        private static string ParseJsonString(string jsonString)
         {
-            var endPosition = json.IndexOfAny(new char[] { ',', '}', ' ' });
-            endPosition = endPosition == -1 ? json.Length : endPosition;
+            // Remove surrounding quotes
+            jsonString = jsonString.Trim('\"');
 
-            var number = json.Substring(0, endPosition);
-            if (number.IndexOf('.') >= 0)
+            // Replace \\ with a single backslash \
+            var parts = jsonString.Split('\\');
+            jsonString = parts[0];
+            for (int i = 1; i < parts.Length; i++)
             {
-                return double.Parse(number);
+                if (!string.IsNullOrEmpty(parts[i]))
+                {
+                    jsonString += '\\' + parts[i];
+                }
+            }
+
+            return jsonString;
+        }
+
+        private static object ParseJsonValue(string jsonValue)
+        {
+            if (jsonValue.StartsWith("\""))
+            {
+                return ParseJsonString(jsonValue);
+            }
+            else if (jsonValue.StartsWith("["))
+            {
+                jsonValue = jsonValue.Trim('[', ']');
+                var array = new ArrayList();
+                foreach (var element in jsonValue.SplitAndTrim('\a'))
+                {
+                    var value = ParseJsonValue(element);
+                    array.Add(value);
+                }
+                return array;
+            }
+            else if (int.TryParse(jsonValue, out var number))
+            {
+                return number;
+            }
+            else if (double.TryParse(jsonValue, out var intValue))
+            {
+                return intValue;
             }
             else
             {
-                return int.Parse(number);
+                throw new NotSupportedException($"Unsupported JSON value: {jsonValue}");
             }
         }
 
@@ -241,6 +262,7 @@ namespace TelemetryStash.Shared
         }
 
         private static readonly char[] unsafeChars = new[] { '\\', '"', '\b', '\t', '\n', '\f', '\r' };
+
         private static string GetSafeJson(string unsafeJson)
         {
             if (unsafeJson.IndexOfAny(unsafeChars) == -1)
