@@ -24,6 +24,11 @@ namespace TelemetryStash.Shared
             return RoundTo(dx, 0.01);
         }
 
+        public static string ToOneDecimalString(double dx)
+        {
+            return RoundTo(dx, 0.1).ToString("f1");
+        }
+
         public static string ToTwoDecimalString(double dx)
         {
             return RoundTo(dx, 0.01).ToString("f2");
