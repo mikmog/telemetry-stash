@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TelemetryStash.Ds18b20Sensor;
 using TelemetryStash.IliDisplay;
 using TelemetryStash.MpuxxxxGyro.Sensor;
 using TelemetryStash.Shared;
@@ -16,6 +17,7 @@ namespace RipTide.Nfirmware
             MpuGyro.Configure(dictionary);
             IliDisplay.Configure(dictionary);
             Throttle.Configure(dictionary);
+            Ds18b20.Configure(dictionary);
         }
 
         public MpuGyroSettings MpuGyro { get; set; } = new();
@@ -23,6 +25,8 @@ namespace RipTide.Nfirmware
         public IliDisplaySettings IliDisplay { get; set; } = new();
 
         public ThrottleSettings Throttle { get; set; } = new();
+
+        public Ds18b20SensorSettings Ds18b20 { get; set; } = new();
     }
 
     public class ThrottleSettings
