@@ -1,5 +1,4 @@
 ﻿using nanoFramework.Hardware.Esp32;
-using System;
 using System.Collections;
 using TelemetryStash.Shared;
 
@@ -28,15 +27,13 @@ namespace TelemetryStash.Ds18b20Sensor
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
+            ComRx = dictionary.DeviceFunction(ComRxKey);
+            ComRxPin = dictionary.Int32(ComRxPinKey);
 
-            ComRx = ConfigurationExtensions.ParseDeviceFunction((string)Setting(ComRxKey));
-            ComRxPin = (int)Setting(ComRxPinKey);
+            ComTx = dictionary.DeviceFunction(ComTxKey);
+            ComTxPin = dictionary.Int32(ComTxPinKey);
 
-            ComTx = ConfigurationExtensions.ParseDeviceFunction((string)Setting(ComTxKey));
-            ComTxPin = (int)Setting(ComTxPinKey);
-
-            var sensorMappings = (ArrayList)Setting(SensorMapKey);
+            var sensorMappings = dictionary.List(SensorMapKey);
             foreach (string sensorMapEntry in sensorMappings)
             {
                 var parts = sensorMapEntry.Split(';');

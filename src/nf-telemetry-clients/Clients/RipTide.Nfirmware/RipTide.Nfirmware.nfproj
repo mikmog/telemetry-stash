@@ -25,6 +25,7 @@
     <Compile Include="Components\Common\Component.cs" />
     <Compile Include="Components\DepthMonitor.cs" />
     <Compile Include="Components\ErrorHandler.cs" />
+    <Compile Include="Components\Buzzer.cs" />
     <Compile Include="Components\Gyro.cs" />
     <Compile Include="Components\Display.cs" />
     <Compile Include="Components\TempMonitor.cs" />

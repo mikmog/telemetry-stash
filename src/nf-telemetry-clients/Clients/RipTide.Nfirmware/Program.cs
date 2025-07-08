@@ -18,6 +18,7 @@ namespace RipTide.Nfirmware
 
         private static readonly BatteryMonitor _batteryMonitor = new(_adc, _gpio, _errorHandler);
         private static readonly Buttons _buttons = new(_adc, _gpio, _errorHandler);
+        private static readonly Buzzer _buzzer = new(_adc, _gpio, _errorHandler);
         private static readonly DepthMonitor _depthMonitor = new(_adc, _gpio, _errorHandler);
         private static readonly Gyro _gyro = new(_adc, _gpio, _errorHandler);
         private static readonly Display _display = new(_adc, _gpio, _errorHandler);
@@ -35,19 +36,25 @@ namespace RipTide.Nfirmware
 
                 _appSettings.Configure();
 
+                // Initialize buzzer
+                _buzzer.Initialize(_appSettings);
+
                 // Initialize display
                 _display.Initialize(_appSettings);
-                _errorHandler.Initialize(_display);
+                _errorHandler.Initialize(_display, _buzzer);
                 Thread.Sleep(500);
 
                 // Show splash screen
                 _display.SetScreen(Screen.Splash);
                 _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
+                // Initialize gyro
+                _gyro.Initialize(_appSettings);
+
                 // Initialize temp sensors
                 _tempMonitor.Initialize(_appSettings);
 
-                // Initialize throttle leds
+                // Initialize throttle led's
                 _throttleds.Initialize(_appSettings);
 
                 // Initialize throttle
@@ -63,23 +70,15 @@ namespace RipTide.Nfirmware
 
                         Thread.Sleep(sleep);
                     },
-                    onError: (errorMessage, sleep) =>
+                    onError: (errorMessage, _) =>
                     {
-                        Debug.WriteLine($"Error: {errorMessage}");
-                        _display.SetText($"Error: {errorMessage}");
-
-                        Thread.Sleep(sleep);
                         throw new Exception(errorMessage);
                     });
-
-                _display.SetText("GO!");
 
                 _throttle.OnThrustChanged += _display.SetThrust;
                 _throttle.OnThrustChanged += _throttleds.ThrustChanged;
 
-                //// Throttleds
-                //int throttledsPin = 2;
-                //gpioController.OpenPin(throttledsPin, PinMode.Output);
+                _display.SetText("GO!");
             }
             catch (Exception ex)
             {
@@ -97,10 +96,6 @@ namespace RipTide.Nfirmware
             //pwmEsc2.DutyCycle = 0.5;
             //pwmEsc2.Start();
 
-            //// OneWire
-            //Configuration.SetPinFunction(42, DeviceFunction.COM3_RX);
-            //Configuration.SetPinFunction(41, DeviceFunction.COM3_TX);
-
             //// Gyro
             ///// I2C
             //Configuration.SetPinFunction(8, DeviceFunction.I2C1_DATA);
@@ -109,12 +104,6 @@ namespace RipTide.Nfirmware
             //// Pixels
             //int pixelsPin = 1;
             //gpioController.OpenPin(pixelsPin, PinMode.Output);
-
-            //// Buzzer
-            //Configuration.SetPinFunction(3, DeviceFunction.PWM2);
-            //var pwmBuzzer = PwmChannel.CreateFromPin(3, 400);
-            //pwmBuzzer.DutyCycle = 0.5;
-            //pwmBuzzer.Start();
 
             //// Pressure
             ///// Pin 4

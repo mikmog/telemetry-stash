@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.IO.Peripherals.Led
 {
@@ -9,9 +9,7 @@ namespace TelemetryStash.IO.Peripherals.Led
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
-
-            Pin1 = (int)Setting(Pin1Key);
+            Pin1 = dictionary.Int32(Pin1Key);
         }
 
         public int Pin1 { get; set; }
