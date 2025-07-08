@@ -15,6 +15,9 @@ namespace TelemetryStash.Shared
                 "COM2_TX" => DeviceFunction.COM2_TX,
                 "COM3_RX" => DeviceFunction.COM3_RX,
                 "COM3_TX" => DeviceFunction.COM3_TX,
+
+                "PWM2" => DeviceFunction.PWM2,
+
                 _ => throw new Exception($"Invalid device function: {deviceFunction}")
             };
         }

@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using TelemetryStash.Ds18b20Sensor;
 using TelemetryStash.IliDisplay;
-using TelemetryStash.MpuxxxxGyro.Sensor;
+using TelemetryStash.IO.Peripherals.Buzzer;
+using TelemetryStash.MpuGyroSensor;
 using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware
@@ -18,6 +18,7 @@ namespace RipTide.Nfirmware
             IliDisplay.Configure(dictionary);
             Throttle.Configure(dictionary);
             Ds18b20.Configure(dictionary);
+            PiezoBuzzer.Configure(dictionary);
         }
 
         public MpuGyroSettings MpuGyro { get; set; } = new();
@@ -27,6 +28,8 @@ namespace RipTide.Nfirmware
         public ThrottleSettings Throttle { get; set; } = new();
 
         public Ds18b20SensorSettings Ds18b20 { get; set; } = new();
+
+        public PiezoBuzzerSettings PiezoBuzzer { get; set; } = new();
     }
 
     public class ThrottleSettings
@@ -41,16 +44,14 @@ namespace RipTide.Nfirmware
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
+            AdcReadScale = dictionary.Int32(AdcReadScaleKey);
+            PrimaryButtonPin = dictionary.Int32(PrimaryButtonPinKey);
+            ThrustLockPin = dictionary.Int32(ThrustLockPinKey);
+            LeftMotorPin = dictionary.Int32(LeftMotorPinKey);
+            RightMotorPin = dictionary.Int32(RightMotorPinKey);
+            LeftThrotledPin = dictionary.Int32(LeftThrotledPinKey);
 
-            AdcReadScale = (int)Setting(AdcReadScaleKey);
-            PrimaryButtonPin = (int)Setting(PrimaryButtonPinKey);
-            ThrustLockPin = (int)Setting(ThrustLockPinKey);
-            LeftMotorPin = (int)Setting(LeftMotorPinKey);
-            RightMotorPin = (int)Setting(RightMotorPinKey);
-            LeftThrotledPin = (int)Setting(LeftThrotledPinKey);
-
-            var setting = (ArrayList)Setting(ThrustSensorPinsKey);
+            var setting = dictionary.List(ThrustSensorPinsKey);
             ThrustSensorPins = new int[setting.Count];
             setting.CopyTo(ThrustSensorPins, 0);
         }

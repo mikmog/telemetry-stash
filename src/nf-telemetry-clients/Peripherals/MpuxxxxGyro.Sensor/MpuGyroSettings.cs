@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using TelemetryStash.Shared;
 
-namespace TelemetryStash.MpuxxxxGyro.Sensor
+namespace TelemetryStash.MpuGyroSensor
 {
     public class MpuGyroSettings
     {
@@ -13,10 +13,8 @@ namespace TelemetryStash.MpuxxxxGyro.Sensor
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
-
-            I2cDataPin = (int)Setting(DataPinKey);
-            I2cClockPin = (int)Setting(ClockPinKey);
+            I2cDataPin = dictionary.Int32(DataPinKey);
+            I2cClockPin = dictionary.Int32(ClockPinKey);
         }
     }
 }

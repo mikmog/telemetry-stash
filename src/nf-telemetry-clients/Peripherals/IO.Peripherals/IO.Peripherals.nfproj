@@ -24,6 +24,8 @@
   <ItemGroup>
     <Compile Include="ApisQueenEsc.cs" />
     <Compile Include="Button.cs" />
+    <Compile Include="Buzzer\PiezoBuzzer.cs" />
+    <Compile Include="Buzzer\PiezoBuzzerSettings.cs" />
     <Compile Include="Led\Led.cs" />
     <Compile Include="Led\LedSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

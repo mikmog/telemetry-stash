@@ -5,17 +5,19 @@ namespace RipTide.Nfirmware.Components
     public class ErrorHandler
     {
         private Display _display;
+        private Buzzer _buzzer;
 
-        public void Initialize(Display display)
+        public void Initialize(Display display, Buzzer buzzer)
         {
             _display = display;
+            _buzzer = buzzer;
         }
 
-        public void HandleError(string errorMessage)
+        public void OnError(string errorMessage)
         {
-            // Log the error message
             Console.WriteLine($"Error: {errorMessage}");
-            // Additional error handling logic can be added here
+            _display.SetText(errorMessage);
+            _buzzer.BuzzError();
         }
     }
 }

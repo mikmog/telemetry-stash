@@ -54,7 +54,8 @@ namespace RipTide.Nfirmware.Components
         {
             if (!AwaitThrustSensorInitialization())
             {
-                onError.Invoke("Initialization failed.");
+                _errorHandler.OnError("Thrust sensor initialization failed.");
+                onError.Invoke("Thrust sensor initialization failed.");
                 return;
             }
 

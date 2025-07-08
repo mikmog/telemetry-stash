@@ -1,6 +1,6 @@
 ﻿using nanoFramework.Hardware.Esp32;
-using System;
 using System.Collections;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Aidon.Sensor
 {
@@ -9,14 +9,12 @@ namespace TelemetryStash.Aidon.Sensor
         private const string ComPortKey = "AidonSensor.ComPort";
         private const string RxPinKey = "AidonSensor.RxPin";
         private const string RxComPortKey = "AidonSensor.RxComPort";
-        
+
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(nameof(AidonSensorSettings), key);
-
-            ComPort = (string)Setting(ComPortKey);
-            RxPin = (int)Setting(RxPinKey);
-            RxComPort = (DeviceFunction)Setting(RxComPortKey);
+            ComPort = dictionary.String(ComPortKey);
+            RxPin = dictionary.Int32(RxPinKey);
+            RxComPort = dictionary.DeviceFunction(RxComPortKey);
         }
 
         public string ComPort { get; set; }

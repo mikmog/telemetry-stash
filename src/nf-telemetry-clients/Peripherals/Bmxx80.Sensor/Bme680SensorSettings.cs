@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.Bmxx80.Sensor
 {
@@ -10,14 +10,12 @@ namespace TelemetryStash.Bmxx80.Sensor
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
-
-            DataPin = (int)Setting(DataPinKey);
-            ClockPin = (int)Setting(ClockPinKey);
+            DataPin = dictionary.Int32(DataPinKey);
+            ClockPin = dictionary.Int32(ClockPinKey);
         }
-        
+
         public int DataPin { get; set; }
-        
+
         public int ClockPin { get; set; }
     }
 }
