@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using TelemetryStash.Shared;
 
 namespace TelemetryStash.IliDisplay
 {
@@ -24,15 +24,13 @@ namespace TelemetryStash.IliDisplay
 
         public void Configure(IDictionary dictionary)
         {
-            object Setting(string key) => dictionary[key] ?? throw new ArgumentException(key);
-
-            BackLightPin = (int)Setting(BackLightPinKey);
-            ChipSelectPin = (int)Setting(ChipSelectPinKey);
-            DataCommandPin = (int)Setting(DataCommandPinKey);
-            ResetPin = (int)Setting(ResetPinKey);
-            SpiMisoPin = (int)Setting(SpiMisoPinKey);
-            SpiMosiPin = (int)Setting(SpiMosiPinKey);
-            SpiClockPin = (int)Setting(SpiClockPinKey);
+            BackLightPin = dictionary.Int32(BackLightPinKey);
+            ChipSelectPin = dictionary.Int32(ChipSelectPinKey);
+            DataCommandPin = dictionary.Int32(DataCommandPinKey);
+            ResetPin = dictionary.Int32(ResetPinKey);
+            SpiMisoPin = dictionary.Int32(SpiMisoPinKey);
+            SpiMosiPin = dictionary.Int32(SpiMosiPinKey);
+            SpiClockPin = dictionary.Int32(SpiClockPinKey);
         }
 
         /* pros3

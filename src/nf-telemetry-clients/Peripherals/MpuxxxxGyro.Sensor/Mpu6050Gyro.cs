@@ -5,18 +5,20 @@ using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.Shared;
 
-namespace TelemetryStash.MpuxxxxGyro.Sensor
+namespace TelemetryStash.MpuGyroSensor
 {
-	public class Mpu6050Gyro
+    public class Mpu6050Gyro
     {
-        public Mpu6050Gyro(MpuGyroSettings settings)
+        public Mpu6050Gyro()
+        {
+
+        }
+
+        public void Initialize(MpuGyroSettings settings)
         {
             Configuration.SetPinFunction(settings.I2cDataPin, DeviceFunction.I2C1_DATA);
             Configuration.SetPinFunction(settings.I2cClockPin, DeviceFunction.I2C1_CLOCK);
-        }
 
-        public void RunDemo()
-        {
             var i2c = new I2cConnectionSettings(1, Mpu6050.DefaultI2cAddress);
             using var gyro = new Mpu6050(I2cDevice.Create(i2c));
 
@@ -47,21 +49,23 @@ namespace TelemetryStash.MpuxxxxGyro.Sensor
             //Debug.WriteLine($"Acc X bias = {gyro.AccelerometerBias.X}");
             //Debug.WriteLine($"Acc Y bias = {gyro.AccelerometerBias.Y}");
             //Debug.WriteLine($"Acc Z bias = {gyro.AccelerometerBias.Z}");
-
-            Debug.WriteLine("GetGyroscopeReading");
-            for (int i = 0; i < 100; i++)
+            while (true)
             {
-                var read = gyro.GetGyroscopeReading();
-                Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
-                Thread.Sleep(100);
-            }
+                Debug.WriteLine("GetGyroscopeReading");
+                for (int i = 0; i < 100; i++)
+                {
+                    var read = gyro.GetGyroscopeReading();
+                    Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
+                    Thread.Sleep(100);
+                }
 
-            Debug.WriteLine("GetAccelerometer");
-            for (int i = 0; i < 1000; i++)
-            {
-                var read = gyro.GetAccelerometer();
-                Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
-                Thread.Sleep(100);
+                //Debug.WriteLine("GetAccelerometer");
+                //for (int i = 0; i < 1000; i++)
+                //{
+                //    var read = gyro.GetAccelerometer();
+                //    Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
+                //    Thread.Sleep(100);
+                //}
             }
         }
     }

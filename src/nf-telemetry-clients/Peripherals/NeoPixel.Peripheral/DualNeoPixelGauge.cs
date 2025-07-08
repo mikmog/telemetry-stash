@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Threading;
 
 // https://docid81hrs3j1.cloudfront.net/medialibrary/2018/10/WS2812B_V1.4_EN_18090714224701.pdf
+// https://learn.adafruit.com/adafruit-neopixel-uberguide/best-practices
 
 namespace NeoPixel.Peripheral
 {

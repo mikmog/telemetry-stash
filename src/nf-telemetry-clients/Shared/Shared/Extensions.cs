@@ -1,4 +1,6 @@
-﻿using System;
+﻿using nanoFramework.Hardware.Esp32;
+using System;
+using System.Collections;
 
 namespace TelemetryStash.Shared
 {
@@ -42,6 +44,36 @@ namespace TelemetryStash.Shared
             }
 
             return parts;
+        }
+
+        public static string String(this IDictionary dictionary, string key)
+        {
+            var value = dictionary[key] ?? throw new ArgumentException(key);
+            return (string)value;
+        }
+
+        public static int Int32(this IDictionary dictionary, string key)
+        {
+            var value = dictionary[key] ?? throw new ArgumentException(key);
+            return (int)value;
+        }
+
+        public static double Double(this IDictionary dictionary, string key)
+        {
+            var value = dictionary[key] ?? throw new ArgumentException(key);
+            return (double)value;
+        }
+
+        public static DeviceFunction DeviceFunction(this IDictionary dictionary, string key)
+        {
+            var value = dictionary[key] ?? throw new ArgumentException(key);
+            return ConfigurationExtensions.ParseDeviceFunction((string)value);
+        }
+
+        public static ArrayList List(this IDictionary dictionary, string key)
+        {
+            var value = dictionary[key] ?? throw new ArgumentException(key);
+            return (ArrayList)value;
         }
     }
 }

@@ -7,7 +7,10 @@ namespace TelemetryStash.AdcSensor
 {
     /*
         Important! To avoid frying the pins on ESP32.
-        Magnet north pole facing label side of sensor when running 5v.     
+        Magnet north pole facing label side of sensor when running 5v.
+
+        Use a 0.1µF ceramic decoupling capacitor near sensor VCC & GND.
+        Larger values like 1µF or 10µF can also be beneficial.
     */
 
     public class Ss49eHallSensor
