@@ -1,9 +1,6 @@
 ﻿using Iot.Device.Imu;
 using nanoFramework.Hardware.Esp32;
 using System.Device.I2c;
-using System.Diagnostics;
-using System.Threading;
-using TelemetryStash.Shared;
 
 namespace TelemetryStash.MpuGyroSensor
 {
@@ -49,24 +46,24 @@ namespace TelemetryStash.MpuGyroSensor
             //Debug.WriteLine($"Acc X bias = {gyro.AccelerometerBias.X}");
             //Debug.WriteLine($"Acc Y bias = {gyro.AccelerometerBias.Y}");
             //Debug.WriteLine($"Acc Z bias = {gyro.AccelerometerBias.Z}");
-            while (true)
-            {
-                Debug.WriteLine("GetGyroscopeReading");
-                for (int i = 0; i < 100; i++)
-                {
-                    var read = gyro.GetGyroscopeReading();
-                    Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
-                    Thread.Sleep(100);
-                }
+            //while (true)
+            //{
+            //    Debug.WriteLine("GetGyroscopeReading");
+            //    for (int i = 0; i < 100; i++)
+            //    {
+            //        var read = gyro.GetGyroscopeReading();
+            //        Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
+            //        Thread.Sleep(100);
+            //    }
 
-                //Debug.WriteLine("GetAccelerometer");
-                //for (int i = 0; i < 1000; i++)
-                //{
-                //    var read = gyro.GetAccelerometer();
-                //    Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
-                //    Thread.Sleep(100);
-                //}
-            }
+            //    //Debug.WriteLine("GetAccelerometer");
+            //    //for (int i = 0; i < 1000; i++)
+            //    //{
+            //    //    var read = gyro.GetAccelerometer();
+            //    //    Debug.WriteLine($"X:{Round.ToWhole(read.X)}, Y:{Round.ToWhole(read.Y)}, Z:{Round.ToWhole(read.Z)}");
+            //    //    Thread.Sleep(100);
+            //    //}
+            //}
         }
     }
 }

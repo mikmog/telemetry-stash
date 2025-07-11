@@ -4,6 +4,7 @@ using System.Device.Adc;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
+using TelemetryStash.Peripherals.Bms.Daly;
 
 
 namespace RipTide.Nfirmware
@@ -35,6 +36,11 @@ namespace RipTide.Nfirmware
                 PrintStartupMessage();
 
                 _appSettings.Configure();
+
+                // TODO
+                var bms = new ActiveBalanceBms();
+                bms.Initialize();
+                var value = bms.RadValue(Registers.TotalVoltage);
 
                 // Initialize buzzer
                 _buzzer.Initialize(_appSettings);

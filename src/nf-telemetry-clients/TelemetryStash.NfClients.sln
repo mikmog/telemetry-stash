@@ -68,6 +68,8 @@ Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SdCard.Peripheral", "Periph
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Client.Communication", "Shared\Client.Communication\Client.Communication.nfproj", "{C7C59373-50D9-48A4-90B1-42C75995BE1B}"
 EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Bms.Peripheral", "Peripherals\Bms.Peripheral\Bms.Peripheral.nfproj", "{593356EF-9E0D-4166-883A-AF1816C1668F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,6 +212,12 @@ Global
 		{C7C59373-50D9-48A4-90B1-42C75995BE1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7C59373-50D9-48A4-90B1-42C75995BE1B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C7C59373-50D9-48A4-90B1-42C75995BE1B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{593356EF-9E0D-4166-883A-AF1816C1668F}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +249,7 @@ Global
 		{78E410A5-F0D4-4AE1-A3D1-6BBA81F6306E} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 		{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 		{C7C59373-50D9-48A4-90B1-42C75995BE1B} = {B437FD35-B2E8-467F-8067-2DDEE5EE961B}
+		{593356EF-9E0D-4166-883A-AF1816C1668F} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {303CCAD6-C43B-419F-ACC3-FAE0574C1931}
