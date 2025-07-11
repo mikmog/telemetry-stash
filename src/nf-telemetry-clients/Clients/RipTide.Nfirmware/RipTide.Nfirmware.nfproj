@@ -35,6 +35,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="_docs\Daly Smart Active Balance Modbus Protocol.xlsx" />
     <None Include="_docs\RipTide.fzz" />
     <None Include="packages.config" />
     <None Include="README.md" />
@@ -50,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Peripherals\Adc.Sensor\Adc.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\Bms.Peripheral\Bms.Peripheral.nfproj" />
     <ProjectReference Include="..\..\Peripherals\Ds18b20.Sensor\Ds18b20.Sensor.nfproj" />
     <ProjectReference Include="..\..\Peripherals\Ili9xxx.Display\Ili9xxx.Display.nfproj" />
     <ProjectReference Include="..\..\Peripherals\IO.Peripherals\IO.Peripherals.nfproj" />
