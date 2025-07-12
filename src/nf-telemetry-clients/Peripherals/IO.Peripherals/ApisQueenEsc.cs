@@ -40,8 +40,8 @@ namespace TelemetryStash.IO.Peripherals
             //Configuration.SetPinFunction(18, DeviceFunction.PWM10);
             //_pwm1 = PwmChannel.CreateFromPin(17, 500, neutralDutyCycle);
             //_pwm2 = PwmChannel.CreateFromPin(18, 500, neutralDutyCycle);
-            Configuration.SetPinFunction(pinLeftMotor, DeviceFunction.PWM9);
-            Configuration.SetPinFunction(pinRightMotor, DeviceFunction.PWM10);
+            Configuration.SetPinFunction(pinLeftMotor, DeviceFunction.PWM5);
+            Configuration.SetPinFunction(pinRightMotor, DeviceFunction.PWM6);
             _pwm1 = PwmChannel.CreateFromPin(pinLeftMotor, 500, neutralDutyCycle);
             _pwm2 = PwmChannel.CreateFromPin(pinRightMotor, 500, neutralDutyCycle);
             Stop();

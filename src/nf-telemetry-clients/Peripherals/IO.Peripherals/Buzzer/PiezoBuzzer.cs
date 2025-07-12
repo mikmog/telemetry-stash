@@ -20,6 +20,7 @@ namespace TelemetryStash.IO.Peripherals.Buzzer
         {
             Configuration.SetPinFunction(settings.Pin, settings.DeviceFunction);
             _pwmChannel = PwmChannel.CreateFromPin(settings.Pin);
+            _pwmChannel.Stop();
 
             _buzzerRunner = new Thread(BuzzerRunner);
             _buzzerRunner.Start();
