@@ -19,13 +19,16 @@ namespace RipTide.Nfirmware.Components
 
         public void BuzzWarning()
         {
-            _buzzer.BuzzAsync(1000, TimeSpan.FromMilliseconds(500));
-            _buzzer.BuzzAsync(1000, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(500, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(500, TimeSpan.FromMilliseconds(500));
         }
 
         public void BuzzError()
         {
-            _buzzer.BuzzAsync(2000, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(1000, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(500, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(1000, TimeSpan.FromMilliseconds(500));
+            _buzzer.BuzzAsync(500, TimeSpan.FromMilliseconds(500));
             _buzzer.BuzzAsync(1000, TimeSpan.FromMilliseconds(500));
             _buzzer.BuzzAsync(500, TimeSpan.FromMilliseconds(500));
         }
