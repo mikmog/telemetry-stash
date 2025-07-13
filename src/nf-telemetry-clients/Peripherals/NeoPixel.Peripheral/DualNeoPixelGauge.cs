@@ -11,7 +11,7 @@ namespace NeoPixel.Peripheral
 {
     public class DualNeoPixelGauge
     {
-        private int _pixelsCount;
+        private readonly int _pixelsCount;
         private readonly Color[] _colors;
         private readonly NeoPixelStrip _pixels;
         private readonly Thread _gaugeThread;
@@ -52,6 +52,11 @@ namespace NeoPixel.Peripheral
         public void Initialize()
         {
             _gaugeThread.Start();
+            LightUp();
+        }
+
+        public void LightUp()
+        {
             for (var i = 0; i < _pixelsCount; i++)
             {
                 _pixels.SetLed(i, _colors[i]);

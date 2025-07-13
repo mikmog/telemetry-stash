@@ -4,8 +4,6 @@ using System.Device.Adc;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
-using TelemetryStash.Peripherals.Bms.Daly;
-
 
 namespace RipTide.Nfirmware
 {
@@ -37,16 +35,13 @@ namespace RipTide.Nfirmware
 
                 _appSettings.Configure();
 
-                // TODO
-                var bms = new ActiveBalanceBms();
-                bms.Initialize();
-                var value = bms.RadValue(Registers.TotalVoltage);
+                // Initialize display
+                _display.Initialize(_appSettings);
 
                 // Initialize buzzer
                 _buzzer.Initialize(_appSettings);
 
-                // Initialize display
-                _display.Initialize(_appSettings);
+                // Initialize error handler
                 _errorHandler.Initialize(_display, _buzzer);
                 Thread.Sleep(500);
 
@@ -54,11 +49,17 @@ namespace RipTide.Nfirmware
                 _display.SetScreen(Screen.Splash);
                 _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
+                // Initialize battery monitor
+                _batteryMonitor.Initialize(_appSettings);
+                _batteryMonitor.OnBatteryChanged += _display.BatteryChanged;
+
                 // Initialize gyro
                 _gyro.Initialize(_appSettings);
+                _gyro.OnGyroChanged += _display.GyroChanged;
 
                 // Initialize temp sensors
                 _tempMonitor.Initialize(_appSettings);
+                _tempMonitor.OnTemperatureChanged += _display.TemperatureChanged;
 
                 // Initialize throttle led's
                 _throttleds.Initialize(_appSettings);
@@ -80,6 +81,8 @@ namespace RipTide.Nfirmware
                     {
                         throw new Exception(errorMessage);
                     });
+
+                _throttleds.LightUp();
 
                 _throttle.OnThrustChanged += _display.SetThrust;
                 _throttle.OnThrustChanged += _throttleds.ThrustChanged;

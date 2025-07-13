@@ -24,13 +24,13 @@ namespace TelemetryStash.Bmxx80.Sensor
 
         // Internet suggests 300 reads for gas sensor to stabilize.
         private readonly IndoorAirQuality _indoorAirQuality = new(burnInCycles: 300);
-        
+
         private readonly string[] _tags;
 
         public Bme680Sensor(Bme680SensorSettings settings, TimeSpan notificationInterval, string[] tags)
         {
-            Configuration.SetPinFunction(settings.DataPin, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(settings.ClockPin, DeviceFunction.I2C1_CLOCK);
+            Configuration.SetPinFunction(settings.I2cDataPin, settings.I2cData);
+            Configuration.SetPinFunction(settings.I2cClockPin, settings.I2cClock);
 
             _notificationInterval = notificationInterval;
             _tags = tags;

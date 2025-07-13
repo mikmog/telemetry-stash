@@ -22,7 +22,8 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
-    <Compile Include="ApisQueenEsc.cs" />
+    <Compile Include="ApisQueenEsc\ApisQueen.cs" />
+    <Compile Include="ApisQueenEsc\ApisQueenSettings.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="Buzzer\PiezoBuzzer.cs" />
     <Compile Include="Buzzer\PiezoBuzzerSettings.cs" />

@@ -6,6 +6,8 @@ using System.Threading;
 
 namespace TelemetryStash.IO.Peripherals
 {
+    // TODO remove
+
     public class Pwm
     {
         private readonly GpioController _gpioController;

@@ -3,30 +3,30 @@ using nanoFramework.Hardware.Esp32;
 
 namespace TelemetryStash.Peripherals.Bms.Daly
 {
-    // Uses a MAX485 Modbus Module
-    // 
+    // Use a MAX485 Modbus Module
+
     public class ActiveBalanceBms
     {
         const byte DeviceAddress = 0xD2;
 
         private ModbusClient _modbusClient;
 
-        public void Initialize()
+        public void Initialize(ActiveBalanceBmsSettings settings)
         {
-            Configuration.SetPinFunction(0, DeviceFunction.COM2_RTS);
-            Configuration.SetPinFunction(43, DeviceFunction.COM2_TX);
-            Configuration.SetPinFunction(44, DeviceFunction.COM2_RX);
+            Configuration.SetPinFunction(settings.ComRtsPin, settings.ComRts);
+            Configuration.SetPinFunction(settings.ComTxPin, settings.ComTx);
+            Configuration.SetPinFunction(settings.ComRxPin, settings.ComRx);
 
-            _modbusClient = new ModbusClient("COM2");
-            _modbusClient.ReadTimeout = _modbusClient.WriteTimeout = 2000;
+            _modbusClient = new ModbusClient(settings.ComPort);
+            _modbusClient.ReadTimeout = _modbusClient.WriteTimeout = 1000;
         }
 
-        public double RadValue(Register register)
+        public double ReadValue(Register register, double readFailedValue = double.NaN)
         {
             var data = _modbusClient.ReadHoldingRegisters(DeviceAddress, register.Address, count: 1);
             if (data == null || data.Length == 0)
             {
-                return double.NaN;
+                return readFailedValue;
             }
 
             return register.Value(data[0]);

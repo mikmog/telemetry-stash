@@ -2,10 +2,8 @@
 using System;
 using System.Device.Adc;
 using System.Device.Gpio;
-using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.Ds18b20Sensor;
-using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware.Components
 {
@@ -13,6 +11,8 @@ namespace RipTide.Nfirmware.Components
     {
         private static readonly TimeSpan ReadInterval = TimeSpan.FromSeconds(1);
         private readonly Ds18b20SensorReader _ds18B20Sensors;
+        TemperatureValue[] _currentReadings;
+
 
         public TempMonitor(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler)
         {
@@ -33,31 +33,53 @@ namespace RipTide.Nfirmware.Components
                 Thread.Sleep(ReadInterval);
             }
 
-            var timeStamp = DateTime.MinValue;
+            MapToCurrentReading(_ds18B20Sensors.Readings);
+            OnTemperatureChanged?.Invoke(_currentReadings);
 
+            var waitInterval = (int)ReadInterval.TotalMilliseconds * 2;
             while (true)
             {
-                while (_ds18B20Sensors.TimeStamp == timeStamp)
-                {
-                    Thread.Sleep(ReadInterval);
-                }
+                Thread.Sleep(waitInterval);
 
-                timeStamp = _ds18B20Sensors.TimeStamp;
-
-                // TODO: Expose readings to the system
-                foreach (var reading in _ds18B20Sensors.Readings)
+                for (var i = 0; i < _currentReadings.Length; i++)
                 {
-                    if (reading.IsValid)
+                    if (_currentReadings[i].Temperature != _ds18B20Sensors.Readings[i].Temperature)
                     {
-                        Debug.WriteLine($"DS18B20 [{timeStamp.TimeOfDay}] {reading.Name} - Temperature: {Round.ToOneDecimalString(reading.Temperature)}°C");
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"DS18B20 Sensor {reading.Name} - Invalid reading");
+                        MapToCurrentReading(_ds18B20Sensors.Readings);
+                        OnTemperatureChanged?.Invoke(_currentReadings);
+                        break;
                     }
                 }
-                Debug.WriteLine("");
             }
+        }
+
+        public delegate void TemperatureChanged(TemperatureValue[] temperatureValues);
+        public event TemperatureChanged OnTemperatureChanged;
+
+        private void MapToCurrentReading(Ds18b20SensorReading[] ds18B20SensorReadings)
+        {
+            if (_currentReadings == default)
+            {
+                _currentReadings = new TemperatureValue[ds18B20SensorReadings.Length];
+            }
+
+            for (var i = 0; i < ds18B20SensorReadings.Length; i++)
+            {
+                var reading = ds18B20SensorReadings[i];
+                _currentReadings[i] = new TemperatureValue(reading.Name, reading.Temperature);
+            }
+        }
+    }
+
+    public struct TemperatureValue
+    {
+        public string Name { get; set; }
+        public double Temperature { get; set; }
+
+        public TemperatureValue(string name, double temperature)
+        {
+            Name = name;
+            Temperature = temperature;
         }
     }
 }

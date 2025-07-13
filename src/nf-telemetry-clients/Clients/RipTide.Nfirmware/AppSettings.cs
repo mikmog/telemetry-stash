@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using TelemetryStash.Ds18b20Sensor;
 using TelemetryStash.IliDisplay;
+using TelemetryStash.IO.Peripherals.ApisQueen;
 using TelemetryStash.IO.Peripherals.Buzzer;
 using TelemetryStash.MpuGyroSensor;
+using TelemetryStash.Peripherals.Bms.Daly;
 using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware
@@ -19,6 +21,8 @@ namespace RipTide.Nfirmware
             Throttle.Configure(dictionary);
             Ds18b20.Configure(dictionary);
             PiezoBuzzer.Configure(dictionary);
+            ApisQueen.Configure(dictionary);
+            ActiveBalanceBms.Configure(dictionary);
         }
 
         public MpuGyroSettings MpuGyro { get; set; } = new();
@@ -30,6 +34,10 @@ namespace RipTide.Nfirmware
         public Ds18b20SensorSettings Ds18b20 { get; set; } = new();
 
         public PiezoBuzzerSettings PiezoBuzzer { get; set; } = new();
+
+        public ApisQueenSettings ApisQueen { get; set; } = new();
+
+        public ActiveBalanceBmsSettings ActiveBalanceBms { get; set; } = new();
     }
 
     public class ThrottleSettings
@@ -38,18 +46,14 @@ namespace RipTide.Nfirmware
         private const string PrimaryButtonPinKey = "Throttle.PrimaryButtonPin";
         private const string ThrustLockPinKey = "Throttle.ThrustLockPin";
         private const string ThrustSensorPinsKey = "Throttle.ThrustSensorPins";
-        private const string LeftMotorPinKey = "Throttle.LeftMotorPin";
-        private const string RightMotorPinKey = "Throttle.RightMotorPin";
-        private const string LeftThrotledPinKey = "Throttle.LeftThrotledPin";
+        private const string ThrotledPinKey = "Throttle.ThrotledPin";
 
         public void Configure(IDictionary dictionary)
         {
             AdcReadScale = dictionary.Int32(AdcReadScaleKey);
             PrimaryButtonPin = dictionary.Int32(PrimaryButtonPinKey);
             ThrustLockPin = dictionary.Int32(ThrustLockPinKey);
-            LeftMotorPin = dictionary.Int32(LeftMotorPinKey);
-            RightMotorPin = dictionary.Int32(RightMotorPinKey);
-            LeftThrotledPin = dictionary.Int32(LeftThrotledPinKey);
+            ThrotledPin = dictionary.Int32(ThrotledPinKey);
 
             var setting = dictionary.List(ThrustSensorPinsKey);
             ThrustSensorPins = new int[setting.Count];
@@ -64,10 +68,6 @@ namespace RipTide.Nfirmware
 
         public int[] ThrustSensorPins { get; set; }
 
-        public int LeftMotorPin { get; set; }
-
-        public int RightMotorPin { get; set; }
-
-        public int LeftThrotledPin { get; set; }
+        public int ThrotledPin { get; set; }
     }
 }
