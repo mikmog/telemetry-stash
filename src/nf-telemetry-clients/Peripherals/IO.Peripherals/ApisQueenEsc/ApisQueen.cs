@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.Shared;
 
-namespace TelemetryStash.IO.Peripherals
+namespace TelemetryStash.IO.Peripherals.ApisQueen
 {
     /*
         1ms - 1.5ms     1.5ms       1.5ms - 2ms
@@ -22,7 +22,7 @@ namespace TelemetryStash.IO.Peripherals
 
         __|______|______|______|_
     */
-    public class ApisQueenEsc
+    public class ApisQueen
     {
         private readonly PwmChannel _pwm1;
         private readonly PwmChannel _pwm2;
@@ -34,16 +34,16 @@ namespace TelemetryStash.IO.Peripherals
         private const double neutralDutyCycle = 0.75;
         private const double oneStepDutyCycle = 0.0025;
 
-        public ApisQueenEsc(int pinLeftMotor, int pinRightMotor)
+        public ApisQueen(ApisQueenSettings settings)
         {
             //Configuration.SetPinFunction(17, DeviceFunction.PWM9);
             //Configuration.SetPinFunction(18, DeviceFunction.PWM10);
             //_pwm1 = PwmChannel.CreateFromPin(17, 500, neutralDutyCycle);
             //_pwm2 = PwmChannel.CreateFromPin(18, 500, neutralDutyCycle);
-            Configuration.SetPinFunction(pinLeftMotor, DeviceFunction.PWM5);
-            Configuration.SetPinFunction(pinRightMotor, DeviceFunction.PWM6);
-            _pwm1 = PwmChannel.CreateFromPin(pinLeftMotor, 500, neutralDutyCycle);
-            _pwm2 = PwmChannel.CreateFromPin(pinRightMotor, 500, neutralDutyCycle);
+            Configuration.SetPinFunction(settings.LeftMotorPin, settings.LeftMotorPwmChannel);
+            Configuration.SetPinFunction(settings.RightMotorPin, settings.RightMotorPwmChannel);
+            _pwm1 = PwmChannel.CreateFromPin(settings.LeftMotorPin, 500, neutralDutyCycle);
+            _pwm2 = PwmChannel.CreateFromPin(settings.RightMotorPin, 500, neutralDutyCycle);
             Stop();
 
             _throttleThread = new Thread(SetThrottle);

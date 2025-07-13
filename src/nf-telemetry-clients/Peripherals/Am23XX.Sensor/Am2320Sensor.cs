@@ -30,9 +30,9 @@ namespace TelemetryStash.Am23XX.Sensor
 
         public Am2320Sensor(Am23XXSensorSettings settings, TimeSpan notificationInterval, string[] tags)
         {
-            Configuration.SetPinFunction(settings.DataPin, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(settings.ClockPin, DeviceFunction.I2C1_CLOCK);
-            
+            Configuration.SetPinFunction(settings.I2cDataPin, settings.I2cData);
+            Configuration.SetPinFunction(settings.I2cClockPin, settings.I2cClock);
+
             _temperatureOffset = settings.TemperatureOffset;
             _humidityOffset = settings.HumidityOffset;
 
@@ -104,7 +104,7 @@ namespace TelemetryStash.Am23XX.Sensor
                 var temp = _am2320.Temperature;
                 var hum = _am2320.Humidity;
 
-                if(_burnInCycles > 0)
+                if (_burnInCycles > 0)
                 {
                     _burnInCycles--;
                     return;
@@ -128,7 +128,7 @@ namespace TelemetryStash.Am23XX.Sensor
 
         private static bool TryMapToRegisterSet(double temperature, double temperatureOffset, double humidity, double humidityOffset, string[] tags, out RegisterSet registerSet)
         {
-            if(temperature == -1 || humidity == -1)
+            if (temperature == -1 || humidity == -1)
             {
                 registerSet = null;
                 return false;

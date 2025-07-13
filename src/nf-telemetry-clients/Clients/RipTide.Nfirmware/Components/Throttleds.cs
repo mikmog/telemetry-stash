@@ -10,7 +10,7 @@ namespace RipTide.Nfirmware.Components
     internal class Throttleds : Component
     {
         private DualNeoPixelGauge _gauge;
-        private int _thrust;
+        private int _thrustValue;
 
         public Throttleds(AdcController adc, GpioController gpio, ErrorHandler errorHandler) : base(adc, gpio, errorHandler) { }
 
@@ -19,7 +19,7 @@ namespace RipTide.Nfirmware.Components
             var settings = appSettings.Throttle;
 
             var colors = new Color[] { Color.Green, Color.Yellow, Color.Red };
-            _gauge = new((ushort)settings.AdcReadScale, colors, pin: (byte)settings.LeftThrotledPin);
+            _gauge = new((ushort)settings.AdcReadScale, colors, pin: (byte)settings.ThrotledPin);
             _gauge.Initialize();
 
             Start(Runner);
@@ -27,22 +27,27 @@ namespace RipTide.Nfirmware.Components
 
         private void Runner()
         {
-            var requestedThrust = _thrust;
+            var requestedThrust = _thrustValue;
             while (true)
             {
-                while (requestedThrust == _thrust)
+                while (requestedThrust == _thrustValue)
                 {
                     Thread.Sleep(10);
                 }
 
-                requestedThrust = _thrust;
-                _gauge.SetPosition(_thrust);
+                requestedThrust = _thrustValue;
+                _gauge.SetPosition(_thrustValue);
             }
         }
 
-        public void ThrustChanged(int thrust)
+        public void ThrustChanged(int thrustValue)
         {
-            _thrust = thrust;
+            _thrustValue = thrustValue;
+        }
+
+        internal void LightUp()
+        {
+            _gauge.LightUp();
         }
     }
 }

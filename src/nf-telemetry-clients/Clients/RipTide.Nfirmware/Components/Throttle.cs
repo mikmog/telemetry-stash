@@ -5,7 +5,7 @@ using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading;
 using TelemetryStash.AdcSensor;
-using TelemetryStash.IO.Peripherals;
+using TelemetryStash.IO.Peripherals.ApisQueen;
 using TelemetryStash.Shared;
 
 namespace RipTide.Nfirmware.Components
@@ -21,7 +21,7 @@ namespace RipTide.Nfirmware.Components
 
         private GpioPin _thrustLockPin;
         private Ss49eHallSensor _thrustSensor;
-        private ApisQueenEsc _apisQueenEsc;
+        private ApisQueen _apisQueenEsc;
 
         public bool ThrustRangeCalibrationComplete { get; private set; }
 
@@ -32,7 +32,7 @@ namespace RipTide.Nfirmware.Components
             _adcReadScale = settings.AdcReadScale;
             _thrustScaleFactor = 100d / _adcReadScale;
 
-            _apisQueenEsc = new ApisQueenEsc(settings.LeftMotorPin, settings.RightMotorPin);
+            _apisQueenEsc = new ApisQueen(appSettings.ApisQueen);
             _apisQueenEsc.Initialize();
 
             _thrustSensor = new(_adcController);
@@ -263,7 +263,7 @@ namespace RipTide.Nfirmware.Components
         public delegate void ActionMessageDelegate(string message, int sleep = 0);
         public delegate void ActionNumberDelegate(int value);
 
-        public delegate void ThrustChanged(int thrust);
+        public delegate void ThrustChanged(int thrustValue);
         public event ThrustChanged OnThrustChanged;
     }
 }

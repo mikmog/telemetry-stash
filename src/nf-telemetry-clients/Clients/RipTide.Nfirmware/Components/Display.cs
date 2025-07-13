@@ -5,6 +5,7 @@ using System;
 using System.Device.Adc;
 using System.Device.Gpio;
 using System.Drawing;
+using System.Numerics;
 using System.Threading;
 using TelemetryStash.IliDisplay;
 using TelemetryStash.Shared;
@@ -13,8 +14,13 @@ namespace RipTide.Nfirmware.Components
 {
     public class Display : Component
     {
-        private int _thrust = -1;
+        private int _thrustValue = -1;
+        private BatteryValue _batteryValue;
+        private TemperatureValue[] _tempValues;
+        private Vector3 _gyroValue;
+
         private Screen _screen;
+
         private static Bitmap _logo = null;
         private readonly Ili9488Display _ili9488Display = new();
 
@@ -46,9 +52,24 @@ namespace RipTide.Nfirmware.Components
             _ili9488Display.Fade(from, to, duration);
         }
 
-        public void SetThrust(int thrust)
+        public void SetThrust(int thrustValue)
         {
-            _thrust = thrust;
+            _thrustValue = thrustValue;
+        }
+
+        public void BatteryChanged(BatteryValue batteryValue)
+        {
+            _batteryValue = batteryValue;
+        }
+
+        public void TemperatureChanged(TemperatureValue[] tempValues)
+        {
+            _tempValues = tempValues;
+        }
+
+        public void GyroChanged(Vector3 value)
+        {
+            _gyroValue = value;
         }
 
         private void Runner()
@@ -75,7 +96,7 @@ namespace RipTide.Nfirmware.Components
             }
 
             var currentScreen = _screen;
-            var currentThrust = _thrust;
+            var currentThrust = _thrustValue;
 
             while (true)
             {
@@ -85,9 +106,9 @@ namespace RipTide.Nfirmware.Components
                     SetScreen(_ili9488Display, currentScreen);
                 }
 
-                if (currentThrust != _thrust)
+                if (currentThrust != _thrustValue)
                 {
-                    currentThrust = _thrust;
+                    currentThrust = _thrustValue;
                     _ili9488Display.Text(currentThrust.ToString(), Color.White, new System.Drawing.Point(240, 160));
                 }
 

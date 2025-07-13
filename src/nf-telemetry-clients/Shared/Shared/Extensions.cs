@@ -52,6 +52,11 @@ namespace TelemetryStash.Shared
             return (string)value;
         }
 
+        public static byte Byte(this IDictionary dictionary, string key)
+        {
+            return (byte)dictionary.Int32(key);
+        }
+
         public static int Int32(this IDictionary dictionary, string key)
         {
             var value = dictionary[key] ?? throw new ArgumentException(key);
