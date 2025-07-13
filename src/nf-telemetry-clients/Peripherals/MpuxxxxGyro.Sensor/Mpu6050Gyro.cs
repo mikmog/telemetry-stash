@@ -1,23 +1,23 @@
 ﻿using Iot.Device.Imu;
 using nanoFramework.Hardware.Esp32;
 using System.Device.I2c;
+using System.Numerics;
 
 namespace TelemetryStash.MpuGyroSensor
 {
     public class Mpu6050Gyro
     {
-        public Mpu6050Gyro()
-        {
-
-        }
+        private Mpu6050 _gyro;
 
         public void Initialize(MpuGyroSettings settings)
         {
-            Configuration.SetPinFunction(settings.I2cDataPin, DeviceFunction.I2C1_DATA);
-            Configuration.SetPinFunction(settings.I2cClockPin, DeviceFunction.I2C1_CLOCK);
+            Configuration.SetPinFunction(settings.I2cDataPin, settings.I2cData);
+            Configuration.SetPinFunction(settings.I2cClockPin, settings.I2cClock);
 
             var i2c = new I2cConnectionSettings(1, Mpu6050.DefaultI2cAddress);
-            using var gyro = new Mpu6050(I2cDevice.Create(i2c));
+            _gyro = new Mpu6050(I2cDevice.Create(i2c));
+
+            // TODO
 
             //Debug.WriteLine("Before::");
             //Debug.WriteLine($"Gyro X bias = {gyro.GyroscopeBias.X}");
@@ -64,6 +64,16 @@ namespace TelemetryStash.MpuGyroSensor
             //    //    Thread.Sleep(100);
             //    //}
             //}
+        }
+
+        public Vector3 ReadGyroscope()
+        {
+            return _gyro.GetGyroscopeReading();
+        }
+
+        public Vector3 ReadAccelerometer()
+        {
+            return _gyro.GetAccelerometer();
         }
     }
 }

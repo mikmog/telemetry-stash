@@ -30,11 +30,11 @@ namespace TelemetryStash.IliDisplay
             // MOSI => FSPID => SDI
             // MISO => FSPIQ => SDO
             // SCK => FSPICLK
-            Configuration.SetPinFunction(settings.SpiMisoPin, DeviceFunction.SPI1_MISO);
-            Configuration.SetPinFunction(settings.SpiMosiPin, DeviceFunction.SPI1_MOSI);
-            Configuration.SetPinFunction(settings.SpiClockPin, DeviceFunction.SPI1_CLOCK);
+            Configuration.SetPinFunction(settings.SpiMisoPin, settings.SpiMiso);
+            Configuration.SetPinFunction(settings.SpiMosiPin, settings.SpiMosi);
+            Configuration.SetPinFunction(settings.SpiClockPin, settings.SpiClock);
 
-            var spi = new SpiConfiguration(spiBus: 1, settings.ChipSelectPin, settings.DataCommandPin, settings.ResetPin, settings.BackLightPin);
+            var spi = new SpiConfiguration(settings.SpiBus, settings.ChipSelectPin, settings.DataCommandPin, settings.ResetPin, settings.BackLightPin);
             var driver = Ili9488.GraphicDriver;
 
             // 480X320
