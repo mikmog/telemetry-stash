@@ -32,7 +32,10 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryServic
 
             if (!environment.IsProduction())
             {
-                logger.LogInformation("Received telemetry: {Telemetry}", json);
+                if (logger.IsEnabled(LogLevel.Information))
+                {
+                    logger.LogInformation("Received telemetry: {Telemetry}", json);
+                }
             }
 
             var telemetry = JsonSerializer.Deserialize<TelemetryRequest>(json, JsonOptions)
@@ -42,7 +45,10 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryServic
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Failed to process telemetry. {EventData}", cloudEvent.Data);
+            if (logger.IsEnabled(LogLevel.Error))
+            {
+                logger.LogError(ex, "Failed to process telemetry. {EventData}", cloudEvent.Data);
+            }
             throw;
         }
     }

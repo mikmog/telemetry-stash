@@ -16,7 +16,6 @@ var host = new HostBuilder()
     {
         services.AddApplicationInsights(context.Configuration);
         services.ConfigureApplicationInsightsTelemetryFilter();
-        services.AddHttpClientLogger();
 
         services.AddFunctionServices();
         services.AddTelemetryDatabase(context.Configuration);

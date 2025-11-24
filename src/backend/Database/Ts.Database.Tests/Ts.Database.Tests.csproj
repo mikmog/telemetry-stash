@@ -23,8 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ts.TelemetryDatabase.Sql\Ts.TelemetryDatabase.Sql.sqlproj" />
+    <ProjectReference Include="..\Ts.TelemetryDatabase.Sql\Ts.TelemetryDatabase.Sql.sqlproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\Ts.TelemetryDatabase\Ts.TelemetryDatabase.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\Ts.TelemetryDatabase.Sql\bin\$(Configuration)\Ts.TelemetryDatabase.Sql.dacpac" Link="Sql\Ts.TelemetryDatabase.Sql.dacpac" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+  
 </Project>

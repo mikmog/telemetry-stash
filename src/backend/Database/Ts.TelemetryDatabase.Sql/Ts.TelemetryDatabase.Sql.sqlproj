@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.Build.Sql/0.2.0-preview" DefaultTargets="Build">
+<Project DefaultTargets="Build" ToolsVersion="4.0">
+  <!-- Enable to build in VisualStudio 2026 -->
+  <!--Sdk Name="Microsoft.Build.Sql" Version="1.0.0" /-->
+  <!-- Enable to build via sdk (pipelines), dotnet build  -->
+  <Sdk Name="Microsoft.Build.Sql" Version="2.0.0" />
   <PropertyGroup>
     <SqlTargetName>Ts.TelemetryDatabase.Sql</SqlTargetName>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql170DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <ProjectGuid>{d6b56a08-b5c2-4c8b-9e49-51994f67ff4b}</ProjectGuid>
-	<RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
-	<LangVersion>9.0</LangVersion>
+    <ProjectGuid>{718690b9-8e19-0b53-d189-44507ab89f16}</ProjectGuid>
+    <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
+    <DefaultFileStructure>BySchemaType</DefaultFileStructure>
+    <!-- EnableDefaultSqlItems is needed until VS have full support for the new sdk style projects -->
+    <EnableDefaultSqlItems>False</EnableDefaultSqlItems>
   </PropertyGroup>
-  
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin</OutputPath>
-  </PropertyGroup>
-
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(MSBuildRuntimeType)' != 'Core'">
+    <!-- 
+        Building through visual studio (targeting net48) will fail if a previous build through the dotnet core cli
+        has run and created the obj/project.assets.json file. This custom target should delete the file before the visual studio build starts.
+      -->
+    <Message Importance="high" Text="Ensuring the $(MSBuildThisFileDirectory)\obj\project.assets.json file is removed, if necessary, so that the database project can be built through VisualStudio SSDT without errors" />
+    <Delete Files="$(MSBuildThisFileDirectory)\obj\project.assets.json" />
+  </Target>
   <ItemGroup>
-    <Folder Include="User Defined Types" />
-    <Folder Include="Stored Procedures" />
-    <Folder Include="Tables" />
-    <Folder Include="Compares" />
-    <Folder Include="Stored Procedures\Device" />
-    <Folder Include="Stored Procedures\Register" />
-    <Folder Include="Stored Procedures\Telemetry" />
-    <Folder Include="Security" />
+    <Folder Include="User Defined Types\" />
+    <Folder Include="Stored Procedures\" />
+    <Folder Include="Tables\" />
+    <Folder Include="Stored Procedures\Device\" />
+    <Folder Include="Stored Procedures\Register\" />
+    <Folder Include="Stored Procedures\Telemetry\" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Remove="bin/**/*.sql" />
@@ -44,6 +49,6 @@
     <Build Include="User Defined Types\RegistersType.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Compares\SqlSchemaCompare.Dev.scmp" />
+    <None Include="Directory.Build.props" />
   </ItemGroup>
 </Project>

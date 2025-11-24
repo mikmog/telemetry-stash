@@ -39,7 +39,7 @@ type appServiceParams = {
     family: 'B'
     capacity: 1
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
+  linuxFxVersion: ('DOTNET-ISOLATED|10.0')
   resourceName: string
 }
 
@@ -58,7 +58,7 @@ type functionParams = {
     family: 'B'
     capacity: 1
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
+  linuxFxVersion: ('DOTNET-ISOLATED|10.0')
   resourceName: string
 }
 

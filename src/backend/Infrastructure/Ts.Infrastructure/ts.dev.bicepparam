@@ -25,7 +25,7 @@ param appParameters = {
       family: 'F'
       capacity: 1
     }
-    linuxFxVersion: 'DOTNET-ISOLATED|9.0'
+    linuxFxVersion: 'DOTNET-ISOLATED|10.0'
     resourceName: 'api'
   }
   functions: {
@@ -36,7 +36,7 @@ param appParameters = {
       family: 'Y'
       capacity: 0
     }
-    linuxFxVersion: 'DOTNET-ISOLATED|9.0'
+    linuxFxVersion: 'DOTNET-ISOLATED|10.0'
     resourceName: 'func'
   }
 }
