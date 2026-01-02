@@ -12,6 +12,9 @@ on:
 jobs:
 
   build-and-publish:
+    permissions:
+      id-token: write
+      contents: read
     uses: ./.github/workflows/backend-build.yml
     with:
       projectDirectory: src/backend/Functions/Ts.Functions
@@ -19,6 +22,8 @@ jobs:
       artifactsName: tsfunctions
  
   deploy-dev:
+    permissions:
+      id-token: write
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: build-and-publish
     with:
@@ -27,9 +32,13 @@ jobs:
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
     secrets:
-      publishProfile: ${{ secrets.func_ts_develop_5119 }}
- 
+      azureClientId: ${{ secrets.AZURE_CLIENT_ID_DEV }}
+      azureTenantId: ${{ secrets.AZURE_TENANT_ID_DEV }}
+      azureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID_DEV }}
+
   deploy-prod:
+    permissions:
+      id-token: write
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: deploy-dev
     with:
@@ -38,4 +47,7 @@ jobs:
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
     secrets:
-      publishProfile: ${{ secrets.func_ts_prod_C090 }}
+      azureClientId: ${{ secrets.AZURE_CLIENT_ID_PROD }}
+      azureTenantId: ${{ secrets.AZURE_TENANT_ID_PROD }}
+      azureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID_PROD }}
+

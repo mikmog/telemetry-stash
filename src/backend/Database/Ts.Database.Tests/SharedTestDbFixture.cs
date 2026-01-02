@@ -24,14 +24,15 @@ public class SharedTestDbFixture : IAsyncLifetime
     public SharedTestDbFixture()
     {
         TestcontainersSettings.DockerHostOverride = "127.0.0.1";
+        _sqlDbPassword = $"{Convert.ToBase64String(RandomNumberGenerator.GetBytes(10))}aA1-";
 
         // https://hub.docker.com/r/microsoft/mssql-server
-        _sqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-CU17-ubuntu-22.04")
+        _sqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-latest")
+            .WithPassword(_sqlDbPassword)
             .Build();
 
-        _dacPackage = DacPackage.Load("../../../../Ts.TelemetryDatabase.Sql/bin/Ts.TelemetryDatabase.Sql.dacpac");
-        _sqlDbPassword = $"{Convert.ToBase64String(RandomNumberGenerator.GetBytes(10))}-";
+        _dacPackage = DacPackage.Load("Sql/Ts.TelemetryDatabase.Sql.dacpac");
+
     }
 
     public IDbProvider GetTestDbProvider(string databaseName)

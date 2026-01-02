@@ -10,7 +10,6 @@ public class CacheProvider : IDisposable
     {
         var collection = new ServiceCollection();
 
-#pragma warning disable EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         collection.AddHybridCache(options =>
         {
             options.DefaultEntryOptions = new HybridCacheEntryOptions
@@ -19,7 +18,6 @@ public class CacheProvider : IDisposable
                 LocalCacheExpiration = TimeSpan.FromDays(1)
             };
         });
-#pragma warning restore EXTEXP0018 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         _provider = collection.BuildServiceProvider();
     }

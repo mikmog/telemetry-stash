@@ -3,7 +3,7 @@
 // https://learn.microsoft.com/en-us/azure/templates/microsoft.insights/components?pivots=deployment-language-bicep
 // ********************************************************************
 
-import { applicationParams, monitorParams, getResourceName }  from '../../parameter-types.bicep'
+import { applicationParams, getResourceName }  from '../../parameter-types.bicep'
 param applicationParameters applicationParams
 param logAnalyticsWorkspaceId string
 

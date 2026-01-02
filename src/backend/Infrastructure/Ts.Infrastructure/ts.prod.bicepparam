@@ -26,20 +26,26 @@ param appParameters = {
       family: 'F'
       capacity: 1
     }
-    linuxFxVersion: 'DOTNET-ISOLATED|9.0'
+    linuxFxVersion: 'DOTNET-ISOLATED|10.0'
     resourceName: 'api'
   }
   functions: {
     sku: {
-      name: 'Y1'
-      tier: 'Dynamic'
-      size: 'Y1'
-      family: 'Y'
+      name: 'FC1'
+      tier: 'FlexConsumption'
+      size: 'FC1'
+      family: 'FC'
       capacity: 0
     }
-    linuxFxVersion: 'DOTNET-ISOLATED|9.0'
+    runtimeVersion: '10.0'
     resourceName: 'func'
   }
+}
+
+// Managed Identity used by GitHub delivery pipeline
+param deployIdentityParameters = {
+  resourceName: 'deploy'
+  roleAssignment: 'Contributor' 
 }
 
 // Key Vault Role Assignment

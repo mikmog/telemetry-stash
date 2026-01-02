@@ -3,7 +3,7 @@
 // ********************************************************************
 
 @export()
-func getResourceName(nameParam name, parameters applicationParams) string => '${nameParam.resourceAbbr}-${empty(nameParam.?resourceName) ? '' : '${nameParam.resourceName}-'}${parameters.appName}-${parameters.envAbbr}'
+func getResourceName(nameParam name, parameters applicationParams) string => '${nameParam.resourceAbbr}-${empty(nameParam.?resourceName) ? '' : '${nameParam.?resourceName}-'}${parameters.appName}-${parameters.envAbbr}'
 type name = {
   resourceAbbr: string
   resourceName: string?
@@ -39,26 +39,26 @@ type appServiceParams = {
     family: 'B'
     capacity: 1
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
+  linuxFxVersion: ('DOTNET-ISOLATED|10.0')
   resourceName: string
 }
 
 @export()
 type functionParams = {
-  sku: { 
-    name: 'Y1'
-    tier: 'Dynamic'
-    size: 'Y1'
-    family: 'Y'
-    capacity: 0
-  } | {
+  sku: {
     name: 'B1'
     tier: 'Basic'
     size: 'B1'
     family: 'B'
     capacity: 1
+  } | {
+    name: 'FC1'
+    tier: 'FlexConsumption'
+    size: 'FC1'
+    family: 'FC'
+    capacity: 0
   }
-  linuxFxVersion: ('DOTNET-ISOLATED|9.0')
+  runtimeVersion: '10.0'
   resourceName: string
 }
 
@@ -96,6 +96,13 @@ type roleAssignment = {
   principalType: 'Device' | 'ForeignGroup' | 'Group' | 'ServicePrincipal' | 'User'
   roleDefinition: 'Administrator' | 'SecretsUser'   // Key Vault
                   | 'IoTHubDataReader'              // Iot Hub
+                  | 'StorageBlobDataOwner'          // Storage Account
+}
+
+@export()
+type deployIdentityParams = {
+  resourceName: string
+  roleAssignment: 'Contributor'
 }
 
 @export()

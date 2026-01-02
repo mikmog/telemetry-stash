@@ -1,0 +1,35 @@
+<Solution>
+  <Folder Name="/Api/">
+    <File Path="Api/README.md" />
+  </Folder>
+  <Folder Name="/Database/">
+    <File Path="Database/README.md" />
+    <Project Path="Database/Ts.Database.Tests/Ts.Database.Tests.csproj" />
+    <Project Path="Database/Ts.TelemetryDatabase.Sql/Ts.TelemetryDatabase.Sql.sqlproj">
+      <Build />
+      <Deploy />
+    </Project>
+    <Project Path="Database/Ts.TelemetryDatabase/Ts.TelemetryDatabase.csproj" />
+  </Folder>
+  <Folder Name="/Functions/">
+    <Project Path="Functions/Ts.Functions.Tests/Ts.Functions.Tests.csproj" />
+    <Project Path="Functions/Ts.Functions/Ts.Functions.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/Ts.Infrastructure/Ts.Infrastructure.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129">
+      <Build Project="false" />
+    </Project>
+  </Folder>
+  <Folder Name="/Pipelines/">
+    <File Path="Pipelines/README.md" />
+    <Project Path="../../.github/Ts.Pipelines.GitHub.msbuildproj" Type="13b669be-bb05-4ddf-9536-439f39a36129" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path="NuGet.Config" />
+    <File Path="README.md" />
+  </Folder>
+</Solution>

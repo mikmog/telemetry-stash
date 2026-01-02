@@ -16,22 +16,33 @@ on:
         required: true
         type: string
     secrets:
-      publishProfile:
+      azureClientId:
+        required: true
+      azureTenantId:
+        required: true
+      azureSubscriptionId:
         required: true
 
 jobs:
   deploy-functions:
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Download artifact from publish
         uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.artifactsName }}
           path: ${{ inputs.artifactsDirectory }}
+      - name: 'Log in to Azure with AZ CLI'
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.azureClientId}}
+          tenant-id: ${{ secrets.azureTenantId }}
+          subscription-id: ${{ secrets.azureSubscriptionId }}
       - name: Deploy Azure Function App
         uses: Azure/functions-action@v1
         with:
           app-name: ${{ inputs.functionAppName }}
-          publish-profile: ${{ secrets.publishProfile }}
           package: ${{ inputs.artifactsDirectory }}
