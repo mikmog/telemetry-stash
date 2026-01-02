@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using TelemetryStash.Database.Repositories;
 
-namespace TelemetryStash.Functions.Health.HealtChecks;
+namespace TelemetryStash.Functions.Health.HealthChecks;
 
 public class DatabaseHealthCheck(IHealthRepository healthRepository, ILogger<DatabaseHealthCheck> logger) : IHealthCheck
 {

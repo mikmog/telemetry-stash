@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using TelemetryStash.Functions.Extensions;
 
-namespace TelemetryStash.Functions.Health.HealtChecks;
+namespace TelemetryStash.Functions.Health.HealthChecks;
 public class IotHubHealthCheck(IConfiguration configuration) : IHealthCheck
 {
     public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())

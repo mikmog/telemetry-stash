@@ -21,7 +21,7 @@ resource assignRoles 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for
   }
 }]
 
-// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#internet-of-things
+// https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#storage
 var storageRoleDefinitions = {
     StorageBlobDataOwner:      'b7e6dc6d-f1e8-4753-8033-0f276bb0955b'
 }

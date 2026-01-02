@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using TelemetryStash.Functions.Health.HealtChecks;
+using TelemetryStash.Functions.Health.HealthChecks;
 
 namespace TelemetryStash.Functions.Health;
 

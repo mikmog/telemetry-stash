@@ -23,15 +23,15 @@ az deployment group create --resource-group {RESOURCE_GROUP_NAME} --parameters t
 ```
 > :bulb: Note. Publish __Ts.Functions__ and run again if deployment fails
 
-## Github Actions Workflows
+## GitHub Actions Workflows
 The IaC creates user assigned identity **id-deploy-ts-_{{environment}}_** intended to be used by GitHub Actions workflows.
 
 To authorize the workflows to access Azure resources
 1. Manually add a Federated credential to the user assigned identity **id-deploy-ts-_{{environment}}_** Azure.
 following [Step 4 Create a federated credential](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
-> :bulb: Note. If the action fails. The generated 'Subject identifier' might need to be edited to match the Github expected subject.
+> :bulb: Note. If the action fails. The generated 'Subject identifier' might need to be edited to match the GitHub expected subject.
 
-2. In Github repository settings. Add environment variables following [Step 1 Create these variables in your repository](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
+2. In GitHub repository settings. Add environment variables following [Step 1 Create these variables in your repository](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
 
 ## Deploy SQL database
 
