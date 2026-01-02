@@ -27,8 +27,7 @@ public class SharedTestDbFixture : IAsyncLifetime
         _sqlDbPassword = $"{Convert.ToBase64String(RandomNumberGenerator.GetBytes(10))}aA1-";
 
         // https://hub.docker.com/r/microsoft/mssql-server
-        _sqlContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2025-latest")
+        _sqlContainer = new MsSqlBuilder("mcr.microsoft.com/mssql/server:2025-latest")
             .WithPassword(_sqlDbPassword)
             .Build();
 

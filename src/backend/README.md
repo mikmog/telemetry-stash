@@ -31,7 +31,7 @@ To authorize the workflows to access Azure resources
 following [Step 4 Create a federated credential](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
 > :bulb: Note. If the action fails. The generated 'Subject identifier' might need to be edited to match the GitHub expected subject.
 
-2. In GitHub repository settings. Add environment variables following [Step 1 Create these variables in your repository](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
+2. In GitHub repository settings. Add secrets inspired by [Step 1 Create these variables in your repository](https://github.com/Azure/functions-action?tab=readme-ov-file#use-oidc-recommended)
 
 ## Deploy SQL database
 

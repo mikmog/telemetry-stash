@@ -13,8 +13,8 @@ jobs:
 
   build-and-publish:
     permissions:
-      id-token: write # Required for OIDC
-      contents: read # Required for actions/checkout
+      id-token: write
+      contents: read
     uses: ./.github/workflows/backend-build.yml
     with:
       projectDirectory: src/backend/Functions/Ts.Functions
@@ -23,7 +23,7 @@ jobs:
  
   deploy-dev:
     permissions:
-      id-token: write # Required for OIDC
+      id-token: write
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: build-and-publish
     with:
@@ -31,10 +31,14 @@ jobs:
       functionAppName: func-ts-develop
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
+    secrets:
+      azureClientId: ${{ secrets.AZURE_CLIENT_ID_DEV }}
+      azureTenantId: ${{ secrets.AZURE_TENANT_ID_DEV }}
+      azureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID_DEV }}
 
   deploy-prod:
     permissions:
-      id-token: write # Required for OIDC
+      id-token: write
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: deploy-dev
     with:
@@ -42,4 +46,8 @@ jobs:
       functionAppName: func-ts-prod
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
+    secrets:
+      azureClientId: ${{ secrets.AZURE_CLIENT_ID_PROD }}
+      azureTenantId: ${{ secrets.AZURE_TENANT_ID_PROD }}
+      azureSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID_PROD }}
 
