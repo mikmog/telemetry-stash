@@ -12,6 +12,9 @@ on:
 jobs:
 
   build-and-publish:
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read # Required for actions/checkout
     uses: ./.github/workflows/backend-build.yml
     with:
       projectDirectory: src/backend/Functions/Ts.Functions
@@ -19,6 +22,8 @@ jobs:
       artifactsName: tsfunctions
  
   deploy-dev:
+    permissions:
+      id-token: write # Required for OIDC
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: build-and-publish
     with:
@@ -26,10 +31,10 @@ jobs:
       functionAppName: func-ts-develop
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
-    secrets:
-      publishProfile: ${{ secrets.func_ts_develop_5119 }}
- 
+
   deploy-prod:
+    permissions:
+      id-token: write # Required for OIDC
     uses: ./.github/workflows/backend-functions-deploy.yml
     needs: deploy-dev
     with:
@@ -37,5 +42,4 @@ jobs:
       functionAppName: func-ts-prod
       artifactsDirectory: src/backend/Functions/Ts.Functions/publish
       artifactsName: tsfunctions
-    secrets:
-      publishProfile: ${{ secrets.func_ts_prod_C090 }}
+

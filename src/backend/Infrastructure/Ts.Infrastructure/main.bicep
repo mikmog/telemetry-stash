@@ -3,12 +3,13 @@
 // https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations
 // ********************************************************************
 
-import { applicationParams, appParams, iotHubParams, keyVaultParams, monitorParams, sqlParams, getResourceName }  from './parameter-types.bicep'
+import { applicationParams, appParams, deployIdentityParams, iotHubParams, keyVaultParams, monitorParams, sqlParams, getResourceName }  from './parameter-types.bicep'
 
 targetScope = 'resourceGroup'
 
 param applicationParameters applicationParams
 param appParameters appParams
+param deployIdentityParameters deployIdentityParams
 param iotHubParameters iotHubParams
 param keyVaultParameters keyVaultParams
 param monitorParameters monitorParams
@@ -170,7 +171,26 @@ module keyVaultRoleAssignmentModule 'modules/key-vault/role-assignment.bicep' = 
   }
 }
 
-module lockModule 'modules/lock/delete-lock.bicep' = {
-  name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
-  params: { applicationParameters: applicationParameters }
+// User Assigned Identity - GitHub Actions
+module deployIdentityModule 'modules/identity/user-assigned-identity.bicep' = {
+  name: getResourceName({ resourceAbbr: 'id', resourceName: deployIdentityParameters.resourceName }, applicationParameters)
+  params: {
+      applicationParameters: applicationParameters
+      resourceName: deployIdentityParameters.resourceName
+  }
 }
+
+// User Assigned Identity -  GitHub Actions Role Assignments
+module deployIdentityRoleAssignmentsModule 'modules/identity/role-assignment.bicep' = {
+  name: getResourceName({ resourceAbbr: 'ras', resourceName: deployIdentityParameters.resourceName }, applicationParameters)
+  params: {
+    principalId: deployIdentityModule.outputs.principalId
+    identityId: deployIdentityModule.outputs.identityId
+    roleAssignments: [ deployIdentityParameters.roleAssignment ]
+  }
+}
+
+// module lockModule 'modules/lock/delete-lock.bicep' = {
+//   name: getResourceName({ resourceAbbr: 'lock' }, applicationParameters)
+//   params: { applicationParameters: applicationParameters }
+// }

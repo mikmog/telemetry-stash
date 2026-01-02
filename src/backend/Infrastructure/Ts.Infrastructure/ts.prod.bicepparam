@@ -42,6 +42,12 @@ param appParameters = {
   }
 }
 
+// Managed Identity used by GitHub delivery pipeline
+param deployIdentityParameters = {
+  resourceName: 'deploy'
+  roleAssignment: 'Contributor' 
+}
+
 // Key Vault Role Assignment
 param keyVaultParameters = {
   roleAssignments: [

@@ -100,6 +100,12 @@ type roleAssignment = {
 }
 
 @export()
+type deployIdentityParams = {
+  resourceName: string
+  roleAssignment: 'Contributor'
+}
+
+@export()
 type sqlParams = {
   resourceName: string?
   sku: { 
