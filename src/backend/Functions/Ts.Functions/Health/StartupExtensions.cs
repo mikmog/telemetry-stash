@@ -1,15 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using TelemetryStash.Functions.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
 using TelemetryStash.Functions.Health.HealtChecks;
 
 namespace TelemetryStash.Functions.Health;
+
 internal static class StartupExtensions
 {
-    public static void AddHealthCheck(this IServiceCollection services, IConfiguration configuration)
+    public static void AddHealthCheck(this IServiceCollection services)
     {
         services.AddHealthChecks()
-            .AddSqlServer(configuration.GetRequiredConnectionString("TelemetryStashDatabase"), name: "SqlServerHealthCheck")
+            .AddCheck<DatabaseHealthCheck>("SqlServerHealthCheck")
             .AddCheck<IotHubHealthCheck>("IoTHubHealthCheck");
     }
 }

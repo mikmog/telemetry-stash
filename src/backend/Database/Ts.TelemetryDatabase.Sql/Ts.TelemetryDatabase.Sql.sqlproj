@@ -3,7 +3,7 @@
   <!-- Enable to build in VisualStudio 2026 -->
   <!--Sdk Name="Microsoft.Build.Sql" Version="1.0.0" /-->
   <!-- Enable to build via sdk (pipelines), dotnet build  -->
-  <Sdk Name="Microsoft.Build.Sql" Version="2.0.0" />
+  <Sdk Name="Microsoft.Build.Sql" Version="1.0.0" />
   <PropertyGroup>
     <SqlTargetName>Ts.TelemetryDatabase.Sql</SqlTargetName>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql170DatabaseSchemaProvider</DSP>
@@ -27,9 +27,6 @@
     <Folder Include="User Defined Types\" />
     <Folder Include="Stored Procedures\" />
     <Folder Include="Tables\" />
-    <Folder Include="Stored Procedures\Device\" />
-    <Folder Include="Stored Procedures\Register\" />
-    <Folder Include="Stored Procedures\Telemetry\" />
     <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
@@ -40,13 +37,14 @@
     <Build Include="Tables\Registers.sql" />
     <Build Include="Tables\Telemetries.sql" />
     <Build Include="Tables\Timestamps.sql" />
-    <Build Include="Stored Procedures\Device\UpsertDevice.sql" />
-    <Build Include="Stored Procedures\Register\GetOrCreateRegisters.sql" />
-    <Build Include="Stored Procedures\Telemetry\UpsertTelemetry.sql" />
-    <Build Include="Stored Procedures\Telemetry\GetTelemetryValues.sql" />
     <Build Include="Security\db_execute_procedure_role.sql" />
     <Build Include="Security\create_user.sql" />
     <Build Include="User Defined Types\RegistersType.sql" />
+    <Build Include="Stored Procedures\GetTelemetryValues.sql" />
+    <Build Include="Stored Procedures\UpsertTelemetry.sql" />
+    <Build Include="Stored Procedures\GetOrCreateRegisters.sql" />
+    <Build Include="Stored Procedures\UpsertDevice.sql" />
+    <Build Include="Stored Procedures\HealthCheck.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />
