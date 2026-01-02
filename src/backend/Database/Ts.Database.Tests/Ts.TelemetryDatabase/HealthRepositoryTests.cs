@@ -1,4 +1,7 @@
-﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
+﻿using TelemetryStash.Database.Repositories;
+using Xunit;
+
+namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 [Collection(CollectionState.SharedTestDbServer)]
 public class HealthRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)

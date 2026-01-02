@@ -45,6 +45,8 @@
     <Build Include="Stored Procedures\GetOrCreateRegisters.sql" />
     <Build Include="Stored Procedures\UpsertDevice.sql" />
     <Build Include="Stored Procedures\HealthCheck.sql" />
+    <Build Include="Stored Procedures\UpsertWeatherPrognosis.sql" />
+    <Build Include="Tables\WeatherPrognosis.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Directory.Build.props" />

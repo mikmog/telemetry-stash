@@ -1,4 +1,6 @@
-﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
+﻿using TelemetryStash.Database.Repositories;
+
+namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 public class TelemetryDbSeeder(SharedTestDbFixture dbFixture)
 {

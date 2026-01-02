@@ -5,7 +5,7 @@ using TelemetryStash.Database.Repositories;
 
 namespace TelemetryStash.Database;
 
-public static class StartupExtensions
+public static class Startup
 {
     public static IServiceCollection AddTelemetryDatabase(this IServiceCollection services, IConfiguration configuration)
     {
@@ -18,6 +18,7 @@ public static class StartupExtensions
         services.AddSingleton<IHealthRepository, HealthRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();
         services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
+        services.AddSingleton<IWeatherPrognosisRepository, WeatherPrognosisRepository>();
 
         return services;
     }
