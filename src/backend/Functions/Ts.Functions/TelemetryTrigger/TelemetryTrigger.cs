@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using TelemetryStash.Functions.Services;
+using TelemetryStash.Functions.TelemetryTrigger.Logic;
 
 namespace TelemetryStash.Functions.TelemetryTrigger;
 

@@ -4,6 +4,7 @@ using Microsoft.SqlServer.Dac;
 using RepoDb;
 using System.Security.Cryptography;
 using Testcontainers.MsSql;
+using Xunit;
 
 namespace TelemetryStash.Database.Tests;
 

@@ -1,4 +1,4 @@
-﻿using TelemetryStash.Functions.Services;
+﻿using TelemetryStash.Functions.TelemetryTrigger.Logic;
 
 namespace TelemetryStash.Functions.Tests;
 

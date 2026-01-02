@@ -1,4 +1,7 @@
-﻿namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
+﻿using TelemetryStash.Database.Repositories;
+using Xunit;
+
+namespace TelemetryStash.Database.Tests.Ts.TelemetryDatabase;
 
 [Collection(CollectionState.SharedTestDbServer)]
 public class TelemetryRepositoryTests(SharedTestDbFixture dbFixture) : TelemetryDbSeeder(dbFixture)
@@ -8,7 +11,7 @@ public class TelemetryRepositoryTests(SharedTestDbFixture dbFixture) : Telemetry
     {
         // Arrange
         var timestamp = DateTimeOffset.Parse("2025-01-01T12:00:00Z");
-        var (deviceId, registerValues) = await GetTelemetry(5,3, timestamp);
+        var (deviceId, registerValues) = await GetTelemetry(5, 3, timestamp);
 
         var sut = new TelemetryRepository(GetDbProvider());
 

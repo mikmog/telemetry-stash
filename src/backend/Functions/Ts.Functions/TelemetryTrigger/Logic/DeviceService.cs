@@ -2,7 +2,7 @@
 using TelemetryStash.Database;
 using TelemetryStash.Database.Repositories;
 
-namespace TelemetryStash.Functions.Services;
+namespace TelemetryStash.Functions.TelemetryTrigger.Logic;
 
 public interface IDeviceService
 {
