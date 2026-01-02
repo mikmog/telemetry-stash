@@ -66,7 +66,21 @@ module functionAppModule 'modules/app/function-app.bicep' = {
     appServicePlanId: functionsAppServicePlanModule.outputs.appServicePlanId
     appStorageName: functionsStorageModule.outputs.appStorageName
     appInsightsConnectionString: appInsightsModule.outputs.appInsightsConnectionString
-    appInsightsInstrumentationKey: appInsightsModule.outputs.appInsightsInstrumentationKey
+  }
+}
+
+// Function storage - Role Assignments
+module functionRoleAssignmentModule 'modules/storage/role-assignment.bicep' = {
+  name: getResourceName({ resourceAbbr: 'ras', resourceName: 'func' }, applicationParameters)
+  params: { 
+    storageName: functionsStorageModule.outputs.appStorageName
+    roleAssignments: [
+      {
+        principalId: functionAppModule.outputs.identityPrincipalId
+        principalType: 'ServicePrincipal'
+        roleDefinition: 'StorageBlobDataOwner'
+      }
+    ]
   }
 }
 

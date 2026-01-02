@@ -30,13 +30,13 @@ param appParameters = {
   }
   functions: {
     sku: {
-      name: 'Y1'
-      tier: 'Dynamic'
-      size: 'Y1'
-      family: 'Y'
+      name: 'FC1'
+      tier: 'FlexConsumption'
+      size: 'FC1'
+      family: 'FC'
       capacity: 0
     }
-    linuxFxVersion: 'DOTNET-ISOLATED|10.0'
+    runtimeVersion: '10.0'
     resourceName: 'func'
   }
 }

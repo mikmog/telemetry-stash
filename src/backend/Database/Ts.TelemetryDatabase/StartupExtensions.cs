@@ -15,6 +15,7 @@ public static class StartupExtensions
         services.AddSingleton<IDbProvider>(_ => new DbProvider(connectionString));
 
         services.AddSingleton<IDeviceRepository, DeviceRepository>();
+        services.AddSingleton<IHealthRepository, HealthRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();
         services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
 
