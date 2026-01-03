@@ -1,9 +1,15 @@
 ﻿// ********************************************************************
 // IOT HUB
-// Create an IoT Hub with an Event Grid System Topic and an Event Grid Subscription to an Azure Function
-// https://learn.microsoft.com/en-us/azure/templates/microsoft.devices/2023-06-30/iothubs?pivots=deployment-language-bicep
-// https://learn.microsoft.com/sv-se/azure/templates/microsoft.eventgrid/2022-06-15/systemtopics?pivots=deployment-language-bicep
-// https://learn.microsoft.com/en-us/azure/templates/microsoft.eventgrid/2023-12-15-preview/systemtopics/eventsubscriptions?pivots=deployment-language-bicep
+// Create an IoT Hub with an Event Grid System Topic and an Event Grid Subscription to an Azure Function.
+// 
+// Note. The event subscription requires that the Azure Function already exists. Thus, will fail on first deployment.
+// 1. Deploy infrastructure
+// 2. Deploy backend (Azure Functions)
+// 3. Redeploy infrastructure
+// 
+// https://learn.microsoft.com/en-us/azure/templates/microsoft.devices/iothubs?pivots=deployment-language-bicep
+// https://learn.microsoft.com/en-us/azure/templates/microsoft.eventgrid/systemtopics?pivots=deployment-language-bicep
+// https://learn.microsoft.com/en-us/azure/templates/microsoft.eventgrid/systemtopics/eventsubscriptions?pivots=deployment-language-bicep
 // ********************************************************************
 
 import { applicationParams, iotHubParams, getResourceName }  from '../../parameter-types.bicep'
@@ -23,15 +29,16 @@ resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
     capacity: iotHubParameters.sku.capacity
   }
     properties: {
-    eventHubEndpoints: {
-      events: {
-        retentionTimeInDays: iotHubParameters.retentionTimeInDays
-        partitionCount: iotHubParameters.sku.partitionCount
-      }
+      minTlsVersion:'1.2'
+      eventHubEndpoints: {
+        events: {
+          retentionTimeInDays: iotHubParameters.retentionTimeInDays
+          partitionCount: iotHubParameters.sku.partitionCount
+        }
     }
     routing: {
-        endpoints: {
-        }
+      endpoints: {
+      }
       fallbackRoute: {
         name: '$fallback'
         source: 'DeviceMessages'
@@ -45,7 +52,7 @@ resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
   }
 }
 
-resource telemetryReceivedTopic 'Microsoft.EventGrid/systemTopics@2022-06-15' = {
+resource telemetryReceivedTopic 'Microsoft.EventGrid/systemTopics@2025-02-15' = {
   name: getResourceName({ resourceAbbr: 'egst', resourceName: 'telemetry' }, applicationParameters)
   location: iotHubParameters.location
   tags: applicationParameters.tags
@@ -59,7 +66,7 @@ resource functionApp 'Microsoft.Web/sites@2022-09-01' existing = {
   name: functionsAppName
 }
 
-resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2023-12-15-preview' = {
+resource eventSubscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2025-02-15' = {
   name: eventSubscriptionName
   parent: telemetryReceivedTopic
   properties: {

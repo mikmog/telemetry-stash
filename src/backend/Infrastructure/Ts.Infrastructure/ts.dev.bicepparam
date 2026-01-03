@@ -79,7 +79,7 @@ param iotHubParameters = {
       capacity: 1
       partitionCount: 2
     }
-    location: 'westeurope'
+    location: 'norwayeast'
     retentionTimeInDays: 1
     roleAssignments: [
     {

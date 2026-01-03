@@ -69,7 +69,6 @@ resource functionApp 'Microsoft.Web/sites@2024-04-01' = {
       AZURE_FUNCTIONS_ENVIRONMENT: applicationParameters.environment
       APPLICATIONINSIGHTS_CONNECTION_STRING: appInsightsConnectionString
       AzureWebJobsStorage: 'DefaultEndpointsProtocol=https;AccountName=${appStorage.name};AccountKey=${appStorage.listKeys().keys[0].value}'
-      SCM_BASIC_AUTH_DISABLED: 'false' // Requires premium according to Copilot. Enable manually if needed.
     }
   }
 }
