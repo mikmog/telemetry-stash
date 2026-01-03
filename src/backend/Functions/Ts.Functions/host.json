@@ -1,9 +1,17 @@
 ﻿{
   "version": "2.0",
   "logging": {
+    "logLevel": {
+      "default": "Warning",
+      "Function": "Warning",
+      "Host.Results": "Information",
+      "Function.TelemetryTrigger.User": "Information",
+      "Function.SmhiWeatherForecast.User": "Information",
+      "Function.HealthCheck.User": "Information"
+    },
     "applicationInsights": {
       "samplingSettings": {
-        "isEnabled": false
+        "isEnabled": true
       },
       "enableLiveMetricsFilters": true,
       "enablePerformanceCountersCollection": false
