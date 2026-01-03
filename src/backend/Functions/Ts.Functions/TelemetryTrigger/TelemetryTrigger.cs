@@ -14,7 +14,7 @@ public class TelemetryTrigger(ILogger<TelemetryTrigger> logger, ITelemetryServic
 {
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
-    [Function(nameof(TelemetryTrigger))]
+    [Function("TelemetryTrigger")]
     public async Task RunAsync([EventGridTrigger] CloudEvent cloudEvent)
     {
         try

@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# VisualStudio project deploy files
+**/Ts.Functions/Properties/

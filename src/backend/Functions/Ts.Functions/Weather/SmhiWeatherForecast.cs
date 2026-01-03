@@ -8,7 +8,7 @@ public class SmhiWeatherForecast(IWeatherPrognosisService weatherPrognosisServic
     private const string RunEveryHour = "0 0 * * * *";
 
     [Function("SmhiWeatherForecast")]
-    public async Task Run([TimerTrigger(RunEveryHour, RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
+    public async Task Run([TimerTrigger(RunEveryHour, RunOnStartup = false)] TimerInfo timer, CancellationToken cancellationToken)
     {
         await weatherPrognosisService.ProcessSmhiPrognosis(cancellationToken);
     }
