@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0">
+  
   <!-- Enable to build in VisualStudio 2026 -->
   <!--Sdk Name="Microsoft.Build.Sql" Version="1.0.0" /-->
+
   <!-- Enable to build via sdk (pipelines), dotnet build  -->
   <Sdk Name="Microsoft.Build.Sql" Version="2.0.0" />
+  
   <PropertyGroup>
     <SqlTargetName>Ts.TelemetryDatabase.Sql</SqlTargetName>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql170DatabaseSchemaProvider</DSP>
@@ -12,7 +15,7 @@
     <ProjectGuid>{718690b9-8e19-0b53-d189-44507ab89f16}</ProjectGuid>
     <RunSqlCodeAnalysis>True</RunSqlCodeAnalysis>
     <DefaultFileStructure>BySchemaType</DefaultFileStructure>
-    <!-- EnableDefaultSqlItems is needed until VS have full support for the new sdk style projects -->
+    <!-- EnableDefaultSqlItems: False, is needed until VS have full support for the new sdk style projects -->
     <EnableDefaultSqlItems>False</EnableDefaultSqlItems>
   </PropertyGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(MSBuildRuntimeType)' != 'Core'">
@@ -30,8 +33,6 @@
     <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Remove="bin/**/*.sql" />
-    <Build Remove="obj/**/*.sql" />
     <Build Include="User Defined Types\TelemetriesType.sql" />
     <Build Include="Tables\Devices.sql" />
     <Build Include="Tables\Registers.sql" />
@@ -47,7 +48,15 @@
     <Build Include="Stored Procedures\HealthCheck.sql" />
     <Build Include="Stored Procedures\UpsertWeatherPrognosis.sql" />
     <Build Include="Tables\WeatherPrognosis.sql" />
+    <Build Include="Tables\EnergySpotPrices.sql" />
+    <Build Include="Stored Procedures\UpsertEnergySpotPrice.sql" />
+    <Build Include="User Defined Types\EnergySpotPriceType.sql" />
   </ItemGroup>
+  
+  <!-- 
+	Override solution default Directory.Build.props by adding an empty Directory.Build.props file to sql project
+	<Project></Project>
+  -->
   <ItemGroup>
     <None Include="Directory.Build.props" />
   </ItemGroup>
