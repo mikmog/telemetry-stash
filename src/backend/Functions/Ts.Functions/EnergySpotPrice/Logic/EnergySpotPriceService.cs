@@ -17,8 +17,8 @@ public class EnergySpotPriceService(
 {
     private static readonly DateTimeOffset SpotPrice15MinutesTimeSlotBeginDate = DateTimeOffset.Parse("2025-09-01Z");
 
-    private DateTimeOffset DeliveryStartMinStartTime => timeProvider.GetUtcNow().AddYears(-3).Date; // API supports data from 3 years back
-    private DateTimeOffset Tomorrow => timeProvider.GetUtcNow().AddDays(1).Date;
+    private DateTimeOffset DeliveryStartMinStartTime => new(timeProvider.GetUtcNow().AddYears(-3).Date, TimeSpan.Zero); // API supports data from 3 years back
+    private DateTimeOffset Tomorrow => new(timeProvider.GetUtcNow().AddDays(1).Date, TimeSpan.Zero);
 
     public async Task ProcessEnergySpotPrice(CancellationToken cancellationToken)
     {
@@ -37,7 +37,7 @@ public class EnergySpotPriceService(
                 continue;
             }
 
-            var fromDate = mostRecent.From.Date;
+            var fromDate = new DateTimeOffset(mostRecent.From.Date, TimeSpan.Zero);
             if (fromDate == Tomorrow)
             {
                 continue; // Already imported

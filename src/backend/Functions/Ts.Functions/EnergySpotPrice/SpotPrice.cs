@@ -9,7 +9,7 @@ public class EnergySpotPrice(IEnergySpotPriceService energySpotPriceService)
     private const string Run10MinutesPastBetween12To15 = "0 10 12-15 * * *";
 
     [Function("EnergySpotPrice")]
-    public async Task Run([TimerTrigger(Run10MinutesPastBetween12To15, RunOnStartup = true)] TimerInfo timer, CancellationToken cancellationToken)
+    public async Task Run([TimerTrigger(Run10MinutesPastBetween12To15, RunOnStartup = false)] TimerInfo timer, CancellationToken cancellationToken)
     {
         await energySpotPriceService.ProcessEnergySpotPrice(cancellationToken);
     }

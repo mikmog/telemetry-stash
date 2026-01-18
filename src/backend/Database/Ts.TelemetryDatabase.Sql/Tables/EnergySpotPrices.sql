@@ -4,7 +4,7 @@
     [Price]                 Decimal(18, 3)              NOT NULL,
     [Unit]                  NVARCHAR (450)              NOT NULL
 
-    CONSTRAINT [PK_EnergySpotPrices] PRIMARY KEY CLUSTERED ( [DeliveryArea], [From] ),
+    CONSTRAINT [PK_EnergySpotPrices] PRIMARY KEY CLUSTERED ( [DeliveryArea], [From] )
 );
 
 GO

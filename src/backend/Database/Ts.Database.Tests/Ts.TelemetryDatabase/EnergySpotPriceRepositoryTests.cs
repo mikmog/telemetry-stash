@@ -41,10 +41,6 @@ public class EnergySpotPriceRepositoryTests(SharedTestDbFixture dbFixture) : Tel
     {
         // Arrange
         var sut = new EnergySpotPriceRepository(GetDbProvider());
-
-        var from1Timestamp = DateTimeOffset.UtcNow.Date;
-        var from2Timestamp = from1Timestamp.AddMinutes(15);
-
         await sut.AddOrUpdate(TestEnergySpotPrices, CancellationToken.None); // Insert
 
         var updateEnergySpotPrices = TestEnergySpotPrices
