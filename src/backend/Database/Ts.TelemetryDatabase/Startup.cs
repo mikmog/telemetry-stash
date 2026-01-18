@@ -11,10 +11,11 @@ public static class Startup
     {
         GlobalConfiguration.Setup().UseSqlServer();
 
-        var connectionString = configuration.GetConnectionString("TelemetryStashDatabase") ?? throw new Exception("Missing TelemetryStashDatabase connection string");
+        var connectionString = configuration.GetConnectionString("TelemetryStashDatabase") ?? throw new Exception("Missing 'TelemetryStashDatabase' connection string");
         services.AddSingleton<IDbProvider>(_ => new DbProvider(connectionString));
 
         services.AddSingleton<IDeviceRepository, DeviceRepository>();
+        services.AddSingleton<IEnergySpotPriceRepository, EnergySpotPriceRepository>();
         services.AddSingleton<IHealthRepository, HealthRepository>();
         services.AddSingleton<IRegisterRepository, RegisterRepository>();
         services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
