@@ -14,21 +14,27 @@
     <FileAlignment>512</FileAlignment>
     <RootNamespace>NeoPixel.Peripheral</RootNamespace>
     <AssemblyName>NeoPixel.Peripheral</AssemblyName>
+	<Nullable>Enable</Nullable>
     <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+	<LangVersion>default</LangVersion>
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\ColorConverter.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\ColorOrder.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\Drivers\NeoPixelDriver.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\Drivers\Ws2812B.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\Drivers\Ws2812C.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\Extensions\ColorExtensions.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\HsbColor.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\HslColor.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\NeoPixelStrip.cs" />
+    <Compile Include="CCSWE.nanoFramework.NeoPixel\Rmt\NeoPixelPulse.cs" />
     <Compile Include="DualNeoPixelGauge.cs" />
     <Compile Include="NeoPixelGauge.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CCSWE.nanoFramework.Math">
-      <HintPath>..\..\packages\CCSWE.nanoFramework.Math.1.1.74\lib\CCSWE.nanoFramework.Math.dll</HintPath>
-    </Reference>
-    <Reference Include="CCSWE.nanoFramework.NeoPixel">
-      <HintPath>..\..\packages\CCSWE.nanoFramework.NeoPixel.1.1.74\lib\CCSWE.nanoFramework.NeoPixel.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
@@ -46,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CCSWE.nanoFramework.NeoPixel\README.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
