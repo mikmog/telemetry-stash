@@ -31,63 +31,63 @@ namespace RipTide.Nfirmware
 
             try
             {
-                PrintStartupMessage();
+                //PrintStartupMessage();
 
                 _appSettings.Configure();
 
-                // Initialize display
+                //// Initialize display
                 _display.Initialize(_appSettings);
 
-                // Initialize buzzer
-                _buzzer.Initialize(_appSettings);
+                //// Initialize buzzer
+                //_buzzer.Initialize(_appSettings);
 
-                // Initialize error handler
-                _errorHandler.Initialize(_display, _buzzer);
-                Thread.Sleep(500);
+                //// Initialize error handler
+                //_errorHandler.Initialize(_display, _buzzer);
+                //Thread.Sleep(500);
 
-                // Show splash screen
+                //// Show splash screen
                 _display.SetScreen(Screen.Splash);
                 _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
-                // Initialize battery monitor
-                _batteryMonitor.Initialize(_appSettings);
-                _batteryMonitor.OnBatteryChanged += _display.BatteryChanged;
+                //// Initialize battery monitor
+                //_batteryMonitor.Initialize(_appSettings);
+                //_batteryMonitor.OnBatteryChanged += _display.BatteryChanged;
 
-                // Initialize gyro
-                _gyro.Initialize(_appSettings);
-                _gyro.OnGyroChanged += _display.GyroChanged;
+                //// Initialize gyro
+                //_gyro.Initialize(_appSettings);
+                //_gyro.OnGyroChanged += _display.GyroChanged;
 
-                // Initialize temp sensors
-                _tempMonitor.Initialize(_appSettings);
-                _tempMonitor.OnTemperatureChanged += _display.TemperatureChanged;
+                //// Initialize temp sensors
+                //_tempMonitor.Initialize(_appSettings);
+                //_tempMonitor.OnTemperatureChanged += _display.TemperatureChanged;
 
-                // Initialize throttle led's
-                _throttleds.Initialize(_appSettings);
+                //// Initialize throttle led's
+                //_throttleds.Initialize(_appSettings);
 
-                // Initialize throttle
-                _throttle.Initialize(_appSettings);
+                //// Initialize throttle
+                //_throttle.Initialize(_appSettings);
 
-                _display.SetScreen(Screen.Empty);
+                //_display.SetScreen(Screen.Empty);
 
-                _throttle.CalibrateThrustRange(
-                    onMessage: (message, sleep) =>
-                    {
-                        Debug.WriteLine(message);
-                        _display.SetText(message);
+                //_throttle.CalibrateThrustRange(
+                //    onMessage: (message, sleep) =>
+                //    {
+                //        Debug.WriteLine(message);
+                //        _display.SetText(message);
 
-                        Thread.Sleep(sleep);
-                    },
-                    onError: (errorMessage, _) =>
-                    {
-                        throw new Exception(errorMessage);
-                    });
+                //        Thread.Sleep(sleep);
+                //    },
+                //    onError: (errorMessage, _) =>
+                //    {
+                //        throw new Exception(errorMessage);
+                //    });
 
-                _throttleds.LightUp();
+                //_throttleds.LightUp();
 
-                _throttle.OnThrustChanged += _display.SetThrust;
-                _throttle.OnThrustChanged += _throttleds.ThrustChanged;
+                //_throttle.OnThrustChanged += _display.SetThrust;
+                //_throttle.OnThrustChanged += _throttleds.ThrustChanged;
 
-                _display.SetText("GO!");
+                //_display.SetText("GO!");
             }
             catch (Exception ex)
             {
@@ -187,12 +187,12 @@ namespace RipTide.Nfirmware
             Thread.Sleep(Timeout.Infinite);
         }
 
-        [Conditional("DEBUG")]
-        private static void PrintStartupMessage()
-        {
-            //var printer = new Debugformation();
-            //printer.PrintStartupMessage();
-            //printer.PrintSystemInfo();
-        }
+        //[Conditional("DEBUG")]
+        //private static void PrintStartupMessage()
+        //{
+        //    var printer = new DebugInformation();
+        //    printer.PrintStartupMessage();
+        //    printer.PrintSystemInfo();
+        //}
     }
 }

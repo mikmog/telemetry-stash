@@ -34,13 +34,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Button">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Button.1.2.864\lib\Iot.Device.Button.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Button.1.2.931\lib\Iot.Device.Button.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Hardware.Esp32">
-      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.34\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Hardware.Esp32.1.6.37\lib\nanoFramework.Hardware.Esp32.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Events">
       <HintPath>..\..\packages\nanoFramework.Runtime.Events.1.11.32\lib\nanoFramework.Runtime.Events.dll</HintPath>

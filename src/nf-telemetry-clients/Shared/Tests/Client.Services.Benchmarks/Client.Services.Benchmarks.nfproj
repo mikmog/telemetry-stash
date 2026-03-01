@@ -40,13 +40,13 @@
       <HintPath>..\..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Benchmark">
-      <HintPath>..\..\..\packages\nanoFramework.Benchmark.1.0.108\lib\nanoFramework.Benchmark.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.Benchmark.1.0.113\lib\nanoFramework.Benchmark.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Json">
-      <HintPath>..\..\..\packages\nanoFramework.Json.2.2.195\lib\nanoFramework.Json.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.Json.2.2.203\lib\nanoFramework.Json.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Logging">
-      <HintPath>..\..\..\packages\nanoFramework.Logging.1.1.156\lib\nanoFramework.Logging.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.Logging.1.1.161\lib\nanoFramework.Logging.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.Runtime.Native">
       <HintPath>..\..\..\packages\nanoFramework.Runtime.Native.1.7.11\lib\nanoFramework.Runtime.Native.dll</HintPath>
@@ -61,7 +61,7 @@
       <HintPath>..\..\..\packages\nanoFramework.System.Diagnostics.Stopwatch.1.2.862\lib\System.Diagnostics.Stopwatch.dll</HintPath>
     </Reference>
     <Reference Include="System.IO.Streams">
-      <HintPath>..\..\..\packages\nanoFramework.System.IO.Streams.1.1.94\lib\System.IO.Streams.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.System.IO.Streams.1.1.96\lib\System.IO.Streams.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
