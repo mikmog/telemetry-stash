@@ -38,7 +38,7 @@ namespace TelemetryStash.IliDisplay
             var driver = Ili9488.GraphicDriver;
 
             // 480X320
-            DisplayControl.Initialize(spi, new ScreenConfiguration(0, 0, 480, 320, driver), 480 * 320 * 3);
+            DisplayControl.Initialize(spi, new ScreenConfiguration(0, 0, 480, 320, driver), 480 * 320 * 10);
             Thread.Sleep(1000); // Give som breathing room to initialize
 
             _defaultFont = Resource.GetFont(Resource.FontResources.Consolas16);
