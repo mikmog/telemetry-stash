@@ -63,6 +63,24 @@
     <Reference Include="nanoFramework.UnitsNet.Temperature">
       <HintPath>..\..\packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Duration">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.Duration.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Duration.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.ElectricResistance">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.ElectricResistance.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.ElectricResistance.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Length">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.Length.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Length.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Pressure">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.Pressure.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Pressure.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.RelativeHumidity">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.RelativeHumidity.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.RelativeHumidity.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers.Binary.BinaryPrimitives">
       <HintPath>..\..\packages\nanoFramework.System.Buffers.Binary.BinaryPrimitives.1.2.862\lib\System.Buffers.Binary.BinaryPrimitives.dll</HintPath>
     </Reference>
