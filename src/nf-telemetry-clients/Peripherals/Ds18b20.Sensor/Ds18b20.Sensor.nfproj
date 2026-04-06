@@ -28,7 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Iot.Device.Ds18b20">
-      <HintPath>..\..\packages\nanoFramework.Iot.Device.Ds18b20.1.0.840\lib\Iot.Device.Ds18b20.dll</HintPath>
+      <HintPath>..\..\packages\nanoFramework.Iot.Device.Ds18b20.1.0.903\lib\Iot.Device.Ds18b20.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
@@ -44,6 +44,9 @@
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
       <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.67\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.UnitsNet.Temperature">
+      <HintPath>..\..\packages\nanoFramework.UnitsNet.Temperature.5.76.15\lib\netnano1.0\nanoFramework.UnitsNet.Temperature.dll</HintPath>
     </Reference>
     <Reference Include="System.Device.Model">
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
