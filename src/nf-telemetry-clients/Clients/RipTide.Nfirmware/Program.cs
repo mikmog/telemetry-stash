@@ -46,7 +46,7 @@ namespace RipTide.Nfirmware
                 //Thread.Sleep(500);
 
                 //// Show splash screen
-                _display.SetScreen(Screen.Splash);
+                _display.SetScreen(Screen.Demo);
                 _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
                 //// Initialize battery monitor

@@ -59,7 +59,7 @@ namespace nanoFramework.UI.GraphicDrivers
             Pump_Ratio_Control = 0xF7
         };
 
-        private enum ILI9341_Orientation
+        private enum ILI9488_Orientation
         {
             MADCTL_MH = 0x04, // sets the Horizontal Refresh, 0=Left-Right and 1=Right-Left
             MADCTL_ML = 0x10, // sets the Vertical Refresh, 0=Top-Bottom and 1=Bottom-Top
@@ -72,7 +72,7 @@ namespace nanoFramework.UI.GraphicDrivers
         };
 
         /// <summary>
-        /// Default weight. Use to override the one you'll pass in the screen and add it to the driver.
+        /// Default width. Use to override the one you'll pass in the screen and add it to the driver.
         /// </summary>
         public static uint Width { get; } = 480;
 
@@ -100,18 +100,17 @@ namespace nanoFramework.UI.GraphicDrivers
                             (byte)GraphicDriverCommandType.Command, 3, (byte)ILI9488_CMD.Power_Control_1, 0x17, 0x15,
                             (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Power_Control_2, 0x41,
                             (byte)GraphicDriverCommandType.Command, 4, (byte)ILI9488_CMD.VCOM_Control_1,  0x00, 0x12, 0x80,
-                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Interface_Signal_Control, 0x80,
                             (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Pixel_Format_Set, 0x66, // 18 bit SPI
                             (byte)GraphicDriverCommandType.Command, 16, (byte)ILI9488_CMD.Positive_Gamma_Correction, 0x00, 0x03, 0x09, 0x08, 0x16, 0x0A, 0x3F, 0x78, 0x4C, 0x09, 0x0A, 0x08, 0x16, 0x1A, 0x0F,
                             (byte)GraphicDriverCommandType.Command, 16, (byte)ILI9488_CMD.Negative_Gamma_Correction, 0x00, 0x16, 0x19, 0x03, 0x0F, 0x05, 0x32, 0x45, 0x46, 0x04, 0x0E, 0x0D, 0x35, 0x37, 0x0F,
-                            (byte)GraphicDriverCommandType.Command, 4, (byte)ILI9488_CMD.Display_Function_Control, 0x02, 0x02, 0x3B,
-                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control, 0x48,
+                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Interface_Signal_Control, 0x80,
                             (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Frame_Rate_Control_Normal, 0xA0,
                             (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Inversion_Control, 0x02,
+                            (byte)GraphicDriverCommandType.Command, 4, (byte)ILI9488_CMD.Display_Function_Control, 0x02, 0x02, 0x3B,
                             (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Set_Image_Function, 0x00,
                             (byte)GraphicDriverCommandType.Command, 5, (byte)ILI9488_CMD.Pump_Ratio_Control, 0xA9, 0x51, 0x2C, 0x82,
                             (byte)GraphicDriverCommandType.Command, 1, (byte)ILI9488_CMD.Sleep_Out,
-                            (byte)GraphicDriverCommandType.Sleep, 2, // Sleep 20 ms
+                            (byte)GraphicDriverCommandType.Sleep, 12, // Sleep 120 ms
                             (byte)GraphicDriverCommandType.Command, 1, (byte)ILI9488_CMD.Display_ON,
                             (byte)GraphicDriverCommandType.Sleep, 20, // Sleep 200 ms
                             (byte)GraphicDriverCommandType.Command, 1, (byte)ILI9488_CMD.NOP,
@@ -119,11 +118,37 @@ namespace nanoFramework.UI.GraphicDrivers
                         },
                         OrientationLandscape = new byte[]
                         {
-                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control, (byte)(ILI9341_Orientation.MADCTL_MV | ILI9341_Orientation.MADCTL_RGB),
+                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control,
+                                (byte)(
+                                    ILI9488_Orientation.MADCTL_MX |
+                                    ILI9488_Orientation.MADCTL_MY |
+                                    ILI9488_Orientation.MADCTL_MV |
+                                    ILI9488_Orientation.MADCTL_RGB
+                                ),
+                        },
+                        OrientationLandscape180 = new byte[]
+                        {
+                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control,
+                                (byte)(
+                                    ILI9488_Orientation.MADCTL_MV |
+                                    ILI9488_Orientation.MADCTL_RGB
+                                ),
                         },
                         OrientationPortrait = new byte[]
                         {
-                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control, (byte)(ILI9341_Orientation.MADCTL_MX | ILI9341_Orientation.MADCTL_RGB),
+                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control,
+                                (byte)(
+                                    ILI9488_Orientation.MADCTL_MX |
+                                    ILI9488_Orientation.MADCTL_RGB
+                                ),
+                        },
+                        OrientationPortrait180 = new byte[]
+                        {
+                            (byte)GraphicDriverCommandType.Command, 2, (byte)ILI9488_CMD.Memory_Access_Control,
+                                (byte)(
+                                    ILI9488_Orientation.MADCTL_MY |
+                                    ILI9488_Orientation.MADCTL_RGB
+                                ),
                         },
                         PowerModeNormal = new byte[]
                         {
@@ -133,7 +158,7 @@ namespace nanoFramework.UI.GraphicDrivers
                         {
                             (byte)GraphicDriverCommandType.Command, 3, (byte)ILI9488_CMD.POWER_STATE, 0x00, 0x01,
                         },
-                        DefaultOrientation = DisplayOrientation.Landscape,
+                        DefaultOrientation = DisplayOrientation.Landscape180,
                         Brightness = (byte)ILI9488_CMD.Write_Display_Brightness,
                         SetWindowType = SetWindowType.X16bitsY16Bit,
                         BitsPerPixel = 18
