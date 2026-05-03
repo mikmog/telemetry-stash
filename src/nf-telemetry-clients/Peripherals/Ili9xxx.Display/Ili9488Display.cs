@@ -140,7 +140,6 @@ namespace TelemetryStash.IliDisplay
 
         public void RunDemo(Bitmap logo)
         {
-            Console.WriteLine("Ili9488Display.RunDemo()");
             var start = DateTime.UtcNow;
             Screen.Clear();
             Screen.Flush();
@@ -153,10 +152,10 @@ namespace TelemetryStash.IliDisplay
             Screen.DrawLine(Color.Red, 20, 50, 0, 50, 300);
             Screen.Flush();
 
-            Screen.DrawLine(Color.Blue, 20, 100, 0, 100, 300);
+            Screen.DrawLine(Color.Green, 20, 100, 0, 100, 300);
             Screen.Flush();
 
-            Screen.DrawLine(Color.Green, 20, 150, 0, 150, 300);
+            Screen.DrawLine(Color.Blue, 20, 150, 0, 150, 300);
             Screen.Flush();
 
             Screen.DrawLine(Color.Yellow, 20, 200, 0, 200, 300);
@@ -186,7 +185,7 @@ namespace TelemetryStash.IliDisplay
             {
                 for (var x = 10; x < 440; x++)
                 {
-                    Screen.SetPixel(x, y, Color.Red);
+                    Screen.SetPixel(x, y, Color.Green);
                     Screen.Flush(x, y, 1, 1);
                 }
             }
@@ -195,7 +194,7 @@ namespace TelemetryStash.IliDisplay
             {
                 for (var x = 10; x < 440; x++)
                 {
-                    Screen.SetPixel(x, y, Color.Green);
+                    Screen.SetPixel(x, y, Color.Red);
                     Screen.Flush(x, y, 1, 1);
                 }
             }

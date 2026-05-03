@@ -14,6 +14,8 @@ namespace RipTide.Nfirmware.Components
 {
     public class Display : Component
     {
+        private bool _running = false;
+
         private int _thrustValue = -1;
         private BatteryValue _batteryValue;
         private TemperatureValue[] _tempValues;
@@ -34,6 +36,10 @@ namespace RipTide.Nfirmware.Components
             _logo = new Bitmap(splash, Bitmap.BitmapImageType.Jpeg);
 
             Start(Runner);
+            while (_running == false)
+            {
+                Thread.Sleep(1);
+            }
         }
 
         public void SetScreen(Screen screen)
@@ -97,8 +103,9 @@ namespace RipTide.Nfirmware.Components
 
             var currentScreen = _screen;
             var currentThrust = _thrustValue;
+            _running = true;
 
-            while (true)
+            while (_running)
             {
                 if (currentScreen != _screen)
                 {
