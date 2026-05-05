@@ -6,8 +6,8 @@ Solution contains **.NET nanoFramework** applications, class libraries, and util
 
 ## Architecture
 
-- `Clients/`: non related deployable device applications.
-- `Peripherals/`: hardware drivers and adapters (sensors, displays, IO, etc).
+- `Clients/`: non-related deployable device applications.
+- `Peripherals/`: hardware drivers and adapters (sensors, displays, IO, etc.).
 - `Shared/Client.Communication`: cross-client networking and MQTT communication (M2Mqtt + Azure IoT Hub with TLS certificate auth).
 - `Shared/Client.Services`: telemetry services and runtime metrics logic.
 - `Shared/Shared`: shared models, configuration reading, and common utilities.
