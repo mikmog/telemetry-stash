@@ -2,7 +2,7 @@
 
 ## Repository Overview
 
-Solution contains **.NET nanoFramework** applications, class librarys and utility scripts. The nanoFramework targets a subset of .NET framework , **not** standard .NET. Code runs on resource-constrained ESP32 microcontrollers via the nanoFramework runtime.
+Solution contains **.NET nanoFramework** applications, class libraries, and utility scripts. The nanoFramework targets a subset of the .NET framework, **not** standard .NET. Code runs on resource-constrained ESP32 microcontrollers via the nanoFramework runtime.
 
 ## Architecture
 
