@@ -26,7 +26,7 @@ Solution contains **.NET nanoFramework** applications, class libraries, and util
 
 ## Testing
 
-- Unit tests are are using **nanoFramework.TestFramework**
+- Unit tests are using **nanoFramework.TestFramework**
 - Test classes use `[TestClass]` / `[TestMethod]` / `[DataRow]` attributes (similar to MSTest but nanoFramework-specific)
 - `Assert` class is from `nanoFramework.TestFramework`
 - Tests run on a nanoFramework device or emulator — **not** on the host machine
