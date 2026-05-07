@@ -51,9 +51,6 @@
     <Reference Include="System.Device.Model">
       <HintPath>..\..\packages\nanoFramework.System.Device.Model.1.2.862\lib\System.Device.Model.dll</HintPath>
     </Reference>
-    <Reference Include="UnitsNet.Temperature">
-      <HintPath>..\..\packages\UnitsNet.nanoFramework.Temperature.5.75.0\lib\UnitsNet.Temperature.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
