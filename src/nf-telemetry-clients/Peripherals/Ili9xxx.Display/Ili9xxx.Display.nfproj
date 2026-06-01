@@ -81,6 +81,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="specification.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GraphicDriver\" />
+  </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
     <ProjectCapabilities>
