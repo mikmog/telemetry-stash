@@ -24,6 +24,14 @@
   <ItemGroup>
     <Compile Include="Driver\Ili9488.cs" />
     <Compile Include="Font.cs" />
+    <Compile Include="GraphicDriver\BitmapMetric.cs" />
+    <Compile Include="GraphicDriver\DashboardView.cs" />
+    <Compile Include="GraphicDriver\GenericView.cs" />
+    <Compile Include="GraphicDriver\GraphicsDriver.cs" />
+    <Compile Include="GraphicDriver\IliView.cs" />
+    <Compile Include="GraphicDriver\MetricDefinition.cs" />
+    <Compile Include="GraphicDriver\SplashView.cs" />
+    <Compile Include="GraphicDriver\TextMetric.cs" />
     <Compile Include="Ili9341Display.cs" />
     <Compile Include="Ili9488Display.cs" />
     <Compile Include="IliDisplaySettings.cs" />
@@ -83,9 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="specification.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GraphicDriver\" />
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>

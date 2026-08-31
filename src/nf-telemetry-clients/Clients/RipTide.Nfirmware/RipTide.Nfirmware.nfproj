@@ -24,6 +24,7 @@
     <Compile Include="Components\Buttons.cs" />
     <Compile Include="Components\Common\Component.cs" />
     <Compile Include="Components\DepthMonitor.cs" />
+    <Compile Include="Components\Display2.cs" />
     <Compile Include="Components\ErrorHandler.cs" />
     <Compile Include="Components\Buzzer.cs" />
     <Compile Include="Components\Gyro.cs" />
@@ -33,6 +34,11 @@
     <Compile Include="Components\Throttleds.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <DependentUpon>Resource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="_docs\Daly Smart Active Balance Modbus Protocol.xlsx" />
@@ -93,6 +99,12 @@
     <Reference Include="System.Numerics">
       <HintPath>..\..\packages\nanoFramework.System.Numerics.1.2.862\lib\System.Numerics.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <Generator>nFResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
   <ProjectExtensions>
