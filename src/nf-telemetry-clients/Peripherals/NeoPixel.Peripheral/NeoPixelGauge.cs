@@ -1,4 +1,5 @@
-﻿using CCSWE.nanoFramework.NeoPixel;
+﻿using CCSWE.nanoFramework.Graphics;
+using CCSWE.nanoFramework.NeoPixel;
 using CCSWE.nanoFramework.NeoPixel.Drivers;
 using System;
 using System.Drawing;
@@ -13,7 +14,7 @@ namespace NeoPixel.Peripheral
         private readonly Color[] _colors;
         private readonly NeoPixelStrip _pixels;
         private readonly Thread _gaugeThread;
-        
+
         private int _currentPosition;
         private int _requestedPosition;
 
@@ -56,7 +57,7 @@ namespace NeoPixel.Peripheral
                 _pixels.Update();
                 Thread.Sleep(1);
             }
-            
+
             for (var i = 0; i < _pixels.Count; i++)
             {
                 _pixels.SetLed(i, Color.Black);
@@ -67,7 +68,7 @@ namespace NeoPixel.Peripheral
 
         public void SetPosition(int position)
         {
-            _requestedPosition = Math.Min(position, _colors.Length-1);
+            _requestedPosition = Math.Min(position, _colors.Length - 1);
         }
 
         private void SetPosition()
@@ -122,7 +123,7 @@ namespace NeoPixel.Peripheral
 
                         _pixels.SetLed(currentPosition--, Color.Black);
                         if (currentPosition % increments == 0 || requestedPosition == currentPosition || requestedPosition != _requestedPosition)
-                        { 
+                        {
                             _pixels.Update();
                             Thread.Sleep(0);
                         }
