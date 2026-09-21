@@ -41,13 +41,13 @@
       <HintPath>..\..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.System.Collections">
-      <HintPath>..\..\..\packages\nanoFramework.System.Collections.1.5.67\lib\nanoFramework.System.Collections.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.System.Collections.1.5.75\lib\nanoFramework.System.Collections.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.TestFramework">
-      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.75\lib\nanoFramework.TestFramework.dll</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.80\lib\nanoFramework.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="nanoFramework.UnitTestLauncher">
-      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.75\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
+      <HintPath>..\..\..\packages\nanoFramework.TestFramework.3.0.80\lib\nanoFramework.UnitTestLauncher.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
