@@ -15,7 +15,7 @@ namespace TelemetryStash.Peripherals.Tests.AidonSensor
             var response = AidonMessageParser.Parse(TestData.AidonMessage);
 
             Assert.IsNotNull(response);
-            Assert.AreEqual(new DateTime(2024, 02, 17, 16, 40, 50), response.Timestamp);
+            Assert.AreEqual(new DateTime(2023, 11, 07, 19, 30, 00), response.Timestamp);
 
             var registers = ((RegisterSet)response.RegisterSets[0]).Registers;
             foreach (var register in registers)
@@ -26,38 +26,38 @@ namespace TelemetryStash.Peripherals.Tests.AidonSensor
 
         private Hashtable ObisTable => new()
         {
-            { Obis.TotActiveEnergy.Name,         "7805.332" },
-            { Obis.TotActiveEnergyInput.Name,    "11111111.111" },
-            { Obis.TotReactiveEnergyDraw.Name,   "3.239" },
-            { Obis.TotReactiveEnergyInput.Name,  "1945.988" },
+            { Obis.TotActiveEnergy.Name,         "3501.926" },
+            { Obis.TotActiveEnergyInput.Name,    "0" },
+            { Obis.TotReactiveEnergyDraw.Name,   "2.464" },
+            { Obis.TotReactiveEnergyInput.Name,  "1178.103" },
 
-            { Obis.ActiveEnergyDraw.Name,        "0.87" },
-            { Obis.ActiveEnergyInput.Name,       "1.001" },
+            { Obis.ActiveEnergyDraw.Name,        "3.304" },
+            { Obis.ActiveEnergyInput.Name,       "0" },
 
-            { Obis.ReactiveEnergyDraw.Name,      "2" },
-            { Obis.ReactiveEnergyInput.Name,      "0.551" },
+            { Obis.ReactiveEnergyDraw.Name,      "0" },
+            { Obis.ReactiveEnergyInput.Name,     "0.561" },
 
-            { Obis.L1EnergyDraw.Name,            "0.269" },
-            { Obis.L1EnergyInput.Name,           "0.345" },
-            { Obis.L2EnergyDraw.Name,            "0.526" },
-            { Obis.L2EnergyInput.Name,           "3" },
-            { Obis.L3EnergyDraw.Name,            "0.06" },
-            { Obis.L3EnergyInput.Name,           "4" },
+            { Obis.L1EnergyDraw.Name,            "1.222" },
+            { Obis.L1EnergyInput.Name,           "0" },
+            { Obis.L2EnergyDraw.Name,            "1.02" },
+            { Obis.L2EnergyInput.Name,           "0" },
+            { Obis.L3EnergyDraw.Name,            "1.067" },
+            { Obis.L3EnergyInput.Name,           "0" },
 
-            { Obis.L1ReactiveEnergyDraw.Name,    "5" },
-            { Obis.L1ReactiveEnergyInput.Name,   "0.277" },
-            { Obis.L2ReactiveEnergyDraw.Name,    "6" },
-            { Obis.L2ReactiveEnergyInput.Name,   "0.184" },
+            { Obis.L1ReactiveEnergyDraw.Name,    "0" },
+            { Obis.L1ReactiveEnergyInput.Name,   "0.215" },
+            { Obis.L2ReactiveEnergyDraw.Name,    "0" },
+            { Obis.L2ReactiveEnergyInput.Name,   "0.246" },
             { Obis.L3ReactiveEnergyDraw.Name,    "0" },
-            { Obis.L3ReactiveEnergyInput.Name,   "0.081" },
+            { Obis.L3ReactiveEnergyInput.Name,   "0.088" },
 
-            { Obis.L1Voltage.Name,               "234.7" },
-            { Obis.L2Voltage.Name,               "234.6" },
-            { Obis.L3Voltage.Name,               "234.5" },
+            { Obis.L1Voltage.Name,               "229.5" },
+            { Obis.L2Voltage.Name,               "229.6" },
+            { Obis.L3Voltage.Name,               "229.5" },
 
-            { Obis.L1Current.Name,               "1.6" },
-            { Obis.L2Current.Name,               "2.3" },
-            { Obis.L3Current.Name,               "0.4" }
+            { Obis.L1Current.Name,               "5.4" },
+            { Obis.L2Current.Name,               "4.5" },
+            { Obis.L3Current.Name,               "4.6" }
         };
     }
 }

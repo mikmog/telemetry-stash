@@ -6,6 +6,8 @@
 #   - A root CA certificate
 #   - OpenSSL https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL
 #   - Azure CLI https://learn.microsoft.com/en-gb/cli/azure/install-azure-cli
+#   - Az.KeyVault module
+#       - Install-Module -Name Az.KeyVault
 #   - Azure Key Vault with client certificates
 #       - {CERTIFICATE_NAME}
 #

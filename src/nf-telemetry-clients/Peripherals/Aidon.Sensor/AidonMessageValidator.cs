@@ -1,15 +1,12 @@
-﻿namespace TelemetryStash.Aidon.Sensor
+﻿using System.Text;
+using TelemetryStash.Shared;
+
+namespace TelemetryStash.Aidon.Sensor
 {
     public static class AidonMessageValidator
     {
-        public const int MinMessageLength = 650;
+        const char CrcBegin = '!';
 
-        const int exclamationPointLocation = 7;
-        const char Slash = '/';
-        const char ExclamationPoint = '!';
-
-        // TODO: CRC16 validation
-        // https://www.convertcase.com/hashing/crc-16-checksum-calculator
         public static bool IsValid(string message, out string error)
         {
             error = null;
@@ -17,24 +14,26 @@
             if (message == null)
             {
                 error = "Message is null";
+                return false;
             }
 
-            else if (message.Length < MinMessageLength)
+            var messageParts = message.Split(CrcBegin);
+            if (messageParts.Length != 2)
             {
-                error = "Invalid minimum message length. Expected '" + MinMessageLength + "' . Actual '" + message.Length + "'";
+                error = $"One CRC begin character ({CrcBegin}) expected. Actual: {messageParts.Length - 1}";
+                return false;
             }
 
-            else if (message[0] != Slash)
+            var messageBytes = Encoding.UTF8.GetBytes(messageParts[0] + CrcBegin);
+            var calculatedCrc = CrcCalculator.CalculateCrc16Arc(messageBytes).ToString("X4");
+
+            if (messageParts[1] != calculatedCrc)
             {
-                error = "Invalid initial byte. Expected '" + Slash + "' (/). Actual '" + message[0] + "'";
+                error = $"Invalid CRC: expected '{messageParts[1]}', actual '{calculatedCrc}'";
+                return false;
             }
 
-            else if (message[message.Length - exclamationPointLocation] != ExclamationPoint)
-            {
-                error = "Expected '" + ExclamationPoint + "'. Actual '" + message[message.Length - exclamationPointLocation] + "'";
-            }
-
-            return error == null;
+            return true;
         }
     }
 }

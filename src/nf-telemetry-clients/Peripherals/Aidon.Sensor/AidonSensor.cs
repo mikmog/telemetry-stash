@@ -27,7 +27,7 @@ namespace TelemetryStash.Aidon.Sensor
 
         public void Dispose()
         {
-            if(_serialPort != null)
+            if (_serialPort != null)
             {
                 _serialPort.DataReceived -= Serial_DataReceived;
                 _serialPort.Close();
@@ -46,7 +46,7 @@ namespace TelemetryStash.Aidon.Sensor
 
             Thread.Sleep(100);
 
-            var message = _serialPort.ReadExisting();
+            var message = _serialPort.ReadExisting().TrimEnd(); // Trim trailing new line (\r\n) characters
 
             if (!AidonMessageValidator.IsValid(message, out var error))
             {
