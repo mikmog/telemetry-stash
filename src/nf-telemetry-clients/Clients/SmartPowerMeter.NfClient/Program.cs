@@ -19,14 +19,19 @@ namespace SmartPowerMeter.Client
         {
             try
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 Wifi.EnsureConnected();
+                Thread.Sleep(2000);
+
                 DeviceMetrics.RegisterDeviceStart();
 
                 PrintStartupMessage();
 
                 var settings = new AppSettings(new ConfigurationReader());
-                _telemetryService = new(new MqttService(settings.Mqtt));
+
+                var mqttService = new MqttService(settings.Mqtt);
+                mqttService.Connect();
+                _telemetryService = new(mqttService);
 
                 var aidonSensor = new AidonSensor(settings.AidonSensor);
                 aidonSensor.DataReceived += AidonSensor_DataReceived;

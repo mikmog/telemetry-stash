@@ -28,7 +28,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
                 PrintStartupMessage();
 
                 var settings = new AppSettings(new ConfigurationReader());
-                _telemetryService = new(new MqttService(settings.Mqtt, discardMessages: false));
+                _telemetryService = new(new MqttService(settings.Mqtt));
 
                 var metricsSensor = new TimerRunner(TimeSpan.FromMinutes(60));
                 metricsSensor.TimerElapsed += DeviceMetrics_TimerElapsed;
@@ -71,7 +71,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     wifiSensor.Stop();
                     Debug.WriteLine();
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
                 Power.RebootDevice(10000);
@@ -145,7 +146,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     Timestamp = DateTime.UtcNow,
                     RegisterSets = registerSets
                 });
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
             }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using TelemetryStash.NfClient.Services;
 
 namespace TelemetryStash.NfClient.Services
 {
@@ -13,13 +13,11 @@ namespace TelemetryStash.NfClient.Services
         private const string ClientCertificateNameKey = "Client.CertificateName";
         private const string ClientPemCertKey = "Client.PemCert";
         private const string ClientPrivateKeyKey = "Client.PrivateKey";
-        private const string ClientCertificatePasswordKey = "Client.CertificatePassword";
 
         public MqttSettings Configure(IDictionary dictionary)
         {
-            var reader = new FileReader();
             string Setting(string key) => dictionary[key] as string ?? throw new ArgumentException("Setting not found", key);
-            byte[] ReadFile(string key) => reader.ReadFile(Setting(key), $"File not found '{key}'");
+            string ReadFile(string key) => File.ReadAllText(Setting(key));
 
             ClientICertificateName = Setting(ClientCertificateNameKey);
             BrokerHostName = Setting(BrokerHostNameKey);
@@ -29,7 +27,7 @@ namespace TelemetryStash.NfClient.Services
             ClientCert = new X509Certificate2(
                 rawData: ReadFile(ClientPemCertKey),
                 key: ReadFile(ClientPrivateKeyKey),
-                password: Setting(ClientCertificatePasswordKey));
+                password: null);
 
             return this;
         }
