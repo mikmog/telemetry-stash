@@ -21,7 +21,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $root = "C:/IoTCerts/$env/rootca"
-$keyVaultName = "kv-ts-$env"
+$keyVaultName = "kv-ts-" + ($env -eq 'dev' ? 'develop' : $env)
 $rootCaName = "rootca-$env"
 
 Write-Output "
@@ -45,7 +45,7 @@ New-Item -ItemType Directory -Path "$root/private" -ErrorAction SilentlyContinue
 openssl rand -hex 16 | Out-File -encoding ascii "$root/db/serial"
 "1001" | Out-File -encoding ascii "$root/db/crlnumber"
 
-openssl req -new -config "$rootCaName.conf" -out "$root/$rootCaName.csr" -keyout "$root/private/$rootCaName.key" -passout "pass:$rootCaPassword"
+openssl req -new -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -config "$rootCaName.conf" -out "$root/$rootCaName.csr" -keyout "$root/private/$rootCaName.key" -passout "pass:$rootCaPassword"
 openssl ca -batch -selfsign -config "$rootCaName.conf" -in "$root/$rootCaName.csr" -out "$root/$rootCaName.crt" -extensions ca_ext -passin "pass:$rootCaPassword"
 openssl x509 -in "$root/$rootCaName.crt" -out "$root/$rootCaName.pem" -outform PEM
 

@@ -51,7 +51,7 @@ New-Item -ItemType Directory -Path "$deviceRoot" -ErrorAction SilentlyContinue
 
 # Create device certificate
 openssl rand -hex 16 | Out-File -encoding ascii "$root/rootca/db/serial"
-openssl genpkey -out "$deviceRoot/$deviceId.key" -algorithm RSA -pkeyopt rsa_keygen_bits:2048
+openssl genpkey -out "$deviceRoot/$deviceId.key" -algorithm EC -pkeyopt ec_paramgen_curve:P-256
 openssl req -new -key "$deviceRoot/$deviceId.key" -out "$deviceRoot/$deviceId.csr" -subj "/CN=$deviceId" -passin pass:$privateKeyPassword
 openssl ca -batch -config rootca-$env.conf -in "$deviceRoot/$deviceId.csr" -out "$deviceRoot/$deviceId.crt" -extensions client_ext -passin pass:$rootCaPassword
 openssl x509 -in "$deviceRoot/$deviceId.crt" -out "$deviceRoot/$deviceId.pem" -outform PEM
