@@ -1,5 +1,4 @@
 ﻿using nanoFramework.M2Mqtt;
-using nanoFramework.M2Mqtt.Exceptions;
 using nanoFramework.M2Mqtt.Messages;
 using System;
 using System.Collections;
@@ -18,15 +17,13 @@ namespace TelemetryStash.NfClient.Services
         private readonly string _clientCertName;
         private readonly string _telemetryTopic;
         private readonly string _username;
-        private readonly bool _discardMessages;
 
-        public MqttService(MqttSettings settings, bool discardMessages = false)
+        public MqttService(MqttSettings settings)
         {
             _clientCertName = settings.ClientICertificateName;
 
             _telemetryTopic = "devices/" + _clientCertName + "/messages/events/";
             _username = settings.BrokerHostName + "/" + _clientCertName + "/?api-version=2021-04-12&DeviceClientType=nano";
-            _discardMessages = discardMessages;
 
             _mqttClient = new(
                 brokerHostName: settings.BrokerHostName,
@@ -44,6 +41,14 @@ namespace TelemetryStash.NfClient.Services
 
         public bool IsConnected => _mqttClient != null && _mqttClient.IsConnected;
 
+        /// <summary>
+        /// Connect early, before other allocations to avoid memory fragmentation. 
+        /// <code>Connect will likely fail if running with debugger attached on a device without PS ram.</code>
+        /// <list type="bullet">
+        /// <item>Connecting requires ~17 KB of <i>contiguous</i> internal RAM.</item>
+        /// <item>Heap peaks about 40–50 KB of heap during TLS handshake.</item>
+        /// </list>
+        /// </summary>
         public void Connect()
         {
             lock (_mqttClient)
@@ -59,6 +64,9 @@ namespace TelemetryStash.NfClient.Services
 
                 try
                 {
+                    // Frees managed memory but does not defragment the native mbedTLS heap
+                    nanoFramework.Runtime.Native.GC.Run(compactHeap: true);
+
                     var response = _mqttClient.Connect(
                         clientId: _clientCertName,
                         username: _username,
@@ -71,17 +79,16 @@ namespace TelemetryStash.NfClient.Services
                         cleanSession: true,
                         keepAlivePeriod: 60);
 
-                    _connectionAttempts = 0;
-
                     if (response != MqttReasonCode.Success)
                     {
                         throw new Exception("MQTT connection failed. ReasonCode: " + response + ", IsConnected: " + _mqttClient.IsConnected);
                     }
 
-                    Debug.WriteLine("MQTT connected: " + _mqttClient.IsConnected + ", ReasonCode: " + response);
+                    _connectionAttempts = 0;
 
+                    Debug.WriteLine("MQTT connected: " + _mqttClient.IsConnected + ", ReasonCode: " + response);
                 }
-                catch (MqttCommunicationException ex)
+                catch (Exception ex)
                 {
                     if (_connectionAttempts < 5)
                     {
@@ -95,7 +102,6 @@ namespace TelemetryStash.NfClient.Services
                         throw ex;
                     }
                 }
-
             }
         }
 
@@ -103,21 +109,17 @@ namespace TelemetryStash.NfClient.Services
         {
             var json = JsonSerialize.SerializeTelemetry(telemetry);
 
-            var messageId = -1;
-            if (!_discardMessages)
-            {
-                messageId = _mqttClient.Publish(
-                    topic: _telemetryTopic,
-                    message: Encoding.UTF8.GetBytes(json),
-                    contentType: null,
-                    userProperties: null,
-                    qosLevel: MqttQoSLevel.AtMostOnce,
-                    retain: false);
-            }
+            var messageId = _mqttClient.Publish(
+                topic: _telemetryTopic,
+                message: Encoding.UTF8.GetBytes(json),
+                contentType: null,
+                userProperties: null,
+                qosLevel: MqttQoSLevel.AtMostOnce,
+                retain: false);
 
             Debug.WriteLine(
-                DateTime.UtcNow.ToString("T") + 
-                " - MQTT message " + 
+                DateTime.UtcNow.ToString("T") +
+                " - MQTT message " +
                 messageId +
                 " published. Size: " +
                 Round.ToTwoDecimalString(Encoding.UTF8.GetBytes(json).Length / 1024d) + " KB");

@@ -6,8 +6,6 @@
 #   - A root CA certificate
 #   - OpenSSL https://kb.firedaemon.com/support/solutions/articles/4000121705#Download-OpenSSL
 #   - Azure CLI https://learn.microsoft.com/en-gb/cli/azure/install-azure-cli
-#   - Azure Key Vault with secrets
-#       - Client--CertificatePassword
 #   - Azure Key Vault with client certificates
 #       - {CERTIFICATE_NAME}
 #
@@ -92,9 +90,18 @@ if($hashTable.ContainsKey("Client.CertificateName") -and $hashTable.ContainsKey(
 	$content = $content -replace "%Client.PemCert%", ($tempFiles[-1].FullName -replace "\\", "\\")
 
 	$tempFiles += New-TemporaryFile
+	$keyFile = $tempFiles[-1].FullName
 	$pem -match "(?s)-----BEGIN PRIVATE KEY-----.+-----END PRIVATE KEY-----"
-	$matches[0] | Out-File -FilePath $tempFiles[-1].FullName
-	$content = $content -replace "%Client.PrivateKey%", ($tempFiles[-1].FullName -replace "\\", "\\")
+	$matches[0] | Out-File -FilePath $keyFile
+
+	# Azure Key Vault encodes EC P-256 private key making it incompatible with .NET nanoFramework / Mbed TLS (v3.6.7 at the time of writing)
+	# Workaround removes attributes added by Azure Key Vault from the private key using OpenSSL.
+	$tempFiles += New-TemporaryFile
+	$keyFileCopy = $tempFiles[-1].FullName
+	Copy-Item -Path $keyFile -Destination $keyFileCopy
+	openssl pkey -in $keyFileCopy -out $keyFile
+
+	$content = $content -replace "%Client.PrivateKey%", ($keyFile -replace "\\", "\\")
 } else {
 	Write-Output "No client certificate in settings file"
 }
