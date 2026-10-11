@@ -36,7 +36,7 @@ internal class DbProvider(string connectionString) : IDbProvider
         var response = await connection.ExecuteQueryAsync<T>
         (
             commandText: storedProcedure,
-            param: parameters,
+            param: parameters!,
             commandType: CommandType.StoredProcedure,
             cancellationToken: cancellationToken
         );
@@ -50,7 +50,7 @@ internal class DbProvider(string connectionString) : IDbProvider
         await connection.ExecuteNonQueryAsync
         (
             commandText: storedProcedure,
-            param: parameters,
+            param: parameters!,
             commandType: CommandType.StoredProcedure,
             cancellationToken: cancellationToken
         );
@@ -65,7 +65,7 @@ internal class DbProvider(string connectionString) : IDbProvider
             .QueryAsync<T>(
             tableName: tableName,
             where: where,
-            orderBy: orderBy,
+            orderBy: orderBy!,
             top: top,
             cancellationToken: cancellationToken);
 
