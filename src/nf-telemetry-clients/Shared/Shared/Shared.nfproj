@@ -19,6 +19,7 @@
   </PropertyGroup>
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
+    <Compile Include="CrcCalculator.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MathExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
