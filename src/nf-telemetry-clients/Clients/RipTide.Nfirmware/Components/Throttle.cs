@@ -29,7 +29,7 @@ namespace RipTide.Nfirmware.Components
         {
             var settings = appSettings.Throttle;
 
-            _adcReadScale = settings.AdcReadScale;
+            _adcReadScale = settings.LedCount;
             _thrustScaleFactor = 100d / _adcReadScale;
 
             _apisQueenEsc = new ApisQueen(appSettings.ApisQueen);
@@ -160,7 +160,8 @@ namespace RipTide.Nfirmware.Components
                 }
 
                 var requestedThrust = _thrustSensor.Read();
-                Thread.Sleep(10);
+
+                Thread.Sleep(10); // TODO. Can be removed?
 
                 if (requestedThrust == Ss49eHallSensor.DirtyReadValue)
                 {
@@ -212,11 +213,11 @@ namespace RipTide.Nfirmware.Components
 
         private bool GetRawCalibrationValue(ActionMessageDelegate onMessage, out int rawValue)
         {
-            const int totalReads = 30;
+            const int requiredSuccessfulReads = 30;
             const int readInterval = 50; // milliseconds
 
-            var buffer = new int[totalReads];
-            for (int i = 0; i < totalReads; i++)
+            var buffer = new int[requiredSuccessfulReads];
+            for (int i = 0; i < requiredSuccessfulReads; i++)
             {
                 Thread.Sleep(readInterval);
 
@@ -243,7 +244,7 @@ namespace RipTide.Nfirmware.Components
                 // If last read, ensure range min and max are within acceptable limits
                 // If the range is too large, most likely the throttle is moving, reset attempts and restart calibration
                 const int maxDeltaRange = 20;
-                if (i == totalReads - 1)
+                if (i == requiredSuccessfulReads - 1)
                 {
                     buffer.MinMax(out var minValue, out var maxValue);
                     if (maxValue - minValue > maxDeltaRange)

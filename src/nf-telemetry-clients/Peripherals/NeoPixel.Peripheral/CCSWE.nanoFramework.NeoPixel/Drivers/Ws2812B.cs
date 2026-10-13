@@ -3,7 +3,7 @@
     /// <summary>
     /// Commands required for the WS2812B LED as specified in https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf
     /// </summary>
-    public class Ws2812B: NeoPixelDriver
+    public class Ws2812B : NeoPixelDriver
     {
         /// <summary>
         /// Create a new <see cref="Ws2812B"/> chipset.

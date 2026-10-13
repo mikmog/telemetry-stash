@@ -27,7 +27,7 @@ namespace RipTide.Nfirmware
 
         public static void Main()
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(2000);
 
             try
             {
@@ -36,7 +36,7 @@ namespace RipTide.Nfirmware
                 _appSettings.Configure();
 
                 //// Initialize display
-                _display.Initialize(_appSettings);
+                //_display.Initialize(_appSettings);
 
                 //// Initialize buzzer
                 //_buzzer.Initialize(_appSettings);
@@ -46,8 +46,8 @@ namespace RipTide.Nfirmware
                 //Thread.Sleep(500);
 
                 //// Show splash screen
-                _display.SetScreen(Screen.Demo);
-                _display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
+                //_display.SetScreen(Screen.Demo);
+                //_display.Fade(0, 0.8, TimeSpan.FromMilliseconds(500));
 
                 //// Initialize battery monitor
                 //_batteryMonitor.Initialize(_appSettings);
@@ -61,11 +61,11 @@ namespace RipTide.Nfirmware
                 //_tempMonitor.Initialize(_appSettings);
                 //_tempMonitor.OnTemperatureChanged += _display.TemperatureChanged;
 
-                //// Initialize throttle led's
-                //_throttleds.Initialize(_appSettings);
+                // Initialize throttle led's
+                _throttleds.Initialize(_appSettings);
 
-                //// Initialize throttle
-                //_throttle.Initialize(_appSettings);
+                // Initialize throttle
+                _throttle.Initialize(_appSettings);
 
                 //_display.SetScreen(Screen.Empty);
 

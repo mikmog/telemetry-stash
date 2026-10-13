@@ -1,5 +1,4 @@
-﻿using CCSWE.nanoFramework.Graphics;
-using CCSWE.nanoFramework.NeoPixel;
+﻿using CCSWE.nanoFramework.NeoPixel;
 using CCSWE.nanoFramework.NeoPixel.Drivers;
 using System;
 using System.Drawing;

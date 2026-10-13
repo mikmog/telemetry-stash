@@ -27,7 +27,7 @@ namespace TelemetryStash.IO.Peripherals.ApisQueen
         private readonly PwmChannel _pwm1;
         private readonly PwmChannel _pwm2;
 
-        private readonly Thread _throttleThread;
+        private Thread _throttleThread;
         private int _currentThrottle = 0;
         private int _requestedThrottle = 0;
 
@@ -36,23 +36,19 @@ namespace TelemetryStash.IO.Peripherals.ApisQueen
 
         public ApisQueen(ApisQueenSettings settings)
         {
-            //Configuration.SetPinFunction(17, DeviceFunction.PWM9);
-            //Configuration.SetPinFunction(18, DeviceFunction.PWM10);
-            //_pwm1 = PwmChannel.CreateFromPin(17, 500, neutralDutyCycle);
-            //_pwm2 = PwmChannel.CreateFromPin(18, 500, neutralDutyCycle);
             Configuration.SetPinFunction(settings.LeftMotorPin, settings.LeftMotorPwmChannel);
             Configuration.SetPinFunction(settings.RightMotorPin, settings.RightMotorPwmChannel);
             _pwm1 = PwmChannel.CreateFromPin(settings.LeftMotorPin, 500, neutralDutyCycle);
             _pwm2 = PwmChannel.CreateFromPin(settings.RightMotorPin, 500, neutralDutyCycle);
             Stop();
-
-            _throttleThread = new Thread(SetThrottle);
         }
 
         public void Initialize()
         {
             _pwm1.Start();
             _pwm2.Start();
+
+            _throttleThread = new Thread(SetThrottle);
             _throttleThread.Start();
         }
 
@@ -99,7 +95,6 @@ namespace TelemetryStash.IO.Peripherals.ApisQueen
                         _pwm2.DutyCycle = dutyCycle;
                         _pwm1.DutyCycle = dutyCycle;
                     }
-                    //Thread.Sleep(0);
                 }
 
                 // Slow down
@@ -117,9 +112,6 @@ namespace TelemetryStash.IO.Peripherals.ApisQueen
                         _pwm2.DutyCycle = dutyCycle;
                         _pwm1.DutyCycle = dutyCycle;
                     }
-
-                    //Debug.WriteLine($"Duty cycle: {_pwm1.DutyCycle}. Throttle: {_currentThrottle} %");
-                    //Thread.Sleep(0);
                 }
 
                 _currentThrottle = currentThrottle;
