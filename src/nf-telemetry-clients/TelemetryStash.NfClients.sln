@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.10.34818.151
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12224.323
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SmartPowerMeter.NfClient", "Clients\SmartPowerMeter.NfClient\SmartPowerMeter.NfClient.nfproj", "{9FCF11D3-2C19-4A9A-B180-185A25C56DFD}"
 EndProject
@@ -67,6 +67,10 @@ EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Ili9xxx.Display", "Peripherals\Ili9xxx.Display\Ili9xxx.Display.nfproj", "{78E410A5-F0D4-4AE1-A3D1-6BBA81F6306E}"
 EndProject
 Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "SdCard.Peripheral", "Peripherals\SdCard.Peripheral\SdCard.Peripheral.nfproj", "{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "PowerMonitor.NfClient", "Clients\PowerMonitor.NfClient\PowerMonitor.NfClient.nfproj", "{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}"
+EndProject
+Project("{11A8DD76-328B-46DF-9F39-F559912D0360}") = "Inaxxx.Sensor", "Peripherals\Inaxxx.Sensor\Inaxxx.Sensor.nfproj", "{4140CF22-261D-4922-9F92-C94BD086C956}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -210,6 +214,18 @@ Global
 		{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4140CF22-261D-4922-9F92-C94BD086C956}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -241,6 +257,8 @@ Global
 		{3DB32261-CA53-45B9-B7C4-8E00903FEF2C} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 		{78E410A5-F0D4-4AE1-A3D1-6BBA81F6306E} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 		{B8F127EA-3AC9-4F54-8DFE-03BCBCBC2FB4} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
+		{9445A63C-77E1-44D1-B1BD-7CAF038E76A8} = {C54DF9D6-E23A-4AB3-968F-9E9519B0A099}
+		{4140CF22-261D-4922-9F92-C94BD086C956} = {5505F7B6-DDA0-414F-8BC5-1AC87CDF3928}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {303CCAD6-C43B-419F-ACC3-FAE0574C1931}

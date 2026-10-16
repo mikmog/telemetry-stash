@@ -1,55 +1,81 @@
-﻿using Iot.Device.Ds18b20;
-using nanoFramework.Device.OneWire;
-using nanoFramework.Hardware.Esp32;
-using System;
-using System.Threading;
+﻿//using nanoFramework.Hardware.Esp32;
+//using System;
+//using System.Threading;
 
-namespace TelemetryStash.Ds18b20Sensor
-{
-    public class Ds18b20Sensor
-    {
-        public Ds18b20Sensor()
-        {
-            Configuration.SetPinFunction(18, DeviceFunction.COM2_RX);
-            Configuration.SetPinFunction(17, DeviceFunction.COM2_TX);
-        }
+//namespace TelemetryStash.Ds18b20.Sensor
+//{
+//    public class Ds18b20Sensor
+//    {
+//        private readonly TimeSpan _notificationInterval;
+//        private Timer _notificationTimer;
 
-        public void RunDemo()
-        {
-            var oneWire = new OneWireHost();
+//        private readonly string[] _tags;
 
-            var ds18b20 = new Ds18b20(oneWire, null, false, TemperatureResolution.VeryHigh)
-            {
-                IsAlarmSearchCommandEnabled = false
-            };
+//        private Ina219 _ina219;
 
-            if (ds18b20.Initialize())
-            {
-                Console.WriteLine($"Is sensor parasite powered?:{ds18b20.IsParasitePowered}");
-                string devAddrStr = "";
-                foreach (var addrByte in ds18b20.Address)
-                {
-                    devAddrStr += addrByte.ToString("X2");
-                }
+//        public Ds18b20Sensor(Ds18b20SensorSettings settings, TimeSpan notificationInterval, string[] tags)
+//        {
+//            Configuration.SetPinFunction(settings.DataPin, DeviceFunction.I2C1_DATA);
+//            Configuration.SetPinFunction(settings.ClockPin, DeviceFunction.I2C1_CLOCK);
 
-                Console.WriteLine($"Sensor address:{devAddrStr}");
+//            _notificationInterval = notificationInterval;
+//            _tags = tags;
+//        }
 
-                while (true)
-                {
-                    if (!ds18b20.TryReadTemperature(out var currentTemperature))
-                    {
-                        Console.WriteLine("Can't read!");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Temperature: {currentTemperature.DegreesCelsius.ToString("F")}\u00B0C");
-                    }
+//        public void Start()
+//        {
+//            if (_ina219 == null)
+//            {
+//                InitSensor();
+//            }
 
-                    Thread.Sleep(5000);
-                }
-            }
+//            _notificationTimer ??= new Timer(OnNotificationEvent, null, _notificationInterval, _notificationInterval);
+//        }
 
-            oneWire.Dispose();
-        }
-    }
-}
+//        public void Stop()
+//        {
+//            _notificationTimer.Dispose();
+//            _notificationTimer = null;
+//        }
+
+//        public double ReadVoltage()
+//        {
+//            lock (_ina219)
+//            {
+//                return _ina219.ReadBusVoltage().Volts;
+//            }
+//        }
+
+//        private void InitSensor()
+//        {
+//            const byte Ina219_I2cAddress = 0x40;
+//            const byte Ina219_I2cBus = 0x1;
+
+//            _ina219 = new Ina219(new I2cConnectionSettings(Ina219_I2cBus, Ina219_I2cAddress));
+//            _ina219.Reset();
+
+//            _ina219.BusVoltageRange = Ina219BusVoltageRange.Range16v;
+//            _ina219.PgaSensitivity = Ina219PgaSensitivity.PlusOrMinus40mv;
+//        }
+
+//        private void OnNotificationEvent(object state)
+//        {
+//            var volts = ReadVoltage();
+
+//            var registerSet = new RegisterSet
+//            {
+//                Identifier = "Ina219",
+//                Tags = _tags,
+//                Registers = new Register[]
+//                {
+//                    new ("Volts", volts, DecimalPrecision.Two)
+//                }
+//            };
+
+//            DataReceived?.Invoke(registerSet);
+//        }
+
+//        public delegate void DataReceivedEventHandler(RegisterSet registerSet);
+//        public event DataReceivedEventHandler DataReceived;
+//    }
+//}
