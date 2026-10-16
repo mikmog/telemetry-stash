@@ -19,7 +19,7 @@ namespace TelemetryStash.NfClient.Services
             if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady)
             {
                 // Give 60 seconds to join
-                var cs = new CancellationTokenSource(60000);
+                using var cs = new CancellationTokenSource(60000);
                 var success = WifiNetworkHelper.Reconnect(requiresDateTime: true, token: cs.Token);
                 if (success)
                 {
@@ -35,7 +35,7 @@ namespace TelemetryStash.NfClient.Services
             {
                 Debug.WriteLine("Connected. IP: " + IPAddress.GetDefaultLocalAddress());
             }
-            
+
             Debug.WriteLine("");
         }
     }
