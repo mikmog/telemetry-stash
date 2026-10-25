@@ -13,7 +13,7 @@ namespace SmartPowerMeter.Client
 {
     public class Program
     {
-        private static BufferedTelemetryService _telemetryService;
+        private static TelemetryService _telemetryService;
 
         public static void Main()
         {
@@ -31,7 +31,7 @@ namespace SmartPowerMeter.Client
 
                 var mqttService = new MqttService(settings.Mqtt);
                 mqttService.Connect();
-                _telemetryService = new(mqttService);
+                _telemetryService = new(mqttService, bufferSize: 5);
 
                 var aidonSensor = new AidonSensor(settings.AidonSensor);
                 aidonSensor.DataReceived += AidonSensor_DataReceived;
@@ -58,7 +58,10 @@ namespace SmartPowerMeter.Client
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.ToString());
-                Power.RebootDevice(10000);
+
+                Debug.WriteLine("Error occured. Rebooting device");
+                Thread.Sleep(5000);
+                Power.RebootDevice(1000);
             }
         }
 
@@ -66,7 +69,7 @@ namespace SmartPowerMeter.Client
         {
             try
             {
-                _telemetryService.AddTelemetry(telemetry);
+                _telemetryService.PublishTelemetry(telemetry);
             }
             catch (Exception ex)
             {
@@ -78,7 +81,7 @@ namespace SmartPowerMeter.Client
         {
             try
             {
-                _telemetryService.AddTelemetry(new Telemetry
+                _telemetryService.PublishTelemetry(new Telemetry
                 {
                     Timestamp = DateTime.UtcNow,
                     RegisterSets = new ArrayList { registerSet }
@@ -95,7 +98,7 @@ namespace SmartPowerMeter.Client
             try
             {
                 var deviceMetrics = DeviceMetrics.GetDeviceMetrics();
-                _telemetryService.AddTelemetry(new Telemetry
+                _telemetryService.PublishTelemetry(new Telemetry
                 {
                     Timestamp = timestamp,
                     RegisterSets = deviceMetrics
