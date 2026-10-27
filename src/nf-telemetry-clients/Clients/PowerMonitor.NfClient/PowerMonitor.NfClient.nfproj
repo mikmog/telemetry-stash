@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <NanoFrameworkProjectSystemPath>$(MSBuildExtensionsPath)\nanoFramework\v1.0\</NanoFrameworkProjectSystemPath>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.Default.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{11A8DD76-328B-46DF-9F39-F559912D0360};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>9445a63c-77e1-44d1-b1bd-7caf038e76a8</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <FileAlignment>512</FileAlignment>
+    <RootNamespace>PowerMonitor.NfClient</RootNamespace>
+    <AssemblyName>PowerMonitor.NfClient</AssemblyName>
+    <TargetFrameworkVersion>v1.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
+  <ItemGroup>
+    <Compile Include="AppSettings.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <HintPath>..\..\packages\nanoFramework.CoreLibrary.1.17.11\lib\mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="nanoFramework.System.Collections">
+      <HintPath>..\..\packages\nanoFramework.System.Collections.1.5.75\lib\nanoFramework.System.Collections.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="README.md" />
+    <None Include="Resources\nanoCLR_C3_Onewire_8a962819c18815db3f7e4c55be697b8e1d65cdd5.bin" />
+    <None Include="Resources\nanoFramework.Tools.VS2022.Extension_2022.14.2.37.vsix" />
+    <None Include="Resources\Power monitor.fzz" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Peripherals\Ds18b20.Sensor\Ds18b20.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Peripherals\Inaxxx.Sensor\Inaxxx.Sensor.nfproj" />
+    <ProjectReference Include="..\..\Shared\Client.Services\Client.Services.nfproj" />
+    <ProjectReference Include="..\..\Shared\Shared\Shared.nfproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppSettings.XIAOC3.Dev.json" />
+    <Content Include="AppSettings.XIAOC3.Prod.json" />
+    <Content Include="Resources\xiao-esp32c3-pinout.png" />
+  </ItemGroup>
+  <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.CSharp.targets')" />
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>
