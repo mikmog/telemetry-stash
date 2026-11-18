@@ -20,6 +20,8 @@
   <Import Project="$(NanoFrameworkProjectSystemPath)NFProjectSystem.props" Condition="Exists('$(NanoFrameworkProjectSystemPath)NFProjectSystem.props')" />
   <ItemGroup>
     <Compile Include="DeviceMetrics.cs" />
+    <Compile Include="Mqtt\ConcurrentQueue.cs" />
+    <Compile Include="Mqtt\TelemetryService.cs" />
     <Compile Include="Mqtt\BufferedTelemetryService.cs" />
     <Compile Include="ConfigurationReader.cs" />
     <Compile Include="LocalStorage.cs" />
