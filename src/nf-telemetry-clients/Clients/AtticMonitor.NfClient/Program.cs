@@ -14,7 +14,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
 {
     public class Program
     {
-        private static BufferedTelemetryService _telemetryService;
+        private static TelemetryService _telemetryService;
         private static Am2320Sensor _am2320Sensor;
 
         public static void Main()
@@ -28,7 +28,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
                 PrintStartupMessage();
 
                 var settings = new AppSettings(new ConfigurationReader());
-                _telemetryService = new(new MqttService(settings.Mqtt));
+                _telemetryService = new(new MqttService(settings.Mqtt), inMemoryBufferSize: 100);
 
                 var metricsSensor = new TimerRunner(TimeSpan.FromMinutes(60));
                 metricsSensor.TimerElapsed += DeviceMetrics_TimerElapsed;
@@ -52,6 +52,8 @@ namespace TelemetryStash.AtticMonitor.NfClient
 
                 Debug.WriteLine("Starting Am2320 sensor");
                 _am2320Sensor.Start();
+
+                settings = null;
 
                 while (true)
                 {
@@ -84,7 +86,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
             try
             {
                 var deviceMetrics = DeviceMetrics.GetDeviceMetrics();
-                _telemetryService.AddTelemetry(new Telemetry
+                _telemetryService.PublishTelemetry(new Telemetry
                 {
                     Timestamp = timestamp,
                     RegisterSets = deviceMetrics
@@ -112,7 +114,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
                     telemetry.RegisterSets.Add(am23Reading.RegisterSet);
                 }
 
-                _telemetryService.AddTelemetry(telemetry);
+                _telemetryService.PublishTelemetry(telemetry);
             }
             catch (Exception ex)
             {
@@ -124,7 +126,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
         {
             try
             {
-                _telemetryService.AddTelemetry(new Telemetry
+                _telemetryService.PublishTelemetry(new Telemetry
                 {
                     Timestamp = DateTime.UtcNow,
                     Tags = new string[] { "Attic" },
@@ -141,7 +143,7 @@ namespace TelemetryStash.AtticMonitor.NfClient
         {
             try
             {
-                _telemetryService.AddTelemetry(new Telemetry
+                _telemetryService.PublishTelemetry(new Telemetry
                 {
                     Timestamp = DateTime.UtcNow,
                     RegisterSets = registerSets
